@@ -47,10 +47,18 @@ public class GamePanel extends JPanel {
 
     private JLabel bg_image;
 
+    @Override
+    public void paint(Graphics g){
+        String bg = "pic"+File.separator+"gamePage2.png";
+        Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
+        g.drawImage(bgimg,0,0,this);
+    }
+
     public GamePanel() {
         backGroundPanel();
-
         initiateEmptyChessboard();
+
+
 
 //
     }
@@ -66,6 +74,7 @@ public class GamePanel extends JPanel {
     public void putChessOnBoard(){ //传入
 
     }
+
 
     public void backGroundPanel() {
 
@@ -88,11 +97,11 @@ public class GamePanel extends JPanel {
         bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
         bg_image.setIcon(bggame);
         bg_image.setVisible(true);
-        new ImageIcon("pic"+File.separator+"gamePage1.png");
 
         JButton buttonExit1 = new MenuButton();          //退出游戏按键
         buttonExit1.setBounds(0, 0, 100, 100);
         buttonExit1.setIcon(buttonImages[0][0]);
+        buttonExit1.setVisible(true);
         bg_image.add(buttonExit1);
         buttonExit1.addMouseListener(new MouseListener() {
             @Override

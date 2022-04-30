@@ -35,7 +35,7 @@ public class MainFrame_LD extends JFrame{
             }
         });
     }
-//        frm.add(new Coverpanel());
+
     //封面窗口设定
     public MainFrame_LD(){
         setIconImage(Toolkit.getDefaultToolkit().getImage("pic"+ File.separator+"图标1.png"));            //图标
@@ -50,7 +50,7 @@ public class MainFrame_LD extends JFrame{
         contentPane.setLayout(null);            //设置中间界面出现位置？
 
         mainPanel.setLayout(cardLayout);
-        mainPanel.add(contentPane);
+
 
 /*封面按键？
 * */
@@ -84,7 +84,6 @@ public class MainFrame_LD extends JFrame{
 
         JButton buttonLocalGame = new MenuButton();         //新游戏按键
         buttonLocalGame.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
-
         buttonLocalGame.setIcon(images[0][0]);
         panelMenu.add(buttonLocalGame);
         buttonLocalGame.addMouseListener(new MouseListener() {
@@ -120,6 +119,8 @@ public class MainFrame_LD extends JFrame{
 
             }
         });
+
+
         JButton buttonExit = new MenuButton();          //退出游戏按键
         buttonExit.setIcon(images[1][0]);
         panelMenu.add(buttonExit);
