@@ -21,7 +21,6 @@ public class GamePanel extends JPanel {
 
     public static final int CHESSBOARD_SIZE = 480;                        //棋盘图片大小
     public static final int BORDER_SIZE = 8;                            //棋盘横向和纵向能下子的个数
-    public static final int CHESS_SIZE = CHESSBOARD_SIZE / BORDER_SIZE;    //棋子的宽和高
     public static final int CHESS_OFFSET = 60;          //棋子位置偏移量
     public static final int CHESSBOARD_LEFTSIDE = 400;
     public static final int CHESSBOARD_UPSIDE = 120;
@@ -34,10 +33,8 @@ public class GamePanel extends JPanel {
     private BufferedImage chess_select;            //选择框图片
 
 
-    private int select_x = -1;                    //选择框横索引
-    private int select_y = -1;                    //选择框纵索引
-
-    private int round;                            //标记轮到谁下棋了（p1-1	p2-2）
+//    private int select_x = -1;                    //选择框横索引
+//    private int select_y = -1;                    //选择框纵索引
 
     private AudioClip chess_chose;                //选择
     private AudioClip chess_place;              //放置
@@ -50,6 +47,9 @@ public class GamePanel extends JPanel {
     private JLabel bg_image;
 
     private Piece[] pieces = new Piece[32];
+    public Piece selectedPiece;
+    private int round;                            //标记轮到谁下棋了（黑0	白1）
+
 
     private void drawPieces(Graphics g) {
         for (Piece item : pieces) {
@@ -58,8 +58,6 @@ public class GamePanel extends JPanel {
             }
         }
     }
-
-
 
 
 
@@ -75,13 +73,31 @@ public class GamePanel extends JPanel {
     }
 
     public GamePanel() {
-        backGroundPanel();
+//        backGroundPanel();
         initiateEmptyChessboard();
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Point p = getXY(e.getX(),e.getY());
+                System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
+                Point p = getPointFromXY(e.getX(), e.getY());
+                System.out.println("点击棋盘的网格坐标对象为：p===" + p);
+                if(selectedPiece == null){
+                    selectedPiece = getChessByP(p);
+                    if(selectedPiece != null&&selectedPiece.getSide()!=round){
+                        selectedPiece = null;
+                        System.out.println("wrong side!");
+                    }else{
+                        Piece c =getChessByP(p);
+                        if(c != null){
+                            if(c.getSide() == selectedPiece.getSide()){
+                                System
+                            }
+                        }
+                    }
+
+                }
+
 
                 super.mouseClicked(e);
             }
@@ -94,10 +110,6 @@ public class GamePanel extends JPanel {
 //绘制初始棋盘
     public void initiateEmptyChessboard(){
         Play.initiateChessboard();
-
-    }
-
-    public void putChessOnBoard(){ //传入
 
     }
 
@@ -177,7 +189,7 @@ public class GamePanel extends JPanel {
         this.add(bg_image);// 将背景添加到容器中
     }
 
-    public static Point getXY(int x,int y){
+    public static Point getPointFromXY(int x,int y){
         Point p = new Point();
         p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET + 1;
         p.y = (y - CHESSBOARD_LEFTSIDE)/CHESS_OFFSET +1;
@@ -187,13 +199,15 @@ public class GamePanel extends JPanel {
         return p;
     }
 
-//    private Piece getPieceByP(Point p){
-//        for(Piece item : piece){
-//            if(item.g)
-//        }
-//
-//    }
+    public Piece getChessByP(Point p) {
+        for (Piece item : pieces) {
+            if (item != null && item.getP().equals(p)) {
+                return item;
+            }
+        }
 
+        return null;
+    }
 
 
 

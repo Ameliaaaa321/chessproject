@@ -41,6 +41,15 @@ import java.util.ArrayList;
                 System.out.println("无法移动");
             }
         }
+        /*写一个获取坐标*/
+        public Point getP(){
+            Point p = new Point(x,y);
+            return p;
+        }
+        /*来个getside*/
+        public int getSide(){
+            return side;
+        }
         /*----------以上5月2日修改---------*/
 
         public Piece(int x, int y, int side, Board board) {
