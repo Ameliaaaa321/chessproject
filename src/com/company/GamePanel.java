@@ -24,6 +24,9 @@ public class GamePanel extends JPanel {
     public static final int BORDER_SIZE = 8;							//棋盘横向和纵向能下子的个数
     public static final int CHESS_SIZE = CHESSBOARD_SIZE / BORDER_SIZE;	//棋子的宽和高
     public static final int CHESS_OFFSET = 60;          //棋子位置偏移量
+    public static final int CHESSBOARD_LEFTSIDE = 400;
+    public static final int CHESSBOARD_UPSIDE = 120;
+
 //    private final ChessComponent[][] chessComponents = new ChessComponent[CHESSBOARD_SIZE][CHESSBOARD_SIZE];
 //    private final ClickController clickController = new ClickController(this);
 
@@ -52,11 +55,28 @@ public class GamePanel extends JPanel {
         String bg = "pic"+File.separator+"gamePage2.png";
         Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
         g.drawImage(bgimg,0,0,this);
+
+        for()
+
+        if(select_x >= 0 && select_y >= 0){
+            g.drawImage(chess_select, select_x * CHESS_SIZE + CHESS_OFFSET, select_y * CHESS_SIZE + CHESS_OFFSET, null);
+        }
+
+
     }
 
     public GamePanel() {
         backGroundPanel();
         initiateEmptyChessboard();
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point p = getXY(e.getX(),e.getY());
+
+                super.mouseClicked(e);
+            }
+        });
 
 
 
@@ -64,11 +84,8 @@ public class GamePanel extends JPanel {
     }
 //绘制初始棋盘
     public void initiateEmptyChessboard(){
-//        for (int i = 0; i < chessComponents.length; i++) {
-//            for (int j = 0; j < chessComponents[i].length; j++) {
-//                putChessOnBoard(new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE));
-//            }
-//        }
+        Play.initiateChessboard();
+
     }
 
     public void putChessOnBoard(){ //传入
@@ -150,5 +167,25 @@ public class GamePanel extends JPanel {
         });
         this.add(bg_image);// 将背景添加到容器中
     }
+
+    public static Point getXY(int x,int y){
+        Point p = new Point();
+        p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET + 1;
+        p.y = (y - CHESSBOARD_LEFTSIDE)/CHESS_OFFSET +1;
+        if(x<=0||y<=0||x>=9||y>=9){
+            return  null;
+        }
+        return p;
+    }
+
+    private Piece getPieceByP(Point p){
+        for(Piece item : piece){
+            if(item.g)
+        }
+
+    }
+
+
+
 
 }

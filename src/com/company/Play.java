@@ -6,14 +6,21 @@ import java.util.ArrayList;
 // 还没写王车易位，和棋判定没写三次重复和50次规则
 
 public class Play {
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
+//        Board board = new Board();
+//        StoreBoard storeBoard = new StoreBoard(board);
+//        initialize(board, 1, 1, 2);
+//        initialize(board, 0, 8, 7);
+//        store(storeBoard, board);
+//    }
+
+    public static void initiateChessboard() {
         Board board = new Board();
         StoreBoard storeBoard = new StoreBoard(board);
         initialize(board, 1, 1, 2);
         initialize(board, 0, 8, 7);
         store(storeBoard, board);
     }
-
     static void store(StoreBoard storeBoard, Board board) {
         storeBoard.z++;
         for (int i = 1; i <= 8; i ++) {
