@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
     private int p1_color;        //右/己方执棋颜色(1黑		-1白)
@@ -46,7 +47,7 @@ public class GamePanel extends JPanel {
 
     private JLabel bg_image;
 
-    private Piece[] pieces = new Piece[32];
+    private ArrayList<Piece> pieces = new ArrayList<>();
     public Piece selectedPiece;
     private int round;                            //标记轮到谁下棋了（黑0	白1）
 
@@ -81,35 +82,51 @@ public class GamePanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                 Point p = getPointFromXY(e.getX(), e.getY());
+                Position p1 = new Position(p.x,p.y);
                 System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                 if(selectedPiece == null){
                     selectedPiece = getChessByP(p);
-                    if(selectedPiece != null&&selectedPiece.getSide()!=round){
+
+                    if(selectedPiece != null&&selectedPiece.getSide()!=round) {
                         selectedPiece = null;
                         System.out.println("wrong side!");
-                    }else{
-                        Piece c =getChessByP(p);
-                        if(c != null){
-                            if(c.getSide() == selectedPiece.getSide()){
-                                System
+                    }
+                }else{
+                    Piece c =getChessByP(p);
+                    if(c != null){
+                        if(c.getSide() == selectedPiece.getSide()){
+                            System.out.println("重新选择");
+                            selectedPiece = c;
+                        }else{
+                            System.out.println("吃子");
+                            if(selectedPiece.findValidMovement().contains(p1)){
+                                //记录行动
+                                pieces.remove(c);
+                                selectedPiece.setP(p);
+                                round = round&1;
                             }
                         }
+                    }else{
+                        System.out.println("移动");
+                        if(selectedPiece.findValidMovement().contains(p1)){
+                            //记录
+
+                            selectedPiece.setP(p);
+                            round = round&1;
+                        }
                     }
-
                 }
-
-
-                super.mouseClicked(e);
+                System.out.println("点击棋子为："+selectedPiece);
+                repaint();
             }
         });
-
-
-
-//
     }
+
+
+
 //绘制初始棋盘
     public void initiateEmptyChessboard(){
-        Play.initiateChessboard();
+        pieces = Play.initializeGame();
 
     }
 

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 // 每个棋子对象里面，储存了坐标和黑白方，拥有可以判断下一步可以走哪的函数
 
     public class Piece {
-        int x, y;    // 坐标
+        int x, y;    // 坐标1-8
         int side;    // 0代表黑方，1代表白方
         Board board;
+        int index;
+
 
         /*一些修改
         * 加一个绘制自身的方法*/
@@ -49,6 +51,11 @@ import java.util.ArrayList;
         /*来个getside*/
         public int getSide(){
             return side;
+        }
+        public void setP(Point p) {
+            this.x = p.x;
+            this.y = p.y;
+
         }
         /*----------以上5月2日修改---------*/
 

@@ -4,12 +4,20 @@ import java.util.ArrayList;
 // 还没写王车易位，和棋判定没写三次重复和50次规则
 
 public class Play {
-    public static void main(String[] args) {
+    public static ArrayList<Piece> initializeGame(){
+
+        ArrayList<Piece> pieces = new ArrayList<>();
+
         Board board = new Board();
         StoreBoard storeBoard = new StoreBoard(board);
-        initialize(board, 1, 1, 2);    // 白方棋子初始化
-        initialize(board, 0, 8, 7);    // 黑方棋子初始化
         store(storeBoard, board);
+        for (Piece item:initialize(board, 1, 1, 2)){
+            pieces.add(item);
+        }
+        for(Piece item:initialize(board, 0, 8, 7)){
+            pieces.add(item);
+        }
+        return pieces;
     }
 
     static void store(StoreBoard storeBoard, Board board) {
