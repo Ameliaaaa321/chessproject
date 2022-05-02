@@ -1,4 +1,7 @@
 package com.company;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 // 多态（继承、重写、向上转型）：Piece是父类，包括6个子类，即所有6种棋子
@@ -8,6 +11,37 @@ import java.util.ArrayList;
         int x, y;    // 坐标
         int side;    // 0代表黑方，1代表白方
         Board board;
+
+        /*一些修改
+        * 加一个绘制自身的方法*/
+         public void draw(Graphics g, JPanel panel){
+             String path = "pic" + File.separator + getClass() + side + GamePanel.suffix;
+             Image img = Toolkit.getDefaultToolkit().getImage(path);
+             g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
+                     GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
+                     GamePanel.CHESS_OFFSET ,GamePanel.CHESS_OFFSET, panel);
+         }
+        /*
+        * 绘制被选中的黑边*/
+        public void drawRect(Graphics g) {
+            g.drawRect(GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
+                    GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
+                    GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET);
+        }
+        /* 绘制可移动格 */
+        public void drawSteps(Graphics g,JPanel jPanel,ArrayList<Position> positions){
+            for (int i=0;i< positions.size();i++) {
+                String path = "pic" + File.separator + "落子位置框" + GamePanel.suffix;
+                Image img = Toolkit.getDefaultToolkit().getImage(path);
+                g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getX()-1),
+                        GamePanel.CHESSBOARD_UPSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getY()- 1),
+                        GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET, jPanel);
+            }
+            if(positions ==null){
+                System.out.println("无法移动");
+            }
+        }
+        /*----------以上5月2日修改---------*/
 
         public Piece(int x, int y, int side, Board board) {
             this.x = x;

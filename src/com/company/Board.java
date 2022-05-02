@@ -2,6 +2,8 @@ package com.company;
 
     // 这里stored用的是固定长度的数组。。。
 
+
+
     // 储存棋盘上的所有格子
     public class Board {
         Position[][] positions = new Position[9][9];

@@ -15,32 +15,31 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 public class GamePanel extends JPanel {
-    private int p1_color;		//右/己方执棋颜色(1黑		-1白)
-    private int p2_color;		//左/联机执棋颜色
+    private int p1_color;        //右/己方执棋颜色(1黑		-1白)
+    private int p2_color;        //左/联机执棋颜色
 
 
-
-    public static final int CHESSBOARD_SIZE = 480;						//棋盘图片大小
-    public static final int BORDER_SIZE = 8;							//棋盘横向和纵向能下子的个数
-    public static final int CHESS_SIZE = CHESSBOARD_SIZE / BORDER_SIZE;	//棋子的宽和高
+    public static final int CHESSBOARD_SIZE = 480;                        //棋盘图片大小
+    public static final int BORDER_SIZE = 8;                            //棋盘横向和纵向能下子的个数
+    public static final int CHESS_SIZE = CHESSBOARD_SIZE / BORDER_SIZE;    //棋子的宽和高
     public static final int CHESS_OFFSET = 60;          //棋子位置偏移量
     public static final int CHESSBOARD_LEFTSIDE = 400;
     public static final int CHESSBOARD_UPSIDE = 120;
+    public static final String suffix = ".png";
 
 //    private final ChessComponent[][] chessComponents = new ChessComponent[CHESSBOARD_SIZE][CHESSBOARD_SIZE];
 //    private final ClickController clickController = new ClickController(this);
 
 
+    private BufferedImage chess_select;            //选择框图片
 
-    private BufferedImage chess_select;			//选择框图片
 
+    private int select_x = -1;                    //选择框横索引
+    private int select_y = -1;                    //选择框纵索引
 
-    private int select_x = -1;					//选择框横索引
-    private int select_y = -1;					//选择框纵索引
+    private int round;                            //标记轮到谁下棋了（p1-1	p2-2）
 
-    private int round;							//标记轮到谁下棋了（p1-1	p2-2）
-
-    private AudioClip chess_chose;				//选择
+    private AudioClip chess_chose;                //选择
     private AudioClip chess_place;              //放置
     private AudioClip chess_out;                //被吃
 
@@ -50,17 +49,27 @@ public class GamePanel extends JPanel {
 
     private JLabel bg_image;
 
+    private Piece[] pieces = new Piece[32];
+
+    private void drawPieces(Graphics g) {
+        for (Piece item : pieces) {
+            if(item != null) {
+                item.draw(g,this);
+            }
+        }
+    }
+
+
+
+
+
     @Override
     public void paint(Graphics g){
         String bg = "pic"+File.separator+"gamePage2.png";
         Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
         g.drawImage(bgimg,0,0,this);
 
-        for()
-
-        if(select_x >= 0 && select_y >= 0){
-            g.drawImage(chess_select, select_x * CHESS_SIZE + CHESS_OFFSET, select_y * CHESS_SIZE + CHESS_OFFSET, null);
-        }
+       drawPieces(g);
 
 
     }
@@ -178,12 +187,12 @@ public class GamePanel extends JPanel {
         return p;
     }
 
-    private Piece getPieceByP(Point p){
-        for(Piece item : piece){
-            if(item.g)
-        }
-
-    }
+//    private Piece getPieceByP(Point p){
+//        for(Piece item : piece){
+//            if(item.g)
+//        }
+//
+//    }
 
 
 

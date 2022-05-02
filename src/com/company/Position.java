@@ -10,4 +10,12 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    /*-----------5月2日新增-------*/
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
 }
