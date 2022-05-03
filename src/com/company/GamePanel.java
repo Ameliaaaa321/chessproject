@@ -48,6 +48,9 @@ public class GamePanel extends JPanel {
     private JLabel bg_image;
 
     private ArrayList<Piece> pieces = new ArrayList<>();
+    private Board board = new Board();
+    private StoreBoard storeBoard = new StoreBoard(board);
+
     public Piece selectedPiece;
     private int round;                            //标记轮到谁下棋了（黑0	白1）
 
@@ -70,6 +73,11 @@ public class GamePanel extends JPanel {
 
        drawPieces(g);
 
+        if (selectedPiece != null) {
+            selectedPiece.drawPick(g ,this);
+//            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
+        }
+
 
     }
 
@@ -86,7 +94,6 @@ public class GamePanel extends JPanel {
                 System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                 if(selectedPiece == null){
                     selectedPiece = getChessByP(p);
-
                     if(selectedPiece != null&&selectedPiece.getSide()!=round) {
                         selectedPiece = null;
                         System.out.println("wrong side!");
@@ -99,16 +106,20 @@ public class GamePanel extends JPanel {
                             selectedPiece = c;
                         }else{
                             System.out.println("吃子");
+
+
                             if(selectedPiece.findValidMovement().contains(p1)){
                                 //记录行动
                                 pieces.remove(c);
                                 selectedPiece.setP(p);
+                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
                                 round = round&1;
                             }
                         }
                     }else{
                         System.out.println("移动");
                         if(selectedPiece.findValidMovement().contains(p1)){
+                            Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
                             //记录
 
                             selectedPiece.setP(p);
@@ -116,7 +127,7 @@ public class GamePanel extends JPanel {
                         }
                     }
                 }
-                System.out.println("点击棋子为："+selectedPiece);
+                System.out.println("点击棋子为："+selectedPiece.getName());
                 repaint();
             }
         });
@@ -126,7 +137,9 @@ public class GamePanel extends JPanel {
 
 //绘制初始棋盘
     public void initiateEmptyChessboard(){
-        pieces = Play.initializeGame();
+        pieces = Play.initializeGame().getPieces();
+        board = Play.initializeGame().getBoard();
+        storeBoard = Play.initializeGame().getStoreBoard();
 
     }
 
@@ -209,8 +222,8 @@ public class GamePanel extends JPanel {
     public static Point getPointFromXY(int x,int y){
         Point p = new Point();
         p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET + 1;
-        p.y = (y - CHESSBOARD_LEFTSIDE)/CHESS_OFFSET +1;
-        if(x<=0||y<=0||x>=9||y>=9){
+        p.y = (y - CHESSBOARD_UPSIDE)/CHESS_OFFSET +1;
+        if(p.x<=0||p.y<=0||p.x>=9||p.y>=9){
             return  null;
         }
         return p;

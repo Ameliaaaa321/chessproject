@@ -25,10 +25,12 @@ import java.util.ArrayList;
          }
         /*
         * 绘制被选中的黑边*/
-        public void drawRect(Graphics g) {
-            g.drawRect(GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
+        public void drawPick(Graphics g,JPanel panel) {
+            String path = "pic" + File.separator + "落子位置框" + GamePanel.suffix;
+            Image img = Toolkit.getDefaultToolkit().getImage(path);
+            g.drawImage(img ,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
                     GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
-                    GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET);
+                    GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET,panel);
         }
         /* 绘制可移动格 */
         public void drawSteps(Graphics g,JPanel jPanel,ArrayList<Position> positions){
@@ -58,6 +60,10 @@ import java.util.ArrayList;
         }
         public String getName(){
             return name;
+        }
+        public Position getPosition(){
+            Position position = new Position(x,y);
+            return position;
         }
         /*----------以上5月2日修改---------*/
 

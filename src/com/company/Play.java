@@ -4,10 +4,9 @@ import java.util.ArrayList;
 // 还没写王车易位，和棋判定没写三次重复和50次规则
 
 public class Play {
-    public static ArrayList<Piece> initializeGame(){
 
+    public static AGame initializeGame(){
         ArrayList<Piece> pieces = new ArrayList<>();
-
         Board board = new Board();
         StoreBoard storeBoard = new StoreBoard(board);
         store(storeBoard, board);
@@ -17,8 +16,11 @@ public class Play {
         for(Piece item:initialize(board, 0, 8, 7)){
             pieces.add(item);
         }
-        return pieces;
+        AGame game = new AGame(storeBoard,board,pieces);
+        return game;
     }
+
+
 
     static void store(StoreBoard storeBoard, Board board) {
         storeBoard.z++;
@@ -102,7 +104,7 @@ public class Play {
         pieces[7] = r2;
 
         for (int x = 1; x <= 8; x++) {
-            Piece p = new P(x, row2, 1, board);
+            Piece p = new P(x, row2, side, board);
             board.positions[x][row2].piece = p;
             pieces[x+7] = p;
         }
@@ -116,7 +118,7 @@ public class Play {
         return pieces;
     }
 
-    // 若当前棋格中有子，返回该棋子可走的位置，否则返回null
+    // 若当前棋格中有子，返回该棋子可走的位置，否则返回null(这个没用上）
     static ArrayList findValidMovement(Position position) {
         if (position.piece == null) {
             return null;
