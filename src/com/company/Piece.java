@@ -11,13 +11,13 @@ import java.util.ArrayList;
         int x, y;    // 坐标1-8
         int side;    // 0代表黑方，1代表白方
         Board board;
-        int index;
+        String name ="P";
 
 
         /*一些修改
         * 加一个绘制自身的方法*/
          public void draw(Graphics g, JPanel panel){
-             String path = "pic" + File.separator + getClass() + side + GamePanel.suffix;
+             String path = "pic" + File.separator + getName() + side + GamePanel.suffix;
              Image img = Toolkit.getDefaultToolkit().getImage(path);
              g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
                      GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
@@ -55,7 +55,9 @@ import java.util.ArrayList;
         public void setP(Point p) {
             this.x = p.x;
             this.y = p.y;
-
+        }
+        public String getName(){
+            return name;
         }
         /*----------以上5月2日修改---------*/
 
@@ -93,6 +95,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name ="K";
 
         public K(int x, int y, int side, Board board) {
             super(x, y, side, board);
@@ -139,6 +142,10 @@ import java.util.ArrayList;
 
             return validMovement;
         }
+
+        public String getName(){
+            return name;
+        }
     }
 
     // 后
@@ -146,6 +153,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name = "Q";
 
         public Q(int x, int y, int side, Board board) {
             super(x, y, side, board);
@@ -259,6 +267,10 @@ import java.util.ArrayList;
 
             return isBreakUp;
         }
+
+        public String getName(){
+            return name;
+        }
     }
 
     // 车
@@ -266,6 +278,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name = "R";
 
         public R(int x, int y, int side, Board board) {
             super(x, y, side, board);
@@ -347,6 +360,10 @@ import java.util.ArrayList;
 
             return isBreakUp;
         }
+
+        public String getName(){
+            return name;
+        }
     }
 
     // 象
@@ -354,6 +371,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name ="B";
 
         public B(int x, int y, int side, Board board) {
             super(x, y, side, board);
@@ -435,6 +453,10 @@ import java.util.ArrayList;
 
             return isBreakUp;
         }
+
+        public String getName(){
+            return name;
+        }
     }
 
     // 马
@@ -442,6 +464,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name = "N";
 
         public N(int x, int y, int side, Board board) {
             super(x, y, side, board);
@@ -486,6 +509,10 @@ import java.util.ArrayList;
 
             return validMovement;
         }
+
+        public String getName(){
+            return name;
+        }
     }
 
     // 兵（包含了常规走法和吃过路兵）
@@ -493,6 +520,7 @@ import java.util.ArrayList;
         int x, y;
         int side;
         Board board;
+        String name = "P";
         boolean isFirstStep = true;    // 会在对兵调用Play.movePiece时更改此参数，判断是否还没走第一步
         int countSteps = 0;    // 会在对兵调用Play.movePiece时更改此参数，记录上次纵向移动的距离
         ArrayList<P> passerbys = new ArrayList<>();    // 把过路兵装进去，只有当首次遇到这个过路兵时才可以吃它
@@ -566,6 +594,10 @@ import java.util.ArrayList;
             }else {
                 return false;
             }
+        }
+
+        public String getName(){
+            return name;
         }
     }
 
