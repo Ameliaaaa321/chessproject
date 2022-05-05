@@ -67,6 +67,8 @@ public class GamePanel extends JPanel {
 
     @Override
     public void paint(Graphics g){
+        super.paint(g);//清除
+        System.out.println("paint");
         String bg = "pic"+File.separator+"gamePage2.png";
         Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
         g.drawImage(bgimg,0,0,this);
@@ -107,28 +109,46 @@ public class GamePanel extends JPanel {
                         }else{
                             System.out.println("吃子");
 
-
-                            if(selectedPiece.findValidMovement().contains(p1)){
-                                //记录行动
+//                            if(selectedPiece.findValidMovement(board).contains(p1)){
+//                                //记录行动
+//                                System.out.println("成功吃子"+c.getName());
+//                                pieces.remove(c);
+//                                selectedPiece.setP(p);
+//                                System.out.println(selectedPiece.getP());
+//                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
+//                                round = round&1;
+//                            }
+                            System.out.println("成功吃子"+c.getName());
                                 pieces.remove(c);
                                 selectedPiece.setP(p);
-                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
-                                round = round&1;
-                            }
+                                System.out.println(selectedPiece.getP());
+//                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,selectedPiece.board,storeBoard);
+                                round ^=1;
+                                selectedPiece = null;
                         }
                     }else{
                         System.out.println("移动");
-                        if(selectedPiece.findValidMovement().contains(p1)){
-                            Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
+//                        if(selectedPiece.findValidMovement(board).contains(p1)) {
+//                            Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard);
+//                            System.out.println("成功移动");
+//                            //记录
+//                            System.out.println(selectedPiece.getP());
+//                            selectedPiece.setP(p);
+//                            round = round & 1;
+//                        }else{
+//                            System.out.println("不合法移动");
+//                            }
+//                        Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1,selectedPiece.board , storeBoard);
+                            System.out.println("成功移动");
                             //记录
-
+                            System.out.println(selectedPiece.getP());
                             selectedPiece.setP(p);
-                            round = round&1;
-                        }
+                            round ^= 1 ;
+                            selectedPiece = null;
                     }
                 }
-                System.out.println("点击棋子为："+selectedPiece.getName());
                 repaint();
+                System.out.println(round);
             }
         });
     }

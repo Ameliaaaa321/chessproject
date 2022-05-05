@@ -119,7 +119,7 @@ public class Play {
     }
 
     // 若当前棋格中有子，返回该棋子可走的位置，否则返回null(这个没用上）
-    static ArrayList findValidMovement(Position position) {
+    static ArrayList findValidMovement(Position position,Board board) {
         if (position.piece == null) {
             return null;
         }else {
