@@ -10,13 +10,13 @@ public class Play {
         Board board = new Board();
         StoreBoard storeBoard = new StoreBoard(board);
         store(storeBoard, board);
-        for (Piece item:initialize(board, 1, 1, 2)){
+        for (Piece item:initialize(board, 0, 1, 2)){
             pieces.add(item);
         }
-        for(Piece item:initialize(board, 0, 8, 7)){
+        for(Piece item:initialize(board, 1, 8, 7)){
             pieces.add(item);
         }
-        AGame game = new AGame(storeBoard,board,pieces);
+        AGame game = new AGame(storeBoard,board,pieces,1);
         return game;
     }
 

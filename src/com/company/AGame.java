@@ -6,13 +6,13 @@ public class AGame {
     StoreBoard storeBoard;
     Board board;
     ArrayList<Piece> pieces;
+    int round;
 
-
-
-    public AGame(StoreBoard storeBoard,Board board,ArrayList<Piece> pieces){
+    public AGame(StoreBoard storeBoard,Board board,ArrayList<Piece> pieces,int round){
         this.board=board;
         this.storeBoard = storeBoard;
         this.pieces = pieces;
+        this.round=round;
     }
 
     public ArrayList<Piece> getPieces(){
