@@ -34,14 +34,12 @@ public class GamePanel extends JPanel {
     private BufferedImage chess_select;            //选择框图片
 
 
-
-    private AudioClip chess_click;				//下棋音效
+//    private int select_x = -1;                    //选择框横索引
+//    private int select_y = -1;                    //选择框纵索引
 
     private AudioClip chess_chose;                //选择
     private AudioClip chess_place;              //放置
     private AudioClip chess_out;                //被吃
-
-    private Point mouseAt;
 
 //    public boolean is_offline;						//标记是否为本地对战
 //    public boolean online_state = false;           //是否开始网络对战
@@ -54,6 +52,7 @@ public class GamePanel extends JPanel {
     private StoreBoard storeBoard = new StoreBoard(board);
 
     public Piece selectedPiece;
+    public Position MouseAt;
     private int round;                            //标记轮到谁下棋了（黑0	白1）
 
 
@@ -73,44 +72,42 @@ public class GamePanel extends JPanel {
         System.out.println("paint");
         String bg = "pic"+File.separator+"gamePage2.png";
         Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
-        g.drawImage(bgimg,0,0,this);
+        g.drawImage(bgimg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
 
 
-        String mouse = "pic"+File.separator+"落子位置框.png";
-        Image mouseing = Toolkit.getDefaultToolkit().getImage(mouse);
-        g.drawImage(mouseing,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(mouseAt.x-1),
-                GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(mouseAt.y-1),this);
 
-        drawPieces(g);
+       drawPieces(g);
 
         if (selectedPiece != null) {
             selectedPiece.drawPick(g ,this);
-            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
+//            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
             System.out.println("paint successfully");
+        }
+        if(MouseAt!=null){
+            MouseAt.draw(g,this);
         }
 
 
     }
 
     public GamePanel() {
-//        backGroundPanel();
+        backGroundPanel();
         initiateEmptyChessboard();
+
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 //鼠标移动时触发
-                mouseAt = getPointFromXY(e.getX(), e.getY());
-                if(mouseAt!= null){
-                    repaint();
-                }else{
-
-                }
-
+                Point p = getPointFromXY(e.getX(),e.getY());
+                MouseAt = new Position(p.x,p.y);
+                System.out.println(MouseAt.x+""+MouseAt.y);
+                repaint();
             }
         });
 
         addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
@@ -131,6 +128,7 @@ public class GamePanel extends JPanel {
                             selectedPiece = c;
                         }else{
                             System.out.println("吃子");
+
 //                            if(selectedPiece.findValidMovement(board).contains(p1)){
 //                                //记录行动
 //                                System.out.println("成功吃子"+c.getName());
@@ -182,7 +180,6 @@ public class GamePanel extends JPanel {
         pieces = Play.initializeGame().getPieces();
         board = Play.initializeGame().getBoard();
         storeBoard = Play.initializeGame().getStoreBoard();
-        round = Play.initializeGame().round;
 
     }
 
@@ -281,6 +278,7 @@ public class GamePanel extends JPanel {
 
         return null;
     }
+
 
 
 
