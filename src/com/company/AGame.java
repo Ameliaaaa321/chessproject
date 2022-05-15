@@ -25,5 +25,14 @@ public class AGame {
         return board;
     }
 
+    public void load(String s){
+
+
+    }
+
+    public void save(){
+
+    }
+
 
 }
