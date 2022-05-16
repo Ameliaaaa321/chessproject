@@ -24,7 +24,7 @@ public class Position {
     }
 
     public void draw(Graphics g , JPanel jPanel){
-        String path = "pic" + File.separator + "落子位置框" + GamePanel.suffix;
+        String path = "pic" + File.separator + "鼠标位置框" + GamePanel.suffix;
         Image img = Toolkit.getDefaultToolkit().getImage(path);
         g.drawImage(img ,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
                 GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),

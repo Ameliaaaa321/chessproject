@@ -19,6 +19,7 @@ public class MainFrame_LD extends JFrame{
     public static JPanel mainPanel = new JPanel();              //封面
     private JPanel contentPane = new JPanel();                  //中间界面
     private GamePanel gamePanel = new GamePanel();              //游戏主界面
+    private LoadPanel loadPanel = new LoadPanel();              //读档存档界面
 
 //    private RulePanel rulePanel = new RulePanel();
 //    private OnlineBattlePanel onlineBattlePanel = new OnlineBattlePanel();

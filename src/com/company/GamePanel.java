@@ -56,7 +56,8 @@ public class GamePanel extends JPanel {
     public Piece selectedPiece;
     public Position MouseAt;
     private int round;                            //标记轮到谁下棋了（黑0	白1）
-
+    private int GameOver = -1;
+    private boolean lock = false;
 
 
 
@@ -68,17 +69,58 @@ public class GamePanel extends JPanel {
         Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
         g.drawImage(bgimg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
 
+        String BWin = "pic"+File.separator+"BWin.png";
+        Image BWinImg = Toolkit.getDefaultToolkit().getImage(BWin);
+
+        String WWin = "pic"+File.separator+"WWin.png";
+        Image WWinImg = Toolkit.getDefaultToolkit().getImage(WWin);
+
+        String Draw = "pic"+File.separator+"Draw.png";
+        Image DrawImg = Toolkit.getDefaultToolkit().getImage(Draw);
+
+        String sideBlack = "pic"+File.separator+ "sideBlack.png";
+        Image sideBlackImg = Toolkit.getDefaultToolkit().getImage(sideBlack);
+
+        String sideWhite = "pic" +File.separator+"sideWhite.png";
+        Image sideWhiteImg = Toolkit.getDefaultToolkit().getImage(sideWhite);
 
 
-       drawPieces(g);
+        //行棋方显示
+        if(round==1){
+            g.drawImage(sideWhiteImg,CHESSBOARD_LEFTSIDE+CHESSBOARD_SIZE+60,CHESSBOARD_UPSIDE+CHESSBOARD_SIZE-120,this);
+        }else{
+            g.drawImage(sideBlackImg,CHESSBOARD_LEFTSIDE-300,CHESSBOARD_UPSIDE,this);
+        }
+        //画棋子
+        drawPieces(g);
 
         if (selectedPiece != null) {
             selectedPiece.drawPick(g ,this);
-            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
+//            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
 //            System.out.println("paint successfully");
         }
+        //鼠标所在位置
         if(MouseAt!=null){
             MouseAt.draw(g,this);
+        }
+
+
+        //输赢平
+        switch (GameOver){
+            case 1:
+                g.drawImage(BWinImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                lock=true;
+                break;
+            case 0:
+                g.drawImage(WWinImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                lock=true;
+                break;
+            case 2:
+                g.drawImage(DrawImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                lock=true;
+                break;
+            case -1:
+                break;
         }
     }
 
@@ -95,41 +137,43 @@ public class GamePanel extends JPanel {
         backGroundPanel();
         loadChessboard();
 
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                //鼠标移动时触发
-                Point p = getPointFromXY(e.getX(),e.getY());
-                if(p!= null){
-                    MouseAt = new Position(p.x,p.y);
+        if(!lock) {
+            addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    //鼠标移动时触发
+                    Point p = getPointFromXY(e.getX(), e.getY());
+                    if (p != null) {
+                        MouseAt = new Position(p.x, p.y);
 //                    System.out.println(MouseAt.x+""+MouseAt.y);
-                    repaint();
-                }
-            }
-        });
-
-        addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
-                Point p = getPointFromXY(e.getX(), e.getY());
-                Position p1 = new Position(p.x,p.y);
-                System.out.println("点击棋盘的网格坐标对象为：p===" + p);
-                if(selectedPiece == null){
-                    selectedPiece = getChessByP(p);
-                    if(selectedPiece != null&&selectedPiece.getSide()!=round) {
-                        selectedPiece = null;
-                        System.out.println("wrong side!");
+                        repaint();
                     }
-                }else{
-                    Piece c =getChessByP(p);
-                    if(c != null){
-                        if(c.getSide() == selectedPiece.getSide()){
-                            System.out.println("重新选择");
-                            selectedPiece = c;
-                        }else{
-                            System.out.println("吃子");
+                }
+            });
+
+            addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
+                    Point p = getPointFromXY(e.getX(), e.getY());
+                    if (p != null) {
+                        Position p1 = new Position(p.x, p.y);
+                        System.out.println("点击棋盘的网格坐标对象为：p===" + p);
+                        if (selectedPiece == null) {
+                            selectedPiece = getChessByP(p);
+                            if (selectedPiece != null && selectedPiece.getSide() != round) {
+                                selectedPiece = null;
+                                System.out.println("wrong side!");
+                            }
+                        } else {
+                            Piece c = getChessByP(p);
+                            if (c != null) {
+                                if (c.getSide() == selectedPiece.getSide()) {
+                                    System.out.println("重新选择");
+                                    selectedPiece = c;
+                                } else {
+                                    System.out.println("吃子");
 
 //                            if(selectedPiece.findValidMovement(board).contains(p1)){
 //                                //记录行动
@@ -137,21 +181,26 @@ public class GamePanel extends JPanel {
 //                                pieces.remove(c);
 //                                selectedPiece.setP(p);
 //                                System.out.println(selectedPiece.getP());
-//                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard);
+//                                GameOver =  Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard).isOver;
 //                                round = round&1;
+//                                selectedPiece = null;
+//                            }else{
+//                                System.out.println("不合法吃子");
 //                            }
-                            System.out.println("成功吃子"+c.getName());
-                                pieces.remove(c);
-                                selectedPiece.setP(p);
-                                System.out.println(selectedPiece.getP());
-//                                Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,selectedPiece.board,storeBoard);
-                                round ^=1;
-                                selectedPiece = null;
-                        }
-                    }else{
-                        System.out.println("移动");
+
+                                    System.out.println("成功吃子" + c.getName());
+                                    pieces.remove(c);
+                                    selectedPiece.setP(p);
+                                    System.out.println(selectedPiece.getP());
+                                    round ^= 1;
+                                    selectedPiece = null;
+                                    GameOver = 2;
+                                }
+                            } else {
+                                System.out.println("移动");
 //                        if(selectedPiece.findValidMovement(board).contains(p1)) {
-//                            Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard);
+//
+//                            GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
 //                            System.out.println("成功移动");
 //                            //记录
 //                            System.out.println(selectedPiece.getP());
@@ -160,24 +209,31 @@ public class GamePanel extends JPanel {
 //                        }else{
 //                            System.out.println("不合法移动");
 //                            }
-//                        Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1,selectedPiece.board , storeBoard);
-                            System.out.println("成功移动");
-                            //记录
-                            System.out.println(selectedPiece.getP());
-                            selectedPiece.setP(p);
-                            round ^= 1 ;
-                            selectedPiece = null;
+                                System.out.println("成功移动");
+                                //记录
+                                System.out.println(selectedPiece.getP());
+                                selectedPiece.setP(p);
+                                round ^= 1;
+                                selectedPiece = null;
+                                GameOver = 1;
+                            }
+                        }
+                        repaint();
+                        System.out.println(round);
                     }
                 }
-                repaint();
-                System.out.println(round);
-            }
-        });
+            });
+        }
+
+
+
+
+
     }
 
 
 
-//绘制初始棋盘
+//导入棋盘
     public void loadChessboard(){
         if(currentGame== null){
             pieces = Play.initializeGame().getPieces();
@@ -223,19 +279,26 @@ public class GamePanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                try {
-                    buttonExit1.setIcon(buttonImages[0][0]);
+                buttonExit1.setIcon(buttonImages[0][0]);
+                MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
+//                try {
+//                    buttonExit1.setIcon(buttonImages[0][0]);
+//
+////				socket = new Socket("cn-zz-bgp-2.natfrp.cloud", 55129);
+////                    OutputStream os = OnlinebattlePanel.socket.getOutputStream();
+////                    os.write(ServerStart.TYPE_OFFLINE.getBytes());				// 发送下线消息
+////                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(os);
+////                    objectOutputStream.writeObject(OnlinebattlePanel.admin);	// 发送离线用户
+//
+//
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                }
 
-//				socket = new Socket("cn-zz-bgp-2.natfrp.cloud", 55129);
-//                    OutputStream os = OnlinebattlePanel.socket.getOutputStream();
-//                    os.write(ServerStart.TYPE_OFFLINE.getBytes());				// 发送下线消息
-//                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(os);
-//                    objectOutputStream.writeObject(OnlinebattlePanel.admin);	// 发送离线用户
+            }
 
-                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
             }
 
@@ -258,14 +321,9 @@ public class GamePanel extends JPanel {
                 buttonExit1.setIcon(buttonImages[0][1]);
             }
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // TODO Auto-generated method stub
-
-            }
         });
 
-        JButton buttonSave = new MenuButton();          //退出游戏按键
+        JButton buttonSave = new MenuButton();          //保存游戏按键
         buttonSave.setBounds(0, 100, 100, 100);
         buttonSave.setIcon(buttonImages[0][0]);
         buttonSave.setVisible(true);

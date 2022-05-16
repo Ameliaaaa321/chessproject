@@ -26,7 +26,7 @@ import java.util.ArrayList;
         /*
         * 绘制被选中的黑边*/
         public void drawPick(Graphics g,JPanel panel) {
-            String path = "pic" + File.separator + "落子位置框" + GamePanel.suffix;
+            String path = "pic" + File.separator + "选择框" + GamePanel.suffix;
             Image img = Toolkit.getDefaultToolkit().getImage(path);
             g.drawImage(img ,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
                     GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
@@ -35,7 +35,7 @@ import java.util.ArrayList;
         /* 绘制可移动格 */
         public void drawSteps(Graphics g,JPanel jPanel,ArrayList<Position> positions){
             for (int i=0;i< positions.size();i++) {
-                String path = "pic" + File.separator + "落子位置框" + GamePanel.suffix;
+                String path = "pic" + File.separator + "合法落子框" + GamePanel.suffix;
                 Image img = Toolkit.getDefaultToolkit().getImage(path);
                 g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getX()-1),
                         GamePanel.CHESSBOARD_UPSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getY()- 1),
