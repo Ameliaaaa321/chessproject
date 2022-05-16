@@ -113,8 +113,9 @@ class K extends Piece {
                     lable1:
                     while (x <= p.x+1) {
                         while (y <= p.y+1 && !(x == p.x && y == p.y)) {
-                            temp = new Position(i, j);
+                            temp = new Position(x, y);
                             if (isOnBoard(temp)) {
+                                System.out.println(x+""+y);
                                 if (board.positions[x][y].piece instanceof K) {
                                     b3 = false;
                                     break lable1;
@@ -122,6 +123,7 @@ class K extends Piece {
                             }
                             y++;
                         }
+                        y=p.y-1;
                         x++;
                     }
 

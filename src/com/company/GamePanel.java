@@ -213,6 +213,7 @@ public class GamePanel extends JPanel {
                                     System.out.println(selectedPiece.getP());
                                     selectedPiece.setP(p);
                                     currentPlayer = currentPlayer !=1?1:0;
+                                    selectedPiece=null;
                                 }else{
                                     System.out.println("不合法移动");
                                 }
