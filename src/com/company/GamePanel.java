@@ -100,7 +100,7 @@ public class GamePanel extends JPanel {
 
         if (selectedPiece != null) {
             selectedPiece.drawPick(g ,this);
-//            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
+            selectedPiece.drawSteps(g,this,selectedPiece.findValidMovement());
 //            System.out.println("paint successfully");
         }
         //鼠标所在位置
@@ -140,7 +140,7 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         backGroundPanel();
         loadChessboard();
-        roundTimer(this);
+//        roundTimer(this);
 
         if(!lock) {
             addMouseMotionListener(new MouseMotionAdapter() {
@@ -162,10 +162,12 @@ public class GamePanel extends JPanel {
                     System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                     Point p = getPointFromXY(e.getX(), e.getY());
                     if (p != null) {
-                        Position p1 = new Position(p.x, p.y);
+//                        Position p1 = new Position(p.x, p.y);
+                        Position p1 = board.positions[p.x][p.y];    // 这一行我改了一下哦
                         System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
+                            System.out.println(selectedPiece.name);
                             if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
                                 selectedPiece = null;
                                 System.out.println("wrong side!");
@@ -179,47 +181,50 @@ public class GamePanel extends JPanel {
                                 } else {
                                     System.out.println("吃子");
 
-//                                    if (selectedPiece.findValidMovement().contains(p1)) {
-//                                        //记录行动
-//                                        System.out.println("成功吃子" + c.getName());
-//                                        pieces.remove(c);
-//                                        selectedPiece.setP(p);
-//                                        System.out.println(selectedPiece.getP());
-//                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
-//                                        currentPlayer = currentPlayer !=1?1:0;
-//                                        selectedPiece = null;
-//                                    } else {
-//                                        System.out.println("不合法吃子");
-//                                    }
+                                    if (selectedPiece.findValidMovement().contains(p1)) {
+                                        //记录行动
+                                        System.out.println("成功吃子" + c.getName());
+                                        pieces.remove(c);
+                                        selectedPiece.setP(p);
+                                        System.out.println(selectedPiece.getP());
+                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+                                        currentPlayer = currentPlayer !=1?1:0;
+                                        selectedPiece = null;
+                                    } else {
+                                        System.out.println("不合法吃子");
+                                    }
 
+//                                    System.out.println("成功吃子" + c.getName());
+//                                    pieces.remove(c);
+//                                    selectedPiece.setP(p);
+//                                    System.out.println(selectedPiece.getP());
+//                                     currentPlayer = currentPlayer !=1?1:0;
+//                                    selectedPiece = null;
+////                                    GameOver = 2;
 
-                                    System.out.println("成功吃子" + c.getName());
-                                    pieces.remove(c);
-                                    selectedPiece.setP(p);
-                                    System.out.println(selectedPiece.getP());
-                                    round ^= 1;
-                                    selectedPiece = null;
-//                                    GameOver = 2;
                                 }
                             } else {
-//                                System.out.println("移动");
-//                        if(selectedPiece.findValidMovement().contains(p1)) {
-//                            GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
-//                            System.out.println("成功移动");
-//                            //记录
-//                            System.out.println(selectedPiece.getP());
-//                            selectedPiece.setP(p);
-//                            currentPlayer = currentPlayer !=1?1:0;
-//                        }else{
-//                            System.out.println("不合法移动");
-//                            }
-                                System.out.println("成功移动");
-                                //记录
-                                System.out.println(selectedPiece.getP());
-                                selectedPiece.setP(p);
-                                round ^= 1;
-                                selectedPiece = null;
-//                                GameOver = 1;
+
+                                System.out.println("移动");
+                                if(selectedPiece.findValidMovement().contains(p1)) {
+                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+                                    System.out.println("成功移动");
+                                    //记录
+                                    System.out.println(selectedPiece.getP());
+                                    selectedPiece.setP(p);
+                                    currentPlayer = currentPlayer !=1?1:0;
+                                }else{
+                                    System.out.println("不合法移动");
+                                }
+
+//                                System.out.println("成功移动");
+//                                //记录
+//                                System.out.println(selectedPiece.getP());
+//                                selectedPiece.setP(p);
+//                                currentPlayer = currentPlayer !=1?1:0;
+//                                selectedPiece = null;
+////                                GameOver = 1;
+
                             }
                         }
                         repaint();
@@ -236,7 +241,7 @@ public class GamePanel extends JPanel {
 
 
 
-//导入棋盘
+    //导入棋盘
     public void loadChessboard(){
         currentGame = Play.initializeGame();
         pieces=currentGame.pieces;
@@ -245,7 +250,7 @@ public class GamePanel extends JPanel {
         currentPlayer= currentGame.currentPlayer;
         storeBoard=currentGame.storeBoard;
     }
-//重载导入
+    //重载导入
     public void loadChessboard(AGame aGame){
         currentGame = aGame;
     }
@@ -413,10 +418,10 @@ public class GamePanel extends JPanel {
         return currentPlayer;
     }
 
-    public void roundTimer(GamePanel gamePanel){
-        Timer timer = new Timer();
-        timer.schedule(new Task(gamePanel),20*1000,20*1000);
-    }
+//    public void roundTimer(GamePanel gamePanel){
+//        Timer timer = new Timer();
+//        timer.schedule(new Task(gamePanel),20*1000,20*1000);
+//    }
 
 
 }
