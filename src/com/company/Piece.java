@@ -99,43 +99,73 @@ class K extends Piece {
         ArrayList<Position> validMovement = new ArrayList<>();
 
         int i = x-1, j = y-1;    // 横纵坐标的指针，可以向周围移动一格
+        labelK0:
         while (i <= x+1) {
+            labelK1:
             while (j <= y+1){
+                if (i == x && j == y) {
+                    continue labelK1;
+                }
+
+//                System.out.println("temp: " + i + " " + j);
+
                 Position temp = new Position(i, j);
                 boolean b1 = isOnBoard(temp);    // 在棋盘上
 
                 if (b1) {
+//                    System.out.println("b1!");
                     Position p = board.positions[i][j];
-                    boolean b2 = p.piece == null || p.piece.side != this.side;    // 没有己方棋子
-                    boolean b3 = true;    // 和对方的王保持一格以上的距离
-                    // 判断b3的值，即查询某位置周围一圈有没有王
-                    int x = p.x-1, y = p.y-1;
-                    lable1:
-                    while (x <= p.x+1) {
-                        while (y <= p.y+1 && !(x == p.x && y == p.y)) {
-                            temp = new Position(x, y);
-                            if (isOnBoard(temp)) {
-                                System.out.println(x+""+y);
-                                if (board.positions[x][y].piece instanceof K) {
-                                    b3 = false;
-                                    break lable1;
-                                }
-                            }
-                            y++;
-                        }
-                        y=p.y-1;
-                        x++;
+                    if (p.piece != null) {
+//                        System.out.println("piece here: " + p.x + " " + p.y + " " + p.piece.name + " " + p.piece.x + " " + p.piece.y);
                     }
 
-                    if (b2 && b3) {
-                        validMovement.add(p);
+                    boolean b2 = p.piece == null || p.piece.side != this.side;    // 没有己方棋子
+
+                    if (b2) {
+//                        System.out.println("b2!");
+                        boolean b3 = true;    // 和对方的王保持一格以上的距离
+
+                        // 判断b3的值，即查询某位置周围一圈有没有王
+                        int m = i-1, n = j-1;
+                        labelK2:
+                        while (m <= i+1) {
+                            labelK3:
+                            while (n <= j+1) {
+                                if (m == i && n == j) {
+                                    continue labelK3;
+                                }
+//                                System.out.println("around temp: " + m + " " + n);
+                                temp = new Position(m, n);
+                                if (isOnBoard(temp)) {
+                                    if (board.positions[m][n].piece instanceof K && board.positions[m][n].piece.side != this.side) {
+                                        b3 = false;
+                                        break labelK2;
+                                    }
+                                }
+                                n++;
+                            }
+                            n = j-1;
+                            m++;
+                        }
+
+                        if (b3) {
+//                            System.out.println("b3!");
+                            validMovement.add(p);
+                        }
                     }
                 }
                 j++;
             }
+            j = y-1;
             i++;
+//            System.out.println("i: " + i);
         }
 
+        System.out.println("valid size: " + validMovement.size());
+        for (int q = 0; q < validMovement.size(); q++) {
+            System.out.print(validMovement.get(i).x + " " + validMovement.get(i).y + "\t");
+        }
+        System.out.println();
         return validMovement;
     }
 
