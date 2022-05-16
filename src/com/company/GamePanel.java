@@ -202,6 +202,9 @@ public class GamePanel extends JPanel {
 //                                    selectedPiece = null;
 ////                                    GameOver = 2;
 
+
+                                    //一些修改
+
                                 }
                             } else {
 
