@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GamePanel extends JPanel {
 //    private int p1_color;        //右/己方执棋颜色(1黑		-1白)
@@ -55,9 +57,11 @@ public class GamePanel extends JPanel {
 
     public Piece selectedPiece;
     public Position MouseAt;
-    private int round;                            //标记轮到谁下棋了（黑0	白1）
+    private int currentPlayer;                            //标记轮到谁下棋了（黑0	白1）
+    private int round;
     private int GameOver = -1;
     private boolean lock = false;
+    private int roundTime = 20;
 
 
 
@@ -86,7 +90,7 @@ public class GamePanel extends JPanel {
 
 
         //行棋方显示
-        if(round==1){
+        if(currentPlayer==1){
             g.drawImage(sideWhiteImg,CHESSBOARD_LEFTSIDE+CHESSBOARD_SIZE+60,CHESSBOARD_UPSIDE+CHESSBOARD_SIZE-120,this);
         }else{
             g.drawImage(sideBlackImg,CHESSBOARD_LEFTSIDE-300,CHESSBOARD_UPSIDE,this);
@@ -136,6 +140,7 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         backGroundPanel();
         loadChessboard();
+        roundTimer(this);
 
         if(!lock) {
             addMouseMotionListener(new MouseMotionAdapter() {
@@ -152,7 +157,6 @@ public class GamePanel extends JPanel {
             });
 
             addMouseListener(new MouseAdapter() {
-
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
@@ -162,7 +166,7 @@ public class GamePanel extends JPanel {
                         System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
-                            if (selectedPiece != null && selectedPiece.getSide() != round) {
+                            if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
                                 selectedPiece = null;
                                 System.out.println("wrong side!");
                             }
@@ -175,18 +179,19 @@ public class GamePanel extends JPanel {
                                 } else {
                                     System.out.println("吃子");
 
-//                            if(selectedPiece.findValidMovement(board).contains(p1)){
-//                                //记录行动
-//                                System.out.println("成功吃子"+c.getName());
-//                                pieces.remove(c);
-//                                selectedPiece.setP(p);
-//                                System.out.println(selectedPiece.getP());
-//                                GameOver =  Play.movePiece(selectedPiece,selectedPiece.getPosition(),p1,board,storeBoard).isOver;
-//                                round = round&1;
-//                                selectedPiece = null;
-//                            }else{
-//                                System.out.println("不合法吃子");
-//                            }
+//                                    if (selectedPiece.findValidMovement().contains(p1)) {
+//                                        //记录行动
+//                                        System.out.println("成功吃子" + c.getName());
+//                                        pieces.remove(c);
+//                                        selectedPiece.setP(p);
+//                                        System.out.println(selectedPiece.getP());
+//                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+//                                        currentPlayer = currentPlayer !=1?1:0;
+//                                        selectedPiece = null;
+//                                    } else {
+//                                        System.out.println("不合法吃子");
+//                                    }
+
 
                                     System.out.println("成功吃子" + c.getName());
                                     pieces.remove(c);
@@ -194,18 +199,17 @@ public class GamePanel extends JPanel {
                                     System.out.println(selectedPiece.getP());
                                     round ^= 1;
                                     selectedPiece = null;
-                                    GameOver = 2;
+//                                    GameOver = 2;
                                 }
                             } else {
-                                System.out.println("移动");
-//                        if(selectedPiece.findValidMovement(board).contains(p1)) {
-//
+//                                System.out.println("移动");
+//                        if(selectedPiece.findValidMovement().contains(p1)) {
 //                            GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
 //                            System.out.println("成功移动");
 //                            //记录
 //                            System.out.println(selectedPiece.getP());
 //                            selectedPiece.setP(p);
-//                            round = round & 1;
+//                            currentPlayer = currentPlayer !=1?1:0;
 //                        }else{
 //                            System.out.println("不合法移动");
 //                            }
@@ -215,19 +219,18 @@ public class GamePanel extends JPanel {
                                 selectedPiece.setP(p);
                                 round ^= 1;
                                 selectedPiece = null;
-                                GameOver = 1;
+//                                GameOver = 1;
                             }
                         }
                         repaint();
-                        System.out.println(round);
+                        System.out.println(currentPlayer);
                     }
                 }
             });
+
+
+
         }
-
-
-
-
 
     }
 
@@ -235,16 +238,16 @@ public class GamePanel extends JPanel {
 
 //导入棋盘
     public void loadChessboard(){
-        if(currentGame== null){
-            pieces = Play.initializeGame().getPieces();
-            board = Play.initializeGame().getBoard();
-            storeBoard = Play.initializeGame().getStoreBoard();
-            round = Play.initializeGame().round;
-        }else{
-
-        }
-
-
+        currentGame = Play.initializeGame();
+        pieces=currentGame.pieces;
+        board=currentGame.board;
+        round=currentGame.round;
+        currentPlayer= currentGame.currentPlayer;
+        storeBoard=currentGame.storeBoard;
+    }
+//重载导入
+    public void loadChessboard(AGame aGame){
+        currentGame = aGame;
     }
 
 
@@ -398,7 +401,22 @@ public class GamePanel extends JPanel {
         return null;
     }
 
+    public void setCurrentPlayer(){
+        currentPlayer=currentPlayer!=1?1:0;
+    }
 
+    public void setRound(){
+        round++;
+    }
+
+    public int getCurrentPlayer(){
+        return currentPlayer;
+    }
+
+    public void roundTimer(GamePanel gamePanel){
+        Timer timer = new Timer();
+        timer.schedule(new Task(gamePanel),20*1000,20*1000);
+    }
 
 
 }
