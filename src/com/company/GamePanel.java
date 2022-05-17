@@ -112,11 +112,11 @@ public class GamePanel extends JPanel {
         //输赢平
         switch (GameOver){
             case 1:
-                g.drawImage(BWinImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                g.drawImage(BWinImg,0,0,this);
                 lock=true;
                 break;
             case 0:
-                g.drawImage(WWinImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                g.drawImage(WWinImg,0,0,this);
                 lock=true;
                 break;
             case 2:
