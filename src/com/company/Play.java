@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Play {
 
-    public static AGame initializeGame(){
+
+    public static AGame initializeGame(Board board){
         ArrayList<Piece> pieces = new ArrayList<>();
-        Board board = new Board();
         StoreBoard storeBoard = new StoreBoard(board);
         store(storeBoard, board);
         for (Piece item:initialize(board, 0, 1, 2)){
@@ -19,8 +19,6 @@ public class Play {
         AGame game = new AGame(storeBoard,board,pieces,1,1);
         return game;
     }
-
-
 
     static void store(StoreBoard storeBoard, Board board) {
         storeBoard.z++;
@@ -118,34 +116,31 @@ public class Play {
         return pieces;
     }
 
-    // 若当前棋格中有子，返回该棋子可走的位置，否则返回null(这个没用上）
-    static ArrayList findValidMovement(Position position,Board board) {
-        if (position.piece == null) {
-            return null;
-        }else {
-            return position.piece.findValidMovement();
-        }
-    }
+
 
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
     // 返回结果是对象MoveResult，包含以上各函数的结果
     static MoveResult movePiece(Piece piece, Position destination, Position startPlace, Board board, StoreBoard storeBoard) {
-//        destination = board.positions[destination.x][destination.y];
-//        startPlace = board.positions[startPlace.x][startPlace.y];
+        destination = board.positions[destination.x][destination.y];
+        startPlace = board.positions[startPlace.x][startPlace.y];
 
-        boolean isDraw = isDraw(piece, board);
-        Piece k = piece.side == 0 ? board.k1 : board.k0;
-        int isOver = isOver(isDraw, board, k);
-        Piece eaten = isEaten(piece, destination, startPlace, board);
-        boolean isPromotion = isPromotion(piece, destination);
+//        boolean isDraw = isDraw(piece, board);
+//        Piece k = piece.side == 0 ? board.k1 : board.k0;
+//        int isOver = isOver(isDraw, board, k);
+//        Piece eaten = isEaten(piece, destination, startPlace, board);
+//        boolean isPromotion = isPromotion(piece, destination);
 
-//        destination.piece = piece;
-//        startPlace.piece = null;
+        destination.piece = piece;
+        startPlace.piece = null;
 
-        board.positions[destination.x][destination.y].piece = piece;
-        board.positions[startPlace.x][startPlace.y].piece = null;
+//        board.positions[destination.x][destination.y].piece = piece;
+//        board.positions[startPlace.x][startPlace.y].piece = null;
 
-        MoveResult result = new MoveResult(isOver, eaten, isDraw, isPromotion);
+        piece.x = destination.x;
+        piece.y = destination.y;
+
+//        MoveResult result = new MoveResult(isOver, eaten, isDraw, isPromotion);
+        MoveResult result = new MoveResult(-1, null, false, false);
 
         // 这里标记一下这个兵它是否已经走过第一步了，是否是过路兵
         if (piece instanceof P) {
@@ -155,8 +150,34 @@ public class Play {
 
         store(storeBoard, board);
 
+        if (board.positions[startPlace.x][startPlace.y].piece != null) {
+            System.out.println("移动之后的原位置：" + board.positions[startPlace.x][startPlace.y].piece.name);
+        }else {
+            System.out.println("移动之后的原位置：null");
+        }
+
+
         return result;
     }
+
+
+
+    static void updatePositions(ArrayList<Piece> pieces, Board board) {
+
+
+//        for (int i = 1; i <= 8; i++) {
+//            for (int j = 1; j <= 8; j++) {
+//                board.positions[i][j] = null;
+//            }
+//        }
+//        for (int i = 0; i < pieces.size(); i++) {
+//            Piece temp = pieces.get(i);
+//            board.positions[temp.x][temp.y].piece = temp;
+//        }
+
+    }
+
+
 
     // 判断是否有棋子被吃，有的话返回值为被吃的棋子，没有的话返回null
     static Piece isEaten(Piece piece, Position destination, Position startPlace, Board board) {

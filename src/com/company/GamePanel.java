@@ -189,7 +189,8 @@ public class GamePanel extends JPanel {
                                         selectedPiece.setP(p);
                                         System.out.println(selectedPiece.getP());
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
-                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
+                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发和目的地好像反了
+                                        Play.updatePositions(pieces, board);
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                     } else {
@@ -214,6 +215,7 @@ public class GamePanel extends JPanel {
                                 if(selectedPiece.findValidMovement().contains(p1)) {
 //                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                     GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
+                                    Play.updatePositions(pieces, board);
                                     System.out.println("成功移动");
                                     //记录
                                     System.out.println(selectedPiece.getP());
@@ -250,7 +252,7 @@ public class GamePanel extends JPanel {
 
     //导入棋盘
     public void loadChessboard(){
-        currentGame = Play.initializeGame();
+        currentGame = Play.initializeGame(board);
         pieces=currentGame.pieces;
         board=currentGame.board;
         round=currentGame.round;
