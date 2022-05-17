@@ -181,13 +181,15 @@ public class GamePanel extends JPanel {
                                 } else {
                                     System.out.println("吃子");
 
+
                                     if (selectedPiece.findValidMovement().contains(p1)) {
                                         //记录行动
                                         System.out.println("成功吃子" + c.getName());
                                         pieces.remove(c);
                                         selectedPiece.setP(p);
                                         System.out.println(selectedPiece.getP());
-                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+//                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                     } else {
@@ -210,7 +212,8 @@ public class GamePanel extends JPanel {
 
                                 System.out.println("移动");
                                 if(selectedPiece.findValidMovement().contains(p1)) {
-                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+//                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
+                                    GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
                                     System.out.println("成功移动");
                                     //记录
                                     System.out.println(selectedPiece.getP());

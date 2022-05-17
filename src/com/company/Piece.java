@@ -102,27 +102,28 @@ class K extends Piece {
         labelK0:
         while (i <= x+1) {
             labelK1:
-            while (j <= y+1){
+            while (j <= y+1) {
                 if (i == x && j == y) {
+                    j++;
                     continue labelK1;
                 }
 
-//                System.out.println("temp: " + i + " " + j);
+                System.out.println("temp: " + i + " " + j);
 
                 Position temp = new Position(i, j);
                 boolean b1 = isOnBoard(temp);    // 在棋盘上
 
                 if (b1) {
-//                    System.out.println("b1!");
+                    System.out.println("b1!");
                     Position p = board.positions[i][j];
                     if (p.piece != null) {
-//                        System.out.println("piece here: " + p.x + " " + p.y + " " + p.piece.name + " " + p.piece.x + " " + p.piece.y);
+                        System.out.println("piece here: " + p.x + " " + p.y + " " + p.piece.name + " " + p.piece.x + " " + p.piece.y);
                     }
 
                     boolean b2 = p.piece == null || p.piece.side != this.side;    // 没有己方棋子
 
                     if (b2) {
-//                        System.out.println("b2!");
+                        System.out.println("b2!");
                         boolean b3 = true;    // 和对方的王保持一格以上的距离
 
                         // 判断b3的值，即查询某位置周围一圈有没有王
@@ -132,9 +133,10 @@ class K extends Piece {
                             labelK3:
                             while (n <= j+1) {
                                 if (m == i && n == j) {
+                                    n++;
                                     continue labelK3;
                                 }
-//                                System.out.println("around temp: " + m + " " + n);
+                                System.out.println("around temp: " + m + " " + n);
                                 temp = new Position(m, n);
                                 if (isOnBoard(temp)) {
                                     if (board.positions[m][n].piece instanceof K && board.positions[m][n].piece.side != this.side) {
@@ -149,7 +151,7 @@ class K extends Piece {
                         }
 
                         if (b3) {
-//                            System.out.println("b3!");
+                            System.out.println("b3!");
                             validMovement.add(p);
                         }
                     }
@@ -158,12 +160,12 @@ class K extends Piece {
             }
             j = y-1;
             i++;
-//            System.out.println("i: " + i);
+            System.out.println("i: " + i);
         }
 
         System.out.println("valid size: " + validMovement.size());
         for (int q = 0; q < validMovement.size(); q++) {
-            System.out.print(validMovement.get(i).x + " " + validMovement.get(i).y + "\t");
+            System.out.print(validMovement.get(q).x + " " + validMovement.get(q).y + "\t");
         }
         System.out.println();
         return validMovement;
