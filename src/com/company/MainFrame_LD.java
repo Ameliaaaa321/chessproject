@@ -67,6 +67,7 @@ public class MainFrame_LD extends JFrame{
 
         mainPanel.add(contentPane, "主界面");         //添加页面及索引？
         mainPanel.add(gamePanel, "new game");
+        mainPanel.add(loadPanel,"读档界面");
 
         setContentPane(mainPanel);
 
@@ -124,33 +125,34 @@ public class MainFrame_LD extends JFrame{
 
 
         JButton buttonExit = new MenuButton();          //退出游戏按键
-        buttonExit.setIcon(images[1][0]);
+        buttonExit.setIcon(images[0][0]);
         panelMenu.add(buttonExit);
         buttonExit.addMouseListener(new MouseListener() {
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[1][0]);
+                buttonExit.setIcon(images[0][0]);
+                cardLayout.show(mainPanel, "读档界面");
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[1][2]);
-                dispose();
+                buttonExit.setIcon(images[0][1]);
+
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[1][0]);
+                buttonExit.setIcon(images[0][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[1][1]);
+                buttonExit.setIcon(images[0][2]);
             }
 
             @Override

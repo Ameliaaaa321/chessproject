@@ -63,15 +63,28 @@ public class GamePanel extends JPanel {
     private boolean lock = false;
     private int roundTime = 20;
 
+    public boolean backGround =true;
+
+    public String backString ;
+
 
 
     @Override
     public void paint(Graphics g){
         super.paint(g);//清除
 //        System.out.println("paint");
-        String bg = "pic"+File.separator+"gamePage2.png";
-        Image bgimg=Toolkit.getDefaultToolkit().getImage(bg);
-        g.drawImage(bgimg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+        String bg1 = "pic"+File.separator+"gamePage2.png";
+        Image bgimg1=Toolkit.getDefaultToolkit().getImage(bg1);
+
+        String bg2 = "pic"+File.separator+"gamePage21.png";
+        Image bgimg2=Toolkit.getDefaultToolkit().getImage(bg2);
+
+        if(backGround){
+            g.drawImage(bgimg1,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+        }else{
+            g.drawImage(bgimg2,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+        }
+
 
         String BWin = "pic"+File.separator+"BWin.png";
         Image BWinImg = Toolkit.getDefaultToolkit().getImage(BWin);
@@ -87,6 +100,9 @@ public class GamePanel extends JPanel {
 
         String sideWhite = "pic" +File.separator+"sideWhite.png";
         Image sideWhiteImg = Toolkit.getDefaultToolkit().getImage(sideWhite);
+
+        String islock = "pic"+File.separator+"lockboard.png";
+        Image islockImg = Toolkit.getDefaultToolkit().getImage(islock);
 
 
         //行棋方显示
@@ -125,6 +141,10 @@ public class GamePanel extends JPanel {
                 break;
             case -1:
                 break;
+        }
+
+        if(lock){
+            g.drawImage(islockImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
         }
     }
 
@@ -213,6 +233,7 @@ public class GamePanel extends JPanel {
 
                                 System.out.println("移动");
                                 if(selectedPiece.findValidMovement().contains(p1)) {
+
 //                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                     GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
                                     Play.updatePositions(pieces, board);
@@ -282,7 +303,10 @@ public class GamePanel extends JPanel {
         bg_image = new JLabel();
         bg_image.setSize(MainFrame_LD.WIDTH, MainFrame_LD.HEIGHT);
         //棋盘背景
-        ImageIcon bggame = new ImageIcon("pic"+File.separator+"gamePage1.png");
+        String back1 = "pic"+File.separator+"gamePage1.png";
+        String back2 ="pic"+File.separator+"gamePage11.png";
+        backString = back2;
+        ImageIcon bggame = new ImageIcon(backString);
         bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
         bg_image.setIcon(bggame);
         bg_image.setVisible(true);
@@ -350,7 +374,7 @@ public class GamePanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
                 try {
-                    buttonExit1.setIcon(buttonImages[0][0]);
+                    buttonSave.setIcon(buttonImages[0][0]);
 
 //				socket = new Socket("cn-zz-bgp-2.natfrp.cloud", 55129);
 //                    OutputStream os = OnlinebattlePanel.socket.getOutputStream();
@@ -358,7 +382,7 @@ public class GamePanel extends JPanel {
 //                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(os);
 //                    objectOutputStream.writeObject(OnlinebattlePanel.admin);	// 发送离线用户
 
-                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -368,20 +392,20 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit1.setIcon(buttonImages[0][1]);
+                buttonSave.setIcon(buttonImages[0][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit1.setIcon(buttonImages[0][0]);
+                buttonSave.setIcon(buttonImages[0][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit1.setIcon(buttonImages[0][1]);
+                buttonSave.setIcon(buttonImages[0][1]);
             }
 
             @Override
@@ -390,6 +414,135 @@ public class GamePanel extends JPanel {
 
             }
         });
+
+        JButton buttonstart = new MenuButton();          //暂停游戏按键
+        buttonstart.setBounds(0, 200, 100, 100);
+        buttonstart.setIcon(buttonImages[0][0]);
+        buttonstart.setVisible(true);
+        bg_image.add(buttonstart);
+        buttonstart.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonstart.setIcon(buttonImages[0][0]);
+                lock=!lock;
+                repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonstart.setIcon(buttonImages[0][1]);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonstart.setIcon(buttonImages[0][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonstart.setIcon(buttonImages[0][1]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+
+        JButton buttonChangeBoard = new MenuButton();          //换棋盘
+        buttonChangeBoard.setBounds(0, 300, 100, 100);
+        buttonChangeBoard.setIcon(buttonImages[0][0]);
+        buttonChangeBoard.setVisible(true);
+        bg_image.add(buttonChangeBoard);
+        buttonChangeBoard.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeBoard.setIcon(buttonImages[0][0]);
+                backGround=!backGround;
+                repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeBoard.setIcon(buttonImages[0][1]);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeBoard.setIcon(buttonImages[0][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeBoard.setIcon(buttonImages[0][1]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        JButton buttonChangeback = new MenuButton();          //换棋盘
+        buttonChangeback.setBounds(0, 400, 100, 100);
+        buttonChangeback.setIcon(buttonImages[0][0]);
+        buttonChangeback.setVisible(true);
+        bg_image.add(buttonChangeback);
+        buttonChangeback.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeback.setIcon(buttonImages[0][0]);
+//               if(backString==back1){
+                   backString=back1;
+                   ImageIcon bggame = new ImageIcon(back1);
+                   bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
+//               }else{
+//                   backString=back1;
+//                   ImageIcon bggame = new ImageIcon(backString);
+//                   bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
+//               }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeback.setIcon(buttonImages[0][1]);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeback.setIcon(buttonImages[0][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonChangeback.setIcon(buttonImages[0][1]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
 
 
         this.add(bg_image);// 将背景添加到容器中
@@ -427,10 +580,14 @@ public class GamePanel extends JPanel {
         return currentPlayer;
     }
 
-//    public void roundTimer(GamePanel gamePanel){
-//        Timer timer = new Timer();
-//        timer.schedule(new Task(gamePanel),20*1000,20*1000);
-//    }
+    public void roundTimer(GamePanel gamePanel){
+
+            Timer timer = new Timer();
+            timer.schedule(new Task(gamePanel),10*1000,10*1000);
+        }
+
+
+
 
 
 }

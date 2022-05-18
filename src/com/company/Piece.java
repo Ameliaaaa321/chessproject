@@ -539,6 +539,10 @@ class P extends Piece {
         name = "P";
     }
 
+    public boolean getIsEatPasserby(){
+        return isEatPasserby;
+    }
+
     public ArrayList<Position> findValidMovement() {
         isEatPasserby = false;
         ArrayList<Position> validMovement = new ArrayList<>();

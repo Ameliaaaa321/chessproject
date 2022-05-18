@@ -16,6 +16,7 @@ public class Task extends TimerTask {
         gamePanel.setRound();
         System.out.println("change"+gamePanel.getCurrentPlayer());
         gamePanel.repaint();
+        gamePanel.selectedPiece = null;
     }
 
 }
