@@ -9,12 +9,11 @@ public class AGame {
     int currentPlayer;
     int round;
 
-    public AGame(StoreBoard storeBoard,Board board,ArrayList<Piece> pieces,int round,int currentPlayer){
+    public AGame(StoreBoard storeBoard,Board board,ArrayList<Piece> pieces,int currentPlayer){
         this.board=board;
         this.storeBoard = storeBoard;
         this.pieces = pieces;
         this.currentPlayer=currentPlayer;
-        this.round=round;
     }
 
     public ArrayList<Piece> getPieces(){
@@ -31,9 +30,10 @@ public class AGame {
 
 
 
+
     }
 
-    public void save(){
+    public String save(){
         StringBuilder str = new StringBuilder();
         for(Board item: storeBoard.stored){
             for(Position[] positions:item.positions){
@@ -77,9 +77,7 @@ public class AGame {
             str.append("\n");
 
         }
-
-
-
+       return str.toString();
     }
 
 
