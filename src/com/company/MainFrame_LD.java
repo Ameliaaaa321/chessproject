@@ -29,8 +29,8 @@ public class MainFrame_LD extends JFrame{
                 try {
                     MainFrame_LD frm = new MainFrame_LD();
                     frm.setVisible(true);
-                    Music test = new Music("audio"+File.separator+"叮叮.WAV");
-//                    test.start();
+                    Music test = new Music("audio"+File.separator+"Sergei Prokofiev - Dance Of The Knights_01.wav");
+                    test.start();
 
                 } catch (Exception e) {
                     e.printStackTrace();
