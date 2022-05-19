@@ -40,7 +40,7 @@ public class GamePanel extends JPanel {
 
     private ArrayList<Piece> pieces = new ArrayList<>();
     private Board board = new Board();
-    private StoreBoard storeBoard = new StoreBoard(board);
+    private StoreBoard storeBoard = new StoreBoard();
 
     public Piece selectedPiece;
     public Position MouseAt;

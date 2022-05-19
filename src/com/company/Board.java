@@ -24,11 +24,8 @@ import java.util.ArrayList;
 
         ArrayList<Board> stored = new ArrayList<>();
 
-        public StoreBoard(Board board) {
-            stored.add(board);
+        public StoreBoard() {
         }
-
-
         public void addInBoard(Board board){
             stored.add(board);
         }
