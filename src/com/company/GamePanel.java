@@ -18,8 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GamePanel extends JPanel {
-//    private int p1_color;        //右/己方执棋颜色(1黑		-1白)
-//    private int p2_color;        //左/联机执棋颜色
+
 
 
     public static final int CHESSBOARD_SIZE = 480;                        //棋盘图片大小
@@ -29,23 +28,10 @@ public class GamePanel extends JPanel {
     public static final int CHESSBOARD_UPSIDE = 120;
     public static final String suffix = ".png";
 
-//    private final ChessComponent[][] chessComponents = new ChessComponent[CHESSBOARD_SIZE][CHESSBOARD_SIZE];
-//    private final ClickController clickController = new ClickController(this);
-
-
-    private BufferedImage chess_select;            //选择框图片
-
-
-//    private int select_x = -1;                    //选择框横索引
-//    private int select_y = -1;                    //选择框纵索引
-
     private AudioClip chess_chose;                //选择
     private AudioClip chess_place;              //放置
     private AudioClip chess_out;                //被吃
 
-//    public boolean is_offline;						//标记是否为本地对战
-//    public boolean online_state = false;           //是否开始网络对战
-//    public int online_round = 3;                //标记网络对战的回合（1 房主	2玩家	3不能下棋）
 
     private JLabel bg_image;
 
@@ -268,8 +254,6 @@ public class GamePanel extends JPanel {
         }
 
     }
-
-
 
     //导入棋盘
     public void loadChessboard(){
@@ -496,7 +480,7 @@ public class GamePanel extends JPanel {
             }
         });
 
-        JButton buttonChangeback = new MenuButton();          //换棋盘
+        JButton buttonChangeback = new MenuButton();          //换背景
         buttonChangeback.setBounds(0, 400, 100, 100);
         buttonChangeback.setIcon(buttonImages[0][0]);
         buttonChangeback.setVisible(true);
@@ -509,7 +493,6 @@ public class GamePanel extends JPanel {
                if(backString==back1){
                    backString=back2;
                    ImageIcon bggame = new ImageIcon(backString);
-                   System.out.println("change");
                    bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
                    bg_image.setIcon(bggame);
                }else{
