@@ -121,6 +121,14 @@ public class Play {
     // 返回结果是对象MoveResult，包含以上各函数的结果
     static MoveResult movePiece(Piece piece, Position destination, Position startPlace, Board board, StoreBoard storeBoard) {
 
+        if (destination.piece != null && destination.piece instanceof K) {
+            if (destination.piece.side == 0) {
+                board.k0 = null;
+            }else {
+                board.k1 = null;
+            }
+        }
+
         destination.piece = piece;
         startPlace.piece = null;
 
@@ -129,7 +137,7 @@ public class Play {
 
         boolean isDraw = isDraw(piece, board);
         Piece k = piece.side == 0 ? board.k1 : board.k0;
-        int isOver = isOver(isDraw, board, k);
+        int isOver = isOver(isDraw, board, k, piece);
 //        Piece eaten = isEaten(piece, destination, startPlace, board);
 //        boolean isPromotion = isPromotion(piece, destination);
 
@@ -188,10 +196,13 @@ public class Play {
 
     // 判断是否胜负已定，-1代表棋局继续，0代表黑方胜，1代表白方胜, 2代表和棋
     // 包括：被将军且无法避免；和棋
-    static int isOver(boolean isDraw, Board board, Piece k) {
+    static int isOver(boolean isDraw, Board board, Piece k, Piece piece) {
         // 王已经被吃掉啦
         if (k == null) {
-
+            System.out.println("王都被吃掉啦！");
+            return piece.side;
+        }else {
+            System.out.println("王还在哈哈");
         }
 
         // 被将军且无法避免
