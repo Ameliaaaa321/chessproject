@@ -569,7 +569,7 @@ class P extends Piece {
             }
             // 第一次走可以前进两步
             if (isFirstStep) {
-                if (isOnBoard(p) && board.positions[x][y+2].piece == null) {
+                if (board.positions[x][y+1].piece == null && board.positions[x][y+2].piece == null) {
                     validMovement.add(board.positions[x][y+2]);
                 }
             }
@@ -590,7 +590,7 @@ class P extends Piece {
             }
             // 第一次走可以前进两步
             if (isFirstStep) {
-                if (isOnBoard(p) && board.positions[x][y-2].piece == null) {
+                if (board.positions[x][y-1].piece == null && board.positions[x][y-2].piece == null) {
                     validMovement.add(board.positions[x][y-2]);
                 }
             }
