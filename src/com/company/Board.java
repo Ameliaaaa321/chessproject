@@ -21,12 +21,16 @@ import java.util.ArrayList;
     }
 
     class StoreBoard {
-        Board board;
-        int currentPlayer;
-        ArrayList<Piece[][]> stored = new ArrayList<>();
+
+        ArrayList<Board> stored = new ArrayList<>();
 
         public StoreBoard(Board board) {
-            this.board = board;
+            stored.add(board);
+        }
+
+
+        public void addInBoard(Board board){
+            stored.add(board);
         }
     }
 

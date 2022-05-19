@@ -426,7 +426,7 @@ public class GamePanel extends JPanel {
 
 
         JButton buttonChangeBoard = new MenuButton();          //换棋盘
-        buttonChangeBoard.setBounds(0, 240, 160, 80);
+        buttonChangeBoard.setBounds(1280-160, 0, 160, 80);
         buttonChangeBoard.setIcon(buttonImages[2][0]);
         buttonChangeBoard.setVisible(true);
         bg_image.add(buttonChangeBoard);
@@ -466,7 +466,7 @@ public class GamePanel extends JPanel {
         });
 
         JButton buttonChangeback = new MenuButton();          //换背景
-        buttonChangeback.setBounds(0, 320, 160, 80);
+        buttonChangeback.setBounds(1280-160, 80, 160, 80);
         buttonChangeback.setIcon(buttonImages[3][0]);
         buttonChangeback.setVisible(true);
         bg_image.add(buttonChangeback);
