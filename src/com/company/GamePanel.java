@@ -256,7 +256,6 @@ public class GamePanel extends JPanel {
 //                                currentPlayer = currentPlayer !=1?1:0;
 //                                selectedPiece = null;
 ////                                GameOver = 1;
-
                             }
                         }
                         repaint();
@@ -322,20 +321,6 @@ public class GamePanel extends JPanel {
                 // TODO Auto-generated method stub
                 buttonExit1.setIcon(buttonImages[0][0]);
                 MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
-//                try {
-//                    buttonExit1.setIcon(buttonImages[0][0]);
-//
-////				socket = new Socket("cn-zz-bgp-2.natfrp.cloud", 55129);
-////                    OutputStream os = OnlinebattlePanel.socket.getOutputStream();
-////                    os.write(ServerStart.TYPE_OFFLINE.getBytes());				// 发送下线消息
-////                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(os);
-////                    objectOutputStream.writeObject(OnlinebattlePanel.admin);	// 发送离线用户
-//
-//
-//                } catch (Exception e1) {
-//                    e1.printStackTrace();
-//                }
-
             }
 
             @Override
@@ -375,13 +360,6 @@ public class GamePanel extends JPanel {
                 // TODO Auto-generated method stub
                 try {
                     buttonSave.setIcon(buttonImages[0][0]);
-
-//				socket = new Socket("cn-zz-bgp-2.natfrp.cloud", 55129);
-//                    OutputStream os = OnlinebattlePanel.socket.getOutputStream();
-//                    os.write(ServerStart.TYPE_OFFLINE.getBytes());				// 发送下线消息
-//                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(os);
-//                    objectOutputStream.writeObject(OnlinebattlePanel.admin);	// 发送离线用户
-
                     MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
                 } catch (Exception e1) {
                     e1.printStackTrace();

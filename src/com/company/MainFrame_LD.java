@@ -46,7 +46,6 @@ public class MainFrame_LD extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         //关闭键结束运行
         setTitle(TITLE);                    // 窗口标题显示
 
-
         setSize(WIDTH,HEIGHT);          //设置窗口大小
         setLocationRelativeTo(null);            //设置窗口出现位置 null = 居中
         contentPane.setSize(WIDTH, HEIGHT);     //设置中间界面出现大小？？
@@ -67,7 +66,7 @@ public class MainFrame_LD extends JFrame{
             }
         }
 
-        mainPanel.add(contentPane, "主界面");         //添加页面及索引？
+        mainPanel.add(contentPane, "主界面");         //添加页面及索引
         mainPanel.add(gamePanel, "new game");
         mainPanel.add(loadPanel,"读档界面");
 
@@ -126,7 +125,7 @@ public class MainFrame_LD extends JFrame{
         });
 
 
-        JButton buttonExit = new MenuButton();          //退出游戏按键
+        JButton buttonExit = new MenuButton();          //读档游戏按键
         buttonExit.setIcon(images[0][0]);
         panelMenu.add(buttonExit);
         buttonExit.addMouseListener(new MouseListener() {
