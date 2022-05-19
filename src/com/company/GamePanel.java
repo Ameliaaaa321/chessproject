@@ -2,6 +2,7 @@ package com.company;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -144,6 +146,10 @@ public class GamePanel extends JPanel {
 
 
     public GamePanel() {
+
+//        URL url = GamePanel.class.getResource("audio"+File.separator+"choose.wav");
+//        chess_chose = Applet.newAudioClip(url);
+
         backGroundPanel();
         loadChessboard();
 //        roundTimer(this);
@@ -209,8 +215,7 @@ public class GamePanel extends JPanel {
 //                                    System.out.println(selectedPiece.getP());
 //                                     currentPlayer = currentPlayer !=1?1:0;
 //                                    selectedPiece = null;
-////                                    GameOver = 2;
-
+//                                    GameOver = 2;
 
                                     //一些修改
 

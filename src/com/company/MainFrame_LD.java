@@ -31,6 +31,7 @@ public class MainFrame_LD extends JFrame{
                 try {
                     MainFrame_LD frm = new MainFrame_LD();
                     frm.setVisible(true);
+                    JavaClip.playMusic();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -52,6 +53,7 @@ public class MainFrame_LD extends JFrame{
         contentPane.setLayout(null);            //设置中间界面出现位置？
 
         mainPanel.setLayout(cardLayout);
+
 
 
 /*封面按键？
