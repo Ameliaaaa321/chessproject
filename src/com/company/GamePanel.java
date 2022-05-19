@@ -147,8 +147,8 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
 
-//        URL url = GamePanel.class.getResource("audio"+File.separator+"choose.wav");
-//        chess_chose = Applet.newAudioClip(url);
+        URL url = GamePanel.class.getResource("audio"+File.separator+"SWORD09.WAV");
+        chess_chose = Applet.newAudioClip(url);
 
         backGroundPanel();
         loadChessboard();
@@ -179,6 +179,7 @@ public class GamePanel extends JPanel {
                         System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
+                            chess_chose.play();
                             System.out.println(selectedPiece.name);
                             if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
                                 selectedPiece = null;

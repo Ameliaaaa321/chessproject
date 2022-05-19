@@ -21,8 +21,6 @@ public class MainFrame_LD extends JFrame{
     private GamePanel gamePanel = new GamePanel();              //游戏主界面
     private LoadPanel loadPanel = new LoadPanel();              //读档存档界面
 
-//    private RulePanel rulePanel = new RulePanel();
-//    private OnlineBattlePanel onlineBattlePanel = new OnlineBattlePanel();
 
 //尝试新建一个窗口并使其出现
     public static void main(String[] args) {
@@ -31,7 +29,9 @@ public class MainFrame_LD extends JFrame{
                 try {
                     MainFrame_LD frm = new MainFrame_LD();
                     frm.setVisible(true);
-                    JavaClip.playMusic();
+                    Music test = new Music("audio"+File.separator+"叮叮.WAV");
+                    test.start();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
