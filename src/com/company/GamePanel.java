@@ -147,11 +147,8 @@ public class GamePanel extends JPanel {
     public GamePanel() {
 
 
-        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
+        URL url1 = GamePanel.class.getResource("/音效/Button23.wav");
         chess_noise =Applet.newAudioClip(url1);
-
-
-
         backGroundPanel();
         loadChessboard();
 //        roundTimer(this);
@@ -182,7 +179,6 @@ public class GamePanel extends JPanel {
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
                             chess_noise.play();
-                            System.out.println(selectedPiece.name);
                             if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
                                 selectedPiece = null;
                                 System.out.println("wrong side!");
@@ -285,12 +281,12 @@ public class GamePanel extends JPanel {
         //退出按钮和其他交互
 
         //图片传入
-        ImageIcon buttonImages[][] = new ImageIcon[2][4];
-        for (int i = 0; i < 3; i++) {
+        ImageIcon buttonImages[][] = new ImageIcon[4][2];
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
-                ImageIcon img = new ImageIcon("pic" + File.separator + "back1" + j + i + ".png");
-                img.setImage(img.getImage().getScaledInstance(MainFrame_LD.WIDTH / 8, MainFrame_LD.HEIGHT * 10 / 72, Image.SCALE_DEFAULT));
-                buttonImages[j][i] = img;
+                ImageIcon img = new ImageIcon("pic" + File.separator + "gp" + i + j + ".png");
+                img.setImage(img.getImage().getScaledInstance(160, 80, Image.SCALE_DEFAULT));
+                buttonImages[i][j] = img;
             }
         }
         //棋盘页面
@@ -306,7 +302,7 @@ public class GamePanel extends JPanel {
         bg_image.setVisible(true);
 
         JButton buttonExit1 = new MenuButton();          //退出游戏按键
-        buttonExit1.setBounds(0, 0, 100, 100);
+        buttonExit1.setBounds(0, 0, 160, 80);
         buttonExit1.setIcon(buttonImages[0][0]);
         buttonExit1.setVisible(true);
         bg_image.add(buttonExit1);
@@ -345,8 +341,8 @@ public class GamePanel extends JPanel {
         });
 
         JButton buttonSave = new MenuButton();          //保存游戏按键
-        buttonSave.setBounds(0, 100, 100, 100);
-        buttonSave.setIcon(buttonImages[0][0]);
+        buttonSave.setBounds(0, 80, 160, 80);
+        buttonSave.setIcon(buttonImages[1][0]);
         buttonSave.setVisible(true);
         bg_image.add(buttonSave);
         buttonSave.addMouseListener(new MouseListener() {
@@ -354,7 +350,7 @@ public class GamePanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
                 try {
-                    buttonSave.setIcon(buttonImages[0][0]);
+                    buttonSave.setIcon(buttonImages[1][0]);
                     MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -365,20 +361,20 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonSave.setIcon(buttonImages[0][1]);
+                buttonSave.setIcon(buttonImages[1][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonSave.setIcon(buttonImages[0][0]);
+                buttonSave.setIcon(buttonImages[1][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonSave.setIcon(buttonImages[0][1]);
+                buttonSave.setIcon(buttonImages[1][1]);
             }
 
             @Override
@@ -389,8 +385,8 @@ public class GamePanel extends JPanel {
         });
 
         JButton buttonstart = new MenuButton();          //暂停游戏按键
-        buttonstart.setBounds(0, 200, 100, 100);
-        buttonstart.setIcon(buttonImages[0][0]);
+        buttonstart.setBounds(0, 160, 160, 80);
+        buttonstart.setIcon(buttonImages[2][0]);
         buttonstart.setVisible(true);
         bg_image.add(buttonstart);
         buttonstart.addMouseListener(new MouseListener() {
@@ -430,15 +426,15 @@ public class GamePanel extends JPanel {
 
 
         JButton buttonChangeBoard = new MenuButton();          //换棋盘
-        buttonChangeBoard.setBounds(0, 300, 100, 100);
-        buttonChangeBoard.setIcon(buttonImages[0][0]);
+        buttonChangeBoard.setBounds(0, 240, 160, 80);
+        buttonChangeBoard.setIcon(buttonImages[2][0]);
         buttonChangeBoard.setVisible(true);
         bg_image.add(buttonChangeBoard);
         buttonChangeBoard.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeBoard.setIcon(buttonImages[0][0]);
+                buttonChangeBoard.setIcon(buttonImages[2][0]);
                 backGround=!backGround;
                 repaint();
             }
@@ -446,20 +442,20 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeBoard.setIcon(buttonImages[0][1]);
+                buttonChangeBoard.setIcon(buttonImages[2][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeBoard.setIcon(buttonImages[0][0]);
+                buttonChangeBoard.setIcon(buttonImages[2][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeBoard.setIcon(buttonImages[0][1]);
+                buttonChangeBoard.setIcon(buttonImages[2][1]);
             }
 
             @Override
@@ -470,15 +466,15 @@ public class GamePanel extends JPanel {
         });
 
         JButton buttonChangeback = new MenuButton();          //换背景
-        buttonChangeback.setBounds(0, 400, 100, 100);
-        buttonChangeback.setIcon(buttonImages[0][0]);
+        buttonChangeback.setBounds(0, 320, 160, 80);
+        buttonChangeback.setIcon(buttonImages[3][0]);
         buttonChangeback.setVisible(true);
         bg_image.add(buttonChangeback);
         buttonChangeback.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeback.setIcon(buttonImages[0][0]);
+                buttonChangeback.setIcon(buttonImages[3][0]);
                if(backString==back1){
                    backString=back2;
                    ImageIcon bggame = new ImageIcon(backString);
@@ -495,20 +491,20 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeback.setIcon(buttonImages[0][1]);
+                buttonChangeback.setIcon(buttonImages[3][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeback.setIcon(buttonImages[0][0]);
+                buttonChangeback.setIcon(buttonImages[3][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonChangeback.setIcon(buttonImages[0][1]);
+                buttonChangeback.setIcon(buttonImages[3][1]);
             }
 
             @Override
