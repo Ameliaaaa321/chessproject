@@ -147,15 +147,10 @@ public class GamePanel extends JPanel {
     public GamePanel() {
 
 
-//        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
-//        chess_noise =Applet.newAudioClip(url1);
+        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
+        chess_noise =Applet.newAudioClip(url1);
 
 
-
-
-//        chess_chose= new Music("audio"+File.separator+"叮叮.WAV");
-//        chess_place = new Music("audio"+File.separator+"Button23.wav");
-//        chess_out = new Music("audio"+File.separator+"SWORD09.WAV");
 
         backGroundPanel();
         loadChessboard();
