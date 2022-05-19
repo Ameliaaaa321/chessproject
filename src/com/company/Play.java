@@ -123,11 +123,11 @@ public class Play {
 //        destination = board.positions[destination.x][destination.y];
 //        startPlace = board.positions[startPlace.x][startPlace.y];
 
-//        boolean isDraw = isDraw(piece, board);
-//        Piece k = piece.side == 0 ? board.k1 : board.k0;
-//        int isOver = isOver(isDraw, board, k);
-//        Piece eaten = isEaten(piece, destination, startPlace, board);
-//        boolean isPromotion = isPromotion(piece, destination);
+        boolean isDraw = isDraw(piece, board);
+        Piece k = piece.side == 0 ? board.k1 : board.k0;
+        int isOver = isOver(isDraw, board, k);
+        Piece eaten = isEaten(piece, destination, startPlace, board);
+        boolean isPromotion = isPromotion(piece, destination);
 
         destination.piece = piece;
         startPlace.piece = null;
@@ -162,7 +162,6 @@ public class Play {
 
 
     static void updatePositions(ArrayList<Piece> pieces, Board board) {
-
 
 //        for (int i = 1; i <= 8; i++) {
 //            for (int j = 1; j <= 8; j++) {

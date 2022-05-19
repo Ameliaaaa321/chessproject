@@ -606,11 +606,11 @@ class P extends Piece {
         }
 
         // 吃过路兵
-        boolean eatPasserby1 = eatPasserby(x+1, y, validMovement, passerbys);
-        boolean eatPasserby2 = eatPasserby(x-1, y, validMovement, passerbys);
-        if (eatPasserby1 || eatPasserby2) {
-            isEatPasserby = true;
-        }
+//        boolean eatPasserby1 = eatPasserby(x+1, y, validMovement, passerbys);
+//        boolean eatPasserby2 = eatPasserby(x-1, y, validMovement, passerbys);
+//        if (eatPasserby1 || eatPasserby2) {
+//            isEatPasserby = true;
+//        }
 
         return validMovement;
     }
