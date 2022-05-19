@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
 
     private JLabel bg_image;
 
-    private AGame currentGame = null;
+    public AGame currentGame = null;
 
     private ArrayList<Piece> pieces = new ArrayList<>();
     private Board board = new Board();

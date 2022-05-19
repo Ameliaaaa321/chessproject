@@ -9,7 +9,7 @@ public class Play {
     public static AGame initializeGame(Board board){
         ArrayList<Piece> pieces = new ArrayList<>();
         StoreBoard storeBoard = new StoreBoard(board);
-        store(storeBoard, board);
+//        store(storeBoard, board);
         for (Piece item:initialize(board, 0, 1, 2)){
             pieces.add(item);
         }
@@ -20,54 +20,53 @@ public class Play {
         return game;
     }
 
-    static void store(StoreBoard storeBoard, Board board) {
-        storeBoard.z++;
-        for (int i = 1; i <= 8; i ++) {
-            for (int j = 1; j <= 8; j++) {
-                int k;
-                if (board.positions[i][j].piece instanceof K) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 0;
-                    }else {
-                        k = 6;
-                    }
-                }else if (board.positions[i][j].piece instanceof Q) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 1;
-                    }else {
-                        k = 7;
-                    }
-                }else if (board.positions[i][j].piece instanceof R) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 2;
-                    }else {
-                        k = 8;
-                    }
-                }else if (board.positions[i][j].piece instanceof B) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 3;
-                    }else {
-                        k = 9;
-                    }
-                }else if (board.positions[i][j].piece instanceof N) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 4;
-                    }else {
-                        k = 10;
-                    }
-                }else if (board.positions[i][j].piece instanceof P) {
-                    if (board.positions[i][j].piece.side == 0) {
-                        k = 5;
-                    }else {
-                        k = 11;
-                    }
-                }else {
-                    k = -1;
-                }
-                storeBoard.stored[i][j][storeBoard.z] = k;
-            }
-        }
-    }
+//    static void store(StoreBoard storeBoard, Board board) {
+//        for (int i = 1; i <= 8; i ++) {
+//            for (int j = 1; j <= 8; j++) {
+//                int k;
+//                if (board.positions[i][j].piece instanceof K) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 0;
+//                    }else {
+//                        k = 6;
+//                    }
+//                }else if (board.positions[i][j].piece instanceof Q) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 1;
+//                    }else {
+//                        k = 7;
+//                    }
+//                }else if (board.positions[i][j].piece instanceof R) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 2;
+//                    }else {
+//                        k = 8;
+//                    }
+//                }else if (board.positions[i][j].piece instanceof B) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 3;
+//                    }else {
+//                        k = 9;
+//                    }
+//                }else if (board.positions[i][j].piece instanceof N) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 4;
+//                    }else {
+//                        k = 10;
+//                    }
+//                }else if (board.positions[i][j].piece instanceof P) {
+//                    if (board.positions[i][j].piece.side == 0) {
+//                        k = 5;
+//                    }else {
+//                        k = 11;
+//                    }
+//                }else {
+//                    k = -1;
+//                }
+//                storeBoard.stored[i][j][storeBoard.z] = k;
+//            }
+//        }
+//    }
 
     // Board就用main方法里创建的那个board就行，整局游戏一个Board
     // 初始时在棋盘的默认位置上创建棋子, row1是王所在行，row2是兵所在行
@@ -148,7 +147,7 @@ public class Play {
             ((P) piece).countSteps = Math.abs(startPlace.y - destination.y);
         }
 
-        store(storeBoard, board);
+//        store(storeBoard, board);
 
         if (board.positions[startPlace.x][startPlace.y].piece != null) {
             System.out.println("移动之后的原位置：" + board.positions[startPlace.x][startPlace.y].piece.name);
@@ -301,7 +300,7 @@ public class Play {
     // 进行兵的升变
     static void promotion(Piece p, Piece aim, StoreBoard storeBoard, Board board) {
         p = aim;
-        store(storeBoard, board);
+//        store(storeBoard, board);
     }
 }
 
