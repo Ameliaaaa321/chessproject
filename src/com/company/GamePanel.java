@@ -147,7 +147,7 @@ public class GamePanel extends JPanel {
     public GamePanel() {
 
 
-        URL url1 = GamePanel.class.getResource("/音效/Button23.wav");
+        URL url1 = GamePanel.class.getResource("/audios/Button23.wav");
         chess_noise =Applet.newAudioClip(url1);
         backGroundPanel();
         loadChessboard();
