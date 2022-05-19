@@ -305,7 +305,7 @@ public class GamePanel extends JPanel {
         //棋盘背景
         String back1 = "pic"+File.separator+"gamePage1.png";
         String back2 ="pic"+File.separator+"gamePage11.png";
-        backString = back2;
+        backString = back1;
         ImageIcon bggame = new ImageIcon(backString);
         bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
         bg_image.setIcon(bggame);
@@ -506,15 +506,18 @@ public class GamePanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
                 buttonChangeback.setIcon(buttonImages[0][0]);
-//               if(backString==back1){
-                   backString=back1;
-                   ImageIcon bggame = new ImageIcon(back1);
+               if(backString==back1){
+                   backString=back2;
+                   ImageIcon bggame = new ImageIcon(backString);
+                   System.out.println("change");
                    bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
-//               }else{
-//                   backString=back1;
-//                   ImageIcon bggame = new ImageIcon(backString);
-//                   bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
-//               }
+                   bg_image.setIcon(bggame);
+               }else{
+                   backString=back1;
+                   ImageIcon bggame = new ImageIcon(backString);
+                   bggame.setImage(bggame.getImage().getScaledInstance(MainFrame_LD.WIDTH,MainFrame_LD.HEIGHT,Image.SCALE_DEFAULT));
+                   bg_image.setIcon(bggame);
+               }
             }
 
             @Override
