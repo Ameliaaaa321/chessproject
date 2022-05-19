@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -30,9 +31,7 @@ public class GamePanel extends JPanel {
     public static final int CHESSBOARD_UPSIDE = 120;
     public static final String suffix = ".png";
 
-    private AudioClip chess_chose;                //选择
-    private AudioClip chess_place;              //放置
-    private AudioClip chess_out;                //被吃
+    private AudioClip chess_nioce;                //
 
 
     private JLabel bg_image;
@@ -147,8 +146,16 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
 
-        URL url = GamePanel.class.getResource("audio"+File.separator+"SWORD09.WAV");
-        chess_chose = Applet.newAudioClip(url);
+
+        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
+        chess_nioce =Applet.newAudioClip(url1);
+
+
+
+
+//        chess_chose= new Music("audio"+File.separator+"叮叮.WAV");
+//        chess_place = new Music("audio"+File.separator+"Button23.wav");
+//        chess_out = new Music("audio"+File.separator+"SWORD09.WAV");
 
         backGroundPanel();
         loadChessboard();
@@ -179,7 +186,7 @@ public class GamePanel extends JPanel {
                         System.out.println("点击棋盘的网格坐标对象为：p===" + p);
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
-                            chess_chose.play();
+                            chess_nioce.play();
                             System.out.println(selectedPiece.name);
                             if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
                                 selectedPiece = null;
@@ -191,6 +198,7 @@ public class GamePanel extends JPanel {
                                 if (c.getSide() == selectedPiece.getSide()) {
                                     System.out.println("重新选择");
                                     selectedPiece = c;
+                                    chess_nioce.play();
                                 } else {
                                     System.out.println("吃子");
 
@@ -206,6 +214,7 @@ public class GamePanel extends JPanel {
                                         Play.updatePositions(pieces, board);
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
+                                        chess_nioce.play();
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -235,6 +244,7 @@ public class GamePanel extends JPanel {
                                     selectedPiece.setP(p);
                                     currentPlayer = currentPlayer !=1?1:0;
                                     selectedPiece=null;
+                                    chess_nioce.play();
                                 }else{
                                     System.out.println("不合法移动");
                                 }
