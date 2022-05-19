@@ -16,7 +16,7 @@ public class Play {
         for(Piece item:initialize(board, 1, 8, 7)){
             pieces.add(item);
         }
-        AGame game = new AGame(storeBoard,board,pieces,1,1);
+        AGame game = new AGame(storeBoard,board,pieces,1);
         return game;
     }
 
