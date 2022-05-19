@@ -147,8 +147,8 @@ public class GamePanel extends JPanel {
     public GamePanel() {
 
 
-        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
-        chess_noise =Applet.newAudioClip(url1);
+//        URL url1 = GamePanel.class.getResource(File.separator+"音效"+File.separator+"Button23.wav");
+//        chess_noise =Applet.newAudioClip(url1);
 
 
 
@@ -211,7 +211,7 @@ public class GamePanel extends JPanel {
                                         System.out.println(selectedPiece.getP());
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                         GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发和目的地好像反了
-                                        Play.updatePositions(pieces, board);
+//                                        Play.updatePositions(pieces, board);
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                         chess_noise.play();
@@ -237,7 +237,7 @@ public class GamePanel extends JPanel {
 
 //                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                     GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发地和目的地好像反了
-                                    Play.updatePositions(pieces, board);
+//                                    Play.updatePositions(pieces, board);
                                     System.out.println("成功移动");
                                     //记录
                                     System.out.println(selectedPiece.getP());

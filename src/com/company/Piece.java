@@ -65,8 +65,9 @@ public abstract class Piece {
         return name;
     }
     public Position getPosition(){
-        Position position = new Position(x,y);
-        return position;
+//        Position position = new Position(x,y);
+//        return position;
+        return board.positions[x][y];    // 原来是新建一个位置，我改成了返回board上的位置
     }
     /*----------以上5月2日修改---------*/
 
