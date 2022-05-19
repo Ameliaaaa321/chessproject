@@ -370,14 +370,14 @@ class R extends Piece {
             result = 1;
         }
 
-        System.out.print("(" + x + ", " + y + ", " + result + ")\t");
-        if (result == 1) {
-            if (!isOnBoard(p)) {
-                System.out.print("NotOnBoard");
-            }else {
-                System.out.println(board.positions[x][y].piece.name);
-            }
-        }
+//        System.out.print("(" + x + ", " + y + ", " + result + ")\t");
+//        if (result == 1) {
+//            if (!isOnBoard(p)) {
+//                System.out.print("NotOnBoard");
+//            }else {
+//                System.out.println(board.positions[x][y].piece.name);
+//            }
+//        }
 
         switch (result) {
             case -1:

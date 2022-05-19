@@ -16,7 +16,7 @@ public class Play {
         for(Piece item:initialize(board, 1, 8, 7)){
             pieces.add(item);
         }
-        AGame game = new AGame(storeBoard,board,pieces,1,1);
+        AGame game = new AGame(storeBoard,board,pieces,1);
         return game;
     }
 
@@ -120,26 +120,21 @@ public class Play {
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
     // 返回结果是对象MoveResult，包含以上各函数的结果
     static MoveResult movePiece(Piece piece, Position destination, Position startPlace, Board board, StoreBoard storeBoard) {
-//        destination = board.positions[destination.x][destination.y];
-//        startPlace = board.positions[startPlace.x][startPlace.y];
-
-        boolean isDraw = isDraw(piece, board);
-        Piece k = piece.side == 0 ? board.k1 : board.k0;
-        int isOver = isOver(isDraw, board, k);
-        Piece eaten = isEaten(piece, destination, startPlace, board);
-        boolean isPromotion = isPromotion(piece, destination);
 
         destination.piece = piece;
         startPlace.piece = null;
 
-//        board.positions[destination.x][destination.y].piece = piece;
-//        board.positions[startPlace.x][startPlace.y].piece = null;
-
         piece.x = destination.x;
         piece.y = destination.y;
 
-//        MoveResult result = new MoveResult(isOver, eaten, isDraw, isPromotion);
-        MoveResult result = new MoveResult(-1, null, false, false);
+        boolean isDraw = isDraw(piece, board);
+        Piece k = piece.side == 0 ? board.k1 : board.k0;
+        int isOver = isOver(isDraw, board, k);
+//        Piece eaten = isEaten(piece, destination, startPlace, board);
+//        boolean isPromotion = isPromotion(piece, destination);
+
+        MoveResult result = new MoveResult(isOver, null, isDraw, false);
+//        MoveResult result = new MoveResult(-1, null, false, false);
 
         // 这里标记一下这个兵它是否已经走过第一步了，是否是过路兵
         if (piece instanceof P) {
@@ -161,7 +156,7 @@ public class Play {
 
 
 
-    static void updatePositions(ArrayList<Piece> pieces, Board board) {
+//    static void updatePositions(ArrayList<Piece> pieces, Board board) {
 
 //        for (int i = 1; i <= 8; i++) {
 //            for (int j = 1; j <= 8; j++) {
@@ -173,23 +168,23 @@ public class Play {
 //            board.positions[temp.x][temp.y].piece = temp;
 //        }
 
-    }
+//    }
 
 
 
-    // 判断是否有棋子被吃，有的话返回值为被吃的棋子，没有的话返回null
-    static Piece isEaten(Piece piece, Position destination, Position startPlace, Board board) {
-        // 除了吃过路兵以外，吃子都吃的是落子处的
-        if (destination.piece == null) {
-            if (piece instanceof P && ((P) piece).isEatPasserby &&
-                    Math.abs(destination.x - startPlace.x) == 1) {
-                return board.positions[destination.x][startPlace.y].piece;
-            }
-            return null;
-        }else {
-            return destination.piece;
-        }
-    }
+//    // 判断是否有棋子被吃，有的话返回值为被吃的棋子，没有的话返回null
+//    static Piece isEaten(Piece piece, Position destination, Position startPlace, Board board) {
+//        // 除了吃过路兵以外，吃子都吃的是落子处的
+//        if (destination.piece == null) {
+//            if (piece instanceof P && ((P) piece).isEatPasserby &&
+//                    Math.abs(destination.x - startPlace.x) == 1) {
+//                return board.positions[destination.x][startPlace.y].piece;
+//            }
+//            return null;
+//        }else {
+//            return destination.piece;
+//        }
+//    }
 
     // 判断是否胜负已定，-1代表棋局继续，0代表黑方胜，1代表白方胜, 2代表和棋
     // 包括：被将军且无法避免；和棋
@@ -198,26 +193,29 @@ public class Play {
         boolean canAvoid = false;
         if (isChecked(k, board)) {
             lable:
+            // i和j循环的是王方的棋子位置
             for (int i = 1; i <= 8; i ++) {
                 for (int j = 1; j <= 8; j++) {
                     if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != k.side) {
                         continue;
                     }else {
                         ArrayList<Position> validPositions = board.positions[i][j].piece.findValidMovement();
+                        // 模拟走王方所有棋子的所有可行位置
                         for (int m = 0; m < validPositions.size(); m++) {
-                            int x = validPositions.get(m).x;
-                            int y = validPositions.get(m).y;
-                            Piece temp0 = board.positions[i][j].piece;
-                            Piece temp1 = board.positions[x][y].piece;
-                            board.positions[x][y].piece = temp0;
+                            // t和b代表王方棋子目的地的坐标
+                            int t = validPositions.get(m).x;
+                            int b = validPositions.get(m).y;
+                            Piece temp0 = board.positions[i][j].piece;    // 某个可能可以守卫王的棋子
+                            Piece temp1 = board.positions[t][b].piece;    // 该棋子的一个可行位置（王方棋子目的地原本的棋子）
+                            board.positions[t][b].piece = temp0;
                             board.positions[i][j].piece = null;
                             if (!isChecked(k, board)) {
                                 canAvoid = true;
-                                board.positions[x][y].piece = temp1;
+                                board.positions[t][b].piece = temp1;
                                 board.positions[i][j].piece = temp0;
                                 break lable;
                             }else {
-                                board.positions[x][y].piece = temp1;
+                                board.positions[t][b].piece = temp1;
                                 board.positions[i][j].piece = temp0;
                             }
                         }
@@ -225,15 +223,18 @@ public class Play {
                 }
             }
             if (!canAvoid) {
+                System.out.println("判断结果：被将军且无法避免--------------------");
                 return k.side == 1 ? 0 : 1;
             }
         }
 
         // 和棋
         if (isDraw) {
+            System.out.println("判断结果：和棋--------------------");
             return 2;
         }
 
+        System.out.println("判断结果：继续游戏--------------------");
         return -1;
     }
 
