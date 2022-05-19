@@ -207,7 +207,7 @@ public class GamePanel extends JPanel {
                                         //记录行动
                                         System.out.println("成功吃子" + c.getName());
                                         pieces.remove(c);
-                                        selectedPiece.setP(p);
+//                                        selectedPiece.setP(p);
                                         System.out.println(selectedPiece.getP());
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                         GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发和目的地好像反了
@@ -241,7 +241,7 @@ public class GamePanel extends JPanel {
                                     System.out.println("成功移动");
                                     //记录
                                     System.out.println(selectedPiece.getP());
-                                    selectedPiece.setP(p);
+//                                    selectedPiece.setP(p);
                                     currentPlayer = currentPlayer !=1?1:0;
                                     selectedPiece=null;
                                     chess_noise.play();

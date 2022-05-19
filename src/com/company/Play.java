@@ -121,8 +121,8 @@ public class Play {
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
     // 返回结果是对象MoveResult，包含以上各函数的结果
     static MoveResult movePiece(Piece piece, Position destination, Position startPlace, Board board, StoreBoard storeBoard) {
-        destination = board.positions[destination.x][destination.y];
-        startPlace = board.positions[startPlace.x][startPlace.y];
+//        destination = board.positions[destination.x][destination.y];
+//        startPlace = board.positions[startPlace.x][startPlace.y];
 
 //        boolean isDraw = isDraw(piece, board);
 //        Piece k = piece.side == 0 ? board.k1 : board.k0;
