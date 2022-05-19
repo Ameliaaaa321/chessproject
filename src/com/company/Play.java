@@ -8,7 +8,7 @@ public class Play {
 
     public static AGame initializeGame(Board board){
         ArrayList<Piece> pieces = new ArrayList<>();
-        StoreBoard storeBoard = new StoreBoard(board);
+        StoreBoard storeBoard = new StoreBoard();
 //        store(storeBoard, board);
         for (Piece item:initialize(board, 0, 1, 2)){
             pieces.add(item);
@@ -189,6 +189,11 @@ public class Play {
     // 判断是否胜负已定，-1代表棋局继续，0代表黑方胜，1代表白方胜, 2代表和棋
     // 包括：被将军且无法避免；和棋
     static int isOver(boolean isDraw, Board board, Piece k) {
+        // 王已经被吃掉啦
+        if (k == null) {
+
+        }
+
         // 被将军且无法避免
         boolean canAvoid = false;
         if (isChecked(k, board)) {
@@ -199,6 +204,7 @@ public class Play {
                     if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != k.side) {
                         continue;
                     }else {
+                        System.out.println("检查保护王的棋子：" + i + " " + j + " " + board.positions[i][j].piece.name);
                         ArrayList<Position> validPositions = board.positions[i][j].piece.findValidMovement();
                         // 模拟走王方所有棋子的所有可行位置
                         for (int m = 0; m < validPositions.size(); m++) {
@@ -240,6 +246,8 @@ public class Play {
 
     // 判断是否被将军，输入k为需要被判断的王
     static boolean isChecked(Piece k, Board board) {
+        System.out.println("checking!");
+        System.out.println("王的位置：" + k.x + " " + k.y);
         int side = k.side == 0 ? 1 : 0;
         for (int i = 1; i <= 8; i ++) {
             for (int j = 1; j <= 8; j++) {
@@ -249,12 +257,14 @@ public class Play {
                     ArrayList<Position> positions = board.positions[i][j].piece.findValidMovement();
                     for (int m = 0; m < positions.size(); m++) {
                         if (positions.get(m).x == k.x && positions.get(m).y == k.y) {
+                            System.out.println("危险危险危险！！！" + board.positions[i][j].piece.name + " " + i + " " + j);
                             return true;
                         }
                     }
                 }
             }
         }
+        System.out.println("安全！");
         return false;
     }
 
