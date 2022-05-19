@@ -1,4 +1,6 @@
 package com.company;
+import javafx.geometry.Pos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -342,6 +344,8 @@ class R extends Piece {
             i++;
         }
 
+        System.out.println();
+
         return validMovement;
     }
 
@@ -363,6 +367,15 @@ class R extends Piece {
             }
         }else {
             result = 1;
+        }
+
+        System.out.print("(" + x + ", " + y + ", " + result + ")\t");
+        if (result == 1) {
+            if (!isOnBoard(p)) {
+                System.out.print("NotOnBoard");
+            }else {
+                System.out.println(board.positions[x][y].piece.name);
+            }
         }
 
         switch (result) {
@@ -549,13 +562,18 @@ class P extends Piece {
 
         if (side == 0) {
             // 前进一步
-            validMovement.add(board.positions[x][y+1]);
+            Position p = new Position(x, y+1);
+            if (isOnBoard(p) && board.positions[x][y+1].piece == null) {
+                validMovement.add(board.positions[x][y+1]);
+            }
             // 第一次走可以前进两步
             if (isFirstStep) {
-                validMovement.add(board.positions[x][y+2]);
+                if (isOnBoard(p) && board.positions[x][y+2].piece == null) {
+                    validMovement.add(board.positions[x][y+2]);
+                }
             }
             // 斜向前吃子
-            Position p = new Position(x+1,y+1);
+            p = new Position(x+1,y+1);
             if (isOnBoard(p) && board.positions[x+1][y+1].piece != null && board.positions[x+1][y+1].piece.side == 1) {
                 validMovement.add(board.positions[x+1][y+1]);
             }
@@ -565,13 +583,18 @@ class P extends Piece {
             }
         }else if (side == 1) {
             // 前进一步
-            validMovement.add(board.positions[x][y-1]);
+            Position p = new Position(x, y-1);
+            if (isOnBoard(p) && board.positions[x][y-1].piece == null) {
+                validMovement.add(board.positions[x][y-1]);
+            }
             // 第一次走可以前进两步
             if (isFirstStep) {
-                validMovement.add(board.positions[x][y-2]);
+                if (isOnBoard(p) && board.positions[x][y-2].piece == null) {
+                    validMovement.add(board.positions[x][y-2]);
+                }
             }
             // 斜向前吃子
-            Position p = new Position(x+1,y-1);
+            p = new Position(x+1,y-1);
             if (isOnBoard(p) && board.positions[x+1][y-1].piece != null && board.positions[x+1][y-1].piece.side == 0) {
                 validMovement.add(board.positions[x+1][y-1]);
             }
@@ -598,11 +621,10 @@ class P extends Piece {
                 && !passerbys.contains((P) board.positions[x][y].piece)) {
             if (side == 0) {
                 validMovement.add(board.positions[x][y+1]);
-                passerbys.add((P)board.positions[x][y].piece);
             }else if (side == 1) {
                 validMovement.add(board.positions[x][y-1]);
-                passerbys.add((P)board.positions[x][y].piece);
             }
+            passerbys.add((P)board.positions[x][y].piece);
             return true;
         }else {
             return false;
