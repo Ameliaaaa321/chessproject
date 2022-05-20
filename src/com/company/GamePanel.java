@@ -308,6 +308,7 @@ public class GamePanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
                 buttonExit1.setIcon(buttonImages[0][0]);
+                loadChessboard();
                 MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
             }
 
@@ -348,6 +349,7 @@ public class GamePanel extends JPanel {
                 buttonreset.setIcon(buttonImages[0][0]);
                 selectedPiece=null;
                 loadChessboard();
+
             }
 
             @Override
