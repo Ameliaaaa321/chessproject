@@ -10,7 +10,7 @@ import java.util.ArrayList;
 // 每个棋子对象里面，储存了坐标和黑白方，拥有可以判断下一步可以走哪的函数
 
 public abstract class Piece {
-    int x, y;    // 坐标1-8
+    int x, y;    // 坐标0-7
     int side;    // 0代表黑方，1代表白方
     Board board;
     String name;
@@ -80,7 +80,7 @@ public abstract class Piece {
 
     // 判断某位置是否在棋盘上
     boolean isOnBoard(Position p) {
-        if (1 <= p.x && p.x <= 8 && 1 <= p.y && p.y <= 8) {
+        if (0 <= p.x && p.x <= 7 && 0 <= p.y && p.y <= 7) {
             return true;
         }else {
             return false;
@@ -111,22 +111,15 @@ class K extends Piece {
                     continue labelK1;
                 }
 
-//                System.out.println("temp: " + i + " " + j);
-
                 Position temp = new Position(i, j);
                 boolean b1 = isOnBoard(temp);    // 在棋盘上
 
                 if (b1) {
-//                    System.out.println("b1!");
                     Position p = board.positions[i][j];
-                    if (p.piece != null) {
-//                        System.out.println("piece here: " + p.x + " " + p.y + " " + p.piece.name + " " + p.piece.x + " " + p.piece.y);
-                    }
 
                     boolean b2 = p.piece == null || p.piece.side != this.side;    // 没有己方棋子
 
                     if (b2) {
-//                        System.out.println("b2!");
                         boolean b3 = true;    // 和对方的王保持一格以上的距离
 
                         // 判断b3的值，即查询某位置周围一圈有没有王
@@ -139,7 +132,6 @@ class K extends Piece {
                                     n++;
                                     continue labelK3;
                                 }
-//                                System.out.println("around temp: " + m + " " + n);
                                 temp = new Position(m, n);
                                 if (isOnBoard(temp)) {
                                     if (board.positions[m][n].piece instanceof K && board.positions[m][n].piece.side != this.side) {
@@ -154,7 +146,6 @@ class K extends Piece {
                         }
 
                         if (b3) {
-//                            System.out.println("b3!");
                             validMovement.add(p);
                         }
                     }
@@ -163,14 +154,8 @@ class K extends Piece {
             }
             j = y-1;
             i++;
-//            System.out.println("i: " + i);
         }
 
-//        System.out.println("valid size: " + validMovement.size());
-//        for (int q = 0; q < validMovement.size(); q++) {
-//            System.out.print(validMovement.get(q).x + " " + validMovement.get(q).y + "\t");
-//        }
-//        System.out.println();
         return validMovement;
     }
 
@@ -193,7 +178,7 @@ class Q extends Piece {
         // 以左上角为坐标原点
         // 向右
         i = 1;
-        while (x < 8) {
+        while (x < 7) {
             if (isValid(x+i, y, side, validMovement)) {
                 break;
             }
@@ -201,7 +186,7 @@ class Q extends Piece {
         }
         // 向左
         i = 1;
-        while (x > 1) {
+        while (x > 0) {
             if (isValid(x-i, y, side, validMovement)) {
                 break;
             }
@@ -209,7 +194,7 @@ class Q extends Piece {
         }
         // 向上
         i = 1;
-        while (y > 1) {
+        while (y > 0) {
             if (isValid(x, y-i, side, validMovement)) {
                 break;
             }
@@ -217,7 +202,7 @@ class Q extends Piece {
         }
         // 向下
         i = 1;
-        while (y < 8) {
+        while (y < 7) {
             if (isValid(x, y+i, side, validMovement)) {
                 break;
             }
@@ -225,7 +210,7 @@ class Q extends Piece {
         }
         // 左上
         i = 1;
-        while (x > 1 && y > 1) {
+        while (x > 0 && y > 0) {
             if (isValid(x-i, y-i, side, validMovement)) {
                 break;
             }
@@ -233,7 +218,7 @@ class Q extends Piece {
         }
         // 左下
         i = 1;
-        while (x > 1 && y < 8) {
+        while (x > 0 && y < 7) {
             if (isValid(x-i, y+i, side, validMovement)) {
                 break;
             }
@@ -241,7 +226,7 @@ class Q extends Piece {
         }
         // 右上
         i = 1;
-        while (x < 8 && y > 0) {
+        while (x < 7 && y > 0) {
             if (isValid(x+i, y-i, side, validMovement)) {
                 break;
             }
@@ -249,7 +234,7 @@ class Q extends Piece {
         }
         // 右下
         i = 1;
-        while (x < 8 && y < 8) {
+        while (x < 7 && y < 7) {
             if (isValid(x+i, y+i, side, validMovement)) {
                 break;
             }
@@ -314,7 +299,7 @@ class R extends Piece {
         // 以左上角为坐标原点
         // 向右
         i = 1;
-        while (x < 8) {
+        while (x < 7) {
             if (isValid(x+i, y, side, validMovement)) {
                 break;
             }
@@ -322,7 +307,7 @@ class R extends Piece {
         }
         // 向左
         i = 1;
-        while (x > 1) {
+        while (x > 0) {
             if (isValid(x-i, y, side, validMovement)) {
                 break;
             }
@@ -330,7 +315,7 @@ class R extends Piece {
         }
         // 向上
         i = 1;
-        while (y > 1) {
+        while (y > 0) {
             if (isValid(x, y-i, side, validMovement)) {
                 break;
             }
@@ -338,7 +323,7 @@ class R extends Piece {
         }
         // 向下
         i = 1;
-        while (y < 8) {
+        while (y < 7) {
             if (isValid(x, y+i, side, validMovement)) {
                 break;
             }
@@ -414,7 +399,7 @@ class B extends Piece {
         // 以左上角为坐标原点
         // 左上
         i = 1;
-        while (x > 1 && y > 1) {
+        while (x > 0 && y > 0) {
             if (isValid(x-i, y-i, side, validMovement)) {
                 break;
             }
@@ -422,7 +407,7 @@ class B extends Piece {
         }
         // 左下
         i = 1;
-        while (x > 1 && y < 8) {
+        while (x > 0 && y < 7) {
             if (isValid(x-i, y+i, side, validMovement)) {
                 break;
             }
@@ -430,7 +415,7 @@ class B extends Piece {
         }
         // 右上
         i = 1;
-        while (x < 8 && y > 0) {
+        while (x < 7 && y > 0) {
             if (isValid(x+i, y-i, side, validMovement)) {
                 break;
             }
@@ -438,7 +423,7 @@ class B extends Piece {
         }
         // 右下
         i = 1;
-        while (x < 8 && y < 8) {
+        while (x < 7 && y < 7) {
             if (isValid(x+i, y+i, side, validMovement)) {
                 break;
             }

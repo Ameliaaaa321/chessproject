@@ -7,17 +7,18 @@ import java.util.ArrayList;
 
 // 储存棋盘上的所有格子
     public class Board {
-        Position[][] positions = new Position[9][9];
+        Position[][] positions = new Position[8][8];
         Piece k0, k1;    // 双方的王，便于之后判断将军
 
         public Board() {
-            for (int i = 1; i <= 8; i++) {
-                for (int j = 1; j <= 8; j++) {
+            for (int i = 0; i <= 7; i++) {
+                for (int j = 0; j <= 7; j++) {
                     Position p = new Position(i, j);
                     positions[i][j] = p;
                 }
             }
         }
+
     }
 
     class StoreBoard {

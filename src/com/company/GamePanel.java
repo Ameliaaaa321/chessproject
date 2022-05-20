@@ -349,7 +349,6 @@ public class GamePanel extends JPanel {
                 buttonreset.setIcon(buttonImages[0][0]);
                 selectedPiece=null;
                 loadChessboard();
-
             }
 
             @Override

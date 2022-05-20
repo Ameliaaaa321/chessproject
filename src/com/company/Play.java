@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 // 还没写王车易位，和棋判定没写三次重复和50次规则
 
+// 现在特殊规则都没写，和棋只判断了无子可走（没测试），胜负只判断了王被吃和被将军且无法避免（没测试）
+
 public class Play {
 
 
@@ -10,10 +12,10 @@ public class Play {
         ArrayList<Piece> pieces = new ArrayList<>();
         StoreBoard storeBoard = new StoreBoard();
 //        store(storeBoard, board);
-        for (Piece item:initialize(board, 0, 1, 2)){
+        for (Piece item:initialize(board, 0, 0, 1)){
             pieces.add(item);
         }
-        for(Piece item:initialize(board, 1, 8, 7)){
+        for(Piece item:initialize(board, 1, 7, 6)){
             pieces.add(item);
         }
         AGame game = new AGame(storeBoard,board,pieces,1,1);
@@ -75,32 +77,32 @@ public class Play {
     static Piece[] initialize(Board board, int side, int row1, int row2) {
         Piece[] pieces = new Piece[16];
 
-        Piece r1 = new R(1, row1, side, board);
-        board.positions[1][row1].piece = r1;
+        Piece r1 = new R(0, row1, side, board);
+        board.positions[0][row1].piece = r1;
         pieces[0] = r1;
-        Piece n1 = new N(2, row1, side, board);
-        board.positions[2][row1].piece = n1;
+        Piece n1 = new N(1, row1, side, board);
+        board.positions[1][row1].piece = n1;
         pieces[1] = n1;
-        Piece b1 = new B(3, row1, side, board);
-        board.positions[3][row1].piece = b1;
+        Piece b1 = new B(2, row1, side, board);
+        board.positions[2][row1].piece = b1;
         pieces[2] = b1;
-        Piece q = new Q(4, row1, side, board);
-        board.positions[4][row1].piece = q;
+        Piece q = new Q(3, row1, side, board);
+        board.positions[3][row1].piece = q;
         pieces[3] = q;
-        Piece k = new K(5, row1, side, board);
-        board.positions[5][row1].piece = k;
+        Piece k = new K(4, row1, side, board);
+        board.positions[4][row1].piece = k;
         pieces[4] = k;
-        Piece b2 = new B(6, row1, side, board);
-        board.positions[6][row1].piece = b2;
+        Piece b2 = new B(5, row1, side, board);
+        board.positions[5][row1].piece = b2;
         pieces[5] = b2;
-        Piece n2 = new N(7, row1, side, board);
-        board.positions[7][row1].piece = n2;
+        Piece n2 = new N(6, row1, side, board);
+        board.positions[6][row1].piece = n2;
         pieces[6] = n2;
-        Piece r2 = new R(8, row1, side, board);
-        board.positions[8][row1].piece = r2;
+        Piece r2 = new R(7, row1, side, board);
+        board.positions[7][row1].piece = r2;
         pieces[7] = r2;
 
-        for (int x = 1; x <= 8; x++) {
+        for (int x = 0; x <= 7; x++) {
             Piece p = new P(x, row2, side, board);
             board.positions[x][row2].piece = p;
             pieces[x+7] = p;
@@ -115,6 +117,10 @@ public class Play {
         return pieces;
     }
 
+
+    static RobotMovement findBestMove() {
+        return null;
+    }
 
 
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
@@ -210,8 +216,8 @@ public class Play {
         if (isChecked(k, board)) {
             lable:
             // i和j循环的是王方的棋子位置
-            for (int i = 1; i <= 8; i ++) {
-                for (int j = 1; j <= 8; j++) {
+            for (int i = 0; i <= 7; i ++) {
+                for (int j = 0; j <= 7; j++) {
                     if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != k.side) {
                         continue;
                     }else {
@@ -260,8 +266,8 @@ public class Play {
         System.out.println("checking!");
         System.out.println("王的位置：" + k.x + " " + k.y);
         int side = k.side == 0 ? 1 : 0;
-        for (int i = 1; i <= 8; i ++) {
-            for (int j = 1; j <= 8; j++) {
+        for (int i = 0; i <= 7; i ++) {
+            for (int j = 0; j <= 7; j++) {
                 if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != side) {
                     continue;
                 }else {
@@ -286,8 +292,8 @@ public class Play {
         // 判断对方是否无子可走
         boolean cannotMove = true;
         lable:
-        for (int i = 1; i <= 8; i ++) {
-            for (int j = 1; j <= 8; j++) {
+        for (int i = 0; i <= 7; i ++) {
+            for (int j = 0; j <= 7; j++) {
                 if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != side) {
                     continue;
                 }else {
@@ -312,7 +318,7 @@ public class Play {
     // 判断是否须进行兵的升变
     static boolean isPromotion(Piece piece, Position destination) {
         if (piece instanceof P) {
-            if ((piece.side == 0 && destination.y == 1) || (piece.side == 1 && destination.y == 8)) {
+            if ((piece.side == 0 && destination.y == 0) || (piece.side == 1 && destination.y == 7)) {
                 return true;
             }
         }
@@ -337,5 +343,17 @@ class MoveResult {
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
+    }
+}
+
+class RobotMovement {
+    Piece piece;
+    Position startPlace;
+    Position destination;
+
+    public RobotMovement(Piece piece, Position startPlace, Position destination) {
+        this.piece = piece;
+        this.startPlace = startPlace;
+        this.destination = destination;
     }
 }
