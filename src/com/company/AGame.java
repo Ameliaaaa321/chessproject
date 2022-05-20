@@ -28,7 +28,29 @@ public class AGame {
         return board;
     }
 
-    public  static AGame load(List<List<String>> s){
+
+    public static ArrayList<ArrayList<String>> splitString(String s){
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        String []  strings = s.split("\n");
+        try {
+            for (int i = 0; 10 * i < strings.length; i++) {
+                ArrayList<String> aGameList = new ArrayList<>();
+                for (int j = 0; j < 10; j++) {
+                    aGameList.add(strings[10 * i + j]);
+                }
+                lists.add(aGameList);
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("下标异常");
+            System.out.println("103");
+        }catch (NullPointerException e){
+            System.out.println("空指针");
+            System.out.println("103");
+        }
+        return lists;
+    }
+
+    public static AGame load(ArrayList<ArrayList<String>> s){
         Board currentBoard = new Board();
         ArrayList<Piece> currentPieces = new ArrayList<>();
         int currentPlayer =1;
@@ -90,8 +112,10 @@ public class AGame {
                 }
             }catch (ArrayIndexOutOfBoundsException e){
                 System.out.println("下标异常");
+                System.out.println("101");
             }catch (NullPointerException e){
                 System.out.println("空指针");
+                System.out.println("101");
             }
         }
         AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);
