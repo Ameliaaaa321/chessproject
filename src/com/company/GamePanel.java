@@ -581,9 +581,9 @@ public class GamePanel extends JPanel {
 
     public static Point getPointFromXY(int x,int y){
         Point p = new Point();
-        p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET + 1;
-        p.y = (y - CHESSBOARD_UPSIDE)/CHESS_OFFSET +1;
-        if(p.x<=0||p.y<=0||p.x>=9||p.y>=9){
+        p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET ;
+        p.y = (y - CHESSBOARD_UPSIDE)/CHESS_OFFSET ;
+        if(p.x<0||p.y<0||p.x>8||p.y>8){
             return  null;
         }
         return p;

@@ -21,8 +21,8 @@ public abstract class Piece {
     public void draw(Graphics g, JPanel panel){
         String path = "pic" + File.separator + getName() + side + GamePanel.suffix;
         Image img = Toolkit.getDefaultToolkit().getImage(path);
-        g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
-                GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
+        g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x),
+                GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y),
                 GamePanel.CHESS_OFFSET ,GamePanel.CHESS_OFFSET, panel);
     }
     /*
@@ -31,8 +31,8 @@ public abstract class Piece {
         String path = "pic" + File.separator + "选择框" + GamePanel.suffix;
         Image img = Toolkit.getDefaultToolkit().getImage(path);
 //        System.out.println("paint heikuang");
-        g.drawImage(img ,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x-1),
-                GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y-1),
+        g.drawImage(img ,GamePanel.CHESSBOARD_LEFTSIDE+GamePanel.CHESS_OFFSET*(x),
+                GamePanel.CHESSBOARD_UPSIDE+GamePanel.CHESS_OFFSET*(y),
                 GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET,panel);
     }
     /* 绘制可移动格 */
@@ -40,8 +40,8 @@ public abstract class Piece {
         for (int i=0;i< positions.size();i++) {
             String path = "pic" + File.separator + "合法落子框" + GamePanel.suffix;
             Image img = Toolkit.getDefaultToolkit().getImage(path);
-            g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getX()-1),
-                    GamePanel.CHESSBOARD_UPSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getY()- 1),
+            g.drawImage(img, GamePanel.CHESSBOARD_LEFTSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getX()),
+                    GamePanel.CHESSBOARD_UPSIDE + GamePanel.CHESS_OFFSET * (positions.get(i).getY()),
                     GamePanel.CHESS_OFFSET, GamePanel.CHESS_OFFSET, jPanel);
         }
         if(positions ==null){
