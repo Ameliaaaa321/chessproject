@@ -28,39 +28,74 @@ public class AGame {
         return board;
     }
 
-//    public AGame load(List<List<String>> s){
-//        Board currentBoard = new Board();
-//        ArrayList<Piece> currentPieces = new ArrayList<>();
-//        int currentPlayer;
-//        int round;
-//
-//        for (int i=0;i<s.size();i++){
-//            for (int j=0;j<10;j++){
-//                for (int k=0;k<8;k++){
-//                    switch(s.get(i).get(j).charAt(k)){
-//                        case 'P'&'P':
-//                            Piece r1 = new R(j,k , 0, board);
-//                            board.positions[j][k].piece = r1;
-//                            currentPieces.add(r1);
-//                            break;
-//
-//                    }
-//                }
-//
-//
-//
-//
-//            }
-//
-//        }
-//
-//
-//
-//
-//
-//
-//
-//    }
+    public  static AGame load(List<List<String>> s){
+        Board currentBoard = new Board();
+        ArrayList<Piece> currentPieces = new ArrayList<>();
+        int currentPlayer =1;
+        int round =0;
+        StoreBoard storeBoard = new StoreBoard();
+
+        for (int i=0;i<s.size();i++){
+            currentPieces.removeAll(currentPieces);
+            try {
+                for (int j=0;j<10;j++){
+                    if(j==0){
+                        round =s.get(i).get(j).charAt(0);
+                    }
+                    if((j>0)&&(j<9)){
+                        for (int k = 0; k < 8; k++) {
+                            switch (s.get(i).get(j).charAt(k)) {
+                                case 'P' & 'P':
+                                    Piece p1 = new P(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = p1;
+                                    currentPieces.add(p1);
+                                    break;
+                                case 'R' & 'r':
+                                    Piece r1 = new R(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = r1;
+                                    currentPieces.add(r1);
+                                    break;
+                                case 'B' & 'b':
+                                    Piece b1 = new B(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = b1;
+                                    currentPieces.add(b1);
+                                    break;
+                                case 'N' & 'n':
+                                    Piece n1 = new N(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = n1;
+                                    currentPieces.add(n1);
+                                    break;
+                                case 'K' & 'k':
+                                    Piece k1 = new K(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = k1;
+                                    currentPieces.add(k1);
+                                    break;
+                                case 'Q' & 'q':
+                                    Piece q1 = new Q(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = q1;
+                                    currentPieces.add(q1);
+                                    break;
+                                case '_':
+                                    currentBoard.positions[j][k].piece=null;
+                                    break;
+                                default:
+                                    throw new IllegalStateException("102: Unexpected value: " + s.get(i).get(j).charAt(k));
+                            }
+                        }
+                    }
+                    if (j==9){
+                        currentPlayer = s.get(i).get(j).charAt(0);
+                    }
+                }
+            }catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("下标异常");
+            }catch (NullPointerException e){
+                System.out.println("空指针");
+            }
+        }
+        AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);
+        return LoadedGame;
+    }
 
     public String save(){
         StringBuilder str = new StringBuilder();
