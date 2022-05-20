@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class AGame {
     ArrayList<Piece> pieces;
     int currentPlayer;
     int round;
+
 
     public AGame(StoreBoard storeBoard,Board board,ArrayList<Piece> pieces,int round,int currentPlayer){
         this.board=board;

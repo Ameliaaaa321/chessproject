@@ -10,10 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -146,7 +143,6 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
 
-
         URL url1 = GamePanel.class.getResource("/audios/Button23.wav");
         chess_noise =Applet.newAudioClip(url1);
         backGroundPanel();
@@ -269,6 +265,7 @@ public class GamePanel extends JPanel {
         round=currentGame.round;
         currentPlayer= currentGame.currentPlayer;
         storeBoard=currentGame.storeBoard;
+
     }
     //重载导入
     public void loadChessboard(AGame aGame){
@@ -339,6 +336,45 @@ public class GamePanel extends JPanel {
             }
 
         });
+        JButton buttonreset = new MenuButton();          //退出游戏按键
+        buttonreset.setBounds(1280-160, 160, 160, 80);
+        buttonreset.setIcon(buttonImages[0][0]);
+        buttonreset.setVisible(true);
+        bg_image.add(buttonreset);
+        buttonreset.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonreset.setIcon(buttonImages[0][0]);
+                selectedPiece=null;
+                loadChessboard();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonreset.setIcon(buttonImages[0][1]);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonreset.setIcon(buttonImages[0][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonreset.setIcon(buttonImages[0][1]);
+            }
+
+        });
 
         JButton buttonSave = new MenuButton();          //保存游戏按键
         buttonSave.setBounds(0, 80, 160, 80);
@@ -351,6 +387,13 @@ public class GamePanel extends JPanel {
                 // TODO Auto-generated method stub
                 try {
                     buttonSave.setIcon(buttonImages[1][0]);
+                    currentGame.board=board;
+                    currentGame.pieces=pieces;
+                    currentGame.storeBoard=storeBoard;
+                    currentGame.currentPlayer=currentPlayer;
+                    currentGame.round=round;
+                    FileLoad fileLoad =new FileLoad();
+                    fileLoad.gameSave(currentGame.save());
                     MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -384,7 +427,7 @@ public class GamePanel extends JPanel {
             }
         });
 
-        JButton buttonstart = new MenuButton();          //暂停游戏按键
+        JButton buttonstart = new MenuButton();          //
         buttonstart.setBounds(0, 160, 160, 80);
         buttonstart.setIcon(buttonImages[2][0]);
         buttonstart.setVisible(true);
