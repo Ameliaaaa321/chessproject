@@ -79,7 +79,8 @@ public class AGame {
                                     currentBoard.positions[j][k].piece=null;
                                     break;
                                 default:
-                                    throw new IllegalStateException("102: Unexpected value: " + s.get(i).get(j).charAt(k));
+                                    System.out.println("102");
+//                                    throw new IllegalStateException("102: Unexpected value: " + s.get(i).get(j).charAt(k));
                             }
                         }
                     }
