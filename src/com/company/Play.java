@@ -147,7 +147,7 @@ public class Play {
 //        Piece eaten = isEaten(piece, destination, startPlace, board);
 //        boolean isPromotion = isPromotion(piece, destination);
 
-        MoveResult result = new MoveResult(isOver, null, isDraw, false);
+
 //        MoveResult result = new MoveResult(-1, null, false, false);
 
         // 这里标记一下这个兵它是否已经走过第一步了，是否是过路兵
@@ -164,7 +164,7 @@ public class Play {
             System.out.println("移动之后的原位置：null");
         }
 
-
+        MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
         return result;
     }
 
@@ -337,12 +337,14 @@ class MoveResult {
     Piece eaten;
     boolean isDraw;
     boolean isPromotion;
+    Board board;
 
-    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion) {
+    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion,Board board) {
         this.isOver = isOver;
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
+        this.board =board;
     }
 }
 

@@ -28,7 +28,8 @@ import java.util.ArrayList;
         public StoreBoard() {
         }
         public void addInBoard(Board board){
-            stored.add(board);
+            Board board1 = board;
+            stored.add(board1);
         }
     }
 

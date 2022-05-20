@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
+import java.io.*;
 
 public class LoadPanel extends JPanel{
     JButton save =null;
@@ -47,6 +47,26 @@ public class LoadPanel extends JPanel{
             File file=jfc.getSelectedFile();
             if(file.isFile()){ //是文件
                 System.out.println("文件:"+file.getAbsolutePath());
+                try {
+                    StringBuffer buffer = new StringBuffer();
+                    BufferedReader bf= new BufferedReader(new FileReader(file));
+                    String s = null;
+                    while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
+                        buffer.append(s.trim());
+                        buffer.append("\n");
+                    }
+                    String string = buffer.toString();
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new Game");
+                    GamePanel gamePanel = new GamePanel();
+                    gamePanel.currentGame=AGame.load(AGame.splitString(string));
+                } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+                    System.out.println("104");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    System.out.println("104.");
+                }
+
                 //TODO: do sth
             }
             System.out.println(jfc.getSelectedFile().getName());

@@ -137,6 +137,7 @@ public class AGame {
                             case "P":
                                 if(position.piece.getSide()==0){str.append("P");}
                                 else{str.append("p");}
+                                System.out.println("P");
                                 break;
                             case "B":
                                 if(position.piece.getSide()==0){str.append("B");}
@@ -168,6 +169,7 @@ public class AGame {
             str.append(currentPlayer);
             str.append("\n");
         }
+        System.out.println(str);
        return str.toString();
     }
 

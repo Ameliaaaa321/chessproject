@@ -33,7 +33,7 @@ public class GamePanel extends JPanel {
 
     private JLabel bg_image;
 
-    private AGame currentGame = null;
+    public AGame currentGame = null;
 
     private ArrayList<Piece> pieces = new ArrayList<>();
     private Board board = new Board();
@@ -147,6 +147,7 @@ public class GamePanel extends JPanel {
         chess_noise =Applet.newAudioClip(url1);
         backGroundPanel();
         loadChessboard();
+
 //        roundTimer(this);
 
         if(!lock) {
@@ -202,6 +203,7 @@ public class GamePanel extends JPanel {
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                         chess_noise.play();
+                                        storeBoard.addInBoard(Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board);
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -232,6 +234,7 @@ public class GamePanel extends JPanel {
                                     currentPlayer = currentPlayer !=1?1:0;
                                     selectedPiece=null;
                                     chess_noise.play();
+                                    storeBoard.addInBoard(Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board);
                                 }else{
                                     System.out.println("不合法移动");
                                 }
@@ -259,19 +262,27 @@ public class GamePanel extends JPanel {
 
     //导入棋盘
     public void loadChessboard(){
-        currentGame = Play.initializeGame(board);
+
+            currentGame = Play.initializeGame(board);
+//        System.out.println(currentGame.board.positions[0][0]);
+            pieces=currentGame.pieces;
+            board=currentGame.board;
+            round=currentGame.round;
+            currentPlayer= currentGame.currentPlayer;
+            storeBoard=currentGame.storeBoard;
+//        System.out.println(board.positions[0][0]);
+            storeBoard.addInBoard(board);
+    }
+
+    public void loadChessboard(AGame currentGame){
         pieces=currentGame.pieces;
         board=currentGame.board;
         round=currentGame.round;
         currentPlayer= currentGame.currentPlayer;
         storeBoard=currentGame.storeBoard;
-
+//        System.out.println(board.positions[0][0]);
+        storeBoard.addInBoard(board);
     }
-    //重载导入
-    public void loadChessboard(AGame aGame){
-        currentGame = aGame;
-    }
-
 
     public void backGroundPanel() {
 
@@ -393,6 +404,11 @@ public class GamePanel extends JPanel {
                     currentGame.storeBoard=storeBoard;
                     currentGame.currentPlayer=currentPlayer;
                     currentGame.round=round;
+//                    System.out.println(currentGame.currentPlayer);
+//                    System.out.println(currentGame.round);
+//                    System.out.println(currentGame.board);
+                    System.out.println(currentGame.storeBoard.stored.get(0).positions[0][0]);
+//                    System.out.println(currentGame.pieces);
                     FileLoad fileLoad =new FileLoad();
                     fileLoad.gameSave(currentGame.save());
                     MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
