@@ -9,35 +9,50 @@ import java.awt.event.MouseListener;
 import java.io.*;
 
 public class LoadPanel extends JPanel{
-    JButton save =null;
-    JButton load =null;
+//    JButton save =null;
+
+    JButton buttonLoad = null;
+
+
     public LoadPanel(){
-        save =new JButton("存档");
-        load=new JButton("读档");
+
+        ImageIcon images ;
+        ImageIcon img = new ImageIcon("pic"+File.separator+"load"+".png");
+        img.setImage(img.getImage());
+        images = img;
+        buttonLoad = new MenuButton();//读档游戏按键
+        buttonLoad.setBounds(0, 0, 160, 80);
+        buttonLoad.setIcon(images);
+        buttonLoad.setVisible(true);
+        this.add(buttonLoad);
         this.setLayout(new GridLayout(2,1));
-        this.add(save);
-        this.add(load);
-        this.setBounds(400, 200, 100, 100);
-        this.setVisible(true);
 
-        save.addActionListener(new Saver());
-        load.addActionListener(new Loader());
+//        save =new JButton("存档");
+//        load=new JButton("读档");
+//        this.setLayout(new GridLayout(2,1));
+//        this.add(save);
+//        this.add(load);
+//        this.setBounds(220, 220, 200, 100);
+//        this.setVisible(true);
+
+//        save.addActionListener(new Saver());
+        buttonLoad.addActionListener(new Loader());
 
     }
-    public class Saver implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser jfc=new JFileChooser();
-            jfc.showSaveDialog(new JLabel());
-            File file=jfc.getSelectedFile();
-            if(file.isFile()){ //是文件
-                System.out.println("文件:"+file.getAbsolutePath());
-                //TODO: do sth
-            }
-            System.out.println(jfc.getSelectedFile().getName());
-        }
-    }
+//    public class Saver implements ActionListener
+//    {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            JFileChooser jfc=new JFileChooser();
+//            jfc.showSaveDialog(new JLabel());
+//            File file=jfc.getSelectedFile();
+//            if(file.isFile()){ //是文件
+//                System.out.println("文件:"+file.getAbsolutePath());
+//                //TODO: do sth
+//            }
+//            System.out.println(jfc.getSelectedFile().getName());
+//        }
+//    }
     public class Loader implements ActionListener
     {
         @Override
@@ -47,25 +62,56 @@ public class LoadPanel extends JPanel{
             File file=jfc.getSelectedFile();
             if(file.isFile()){ //是文件
                 System.out.println("文件:"+file.getAbsolutePath());
-                try {
-                    StringBuffer buffer = new StringBuffer();
-                    BufferedReader bf= new BufferedReader(new FileReader(file));
-                    String s = null;
-                    while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
-                        buffer.append(s.trim());
-                        buffer.append("\n");
-                    }
-                    String string = buffer.toString();
-                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new Game");
-                    GamePanel gamePanel = new GamePanel();
-                    gamePanel.currentGame=AGame.load(AGame.splitString(string));
-                } catch (FileNotFoundException ex) {
-//                    ex.printStackTrace();
-                    System.out.println("104");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    System.out.println("104.");
+                String extension = "";
+                int i = file.getName().lastIndexOf('.');
+                if (i > 0) {
+                    extension = file.getName().substring(i+1);
                 }
+//...
+                if("txt".equals(extension)){
+                    try {
+                        StringBuffer buffer = new StringBuffer();
+                        BufferedReader bf= new BufferedReader(new FileReader(file));
+                        String s = null;
+                        while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
+                            buffer.append(s.trim());
+                            buffer.append("\n");
+                        }
+                        String string = buffer.toString();
+
+                        GamePanel gamePanel = new GamePanel();
+                        gamePanel.currentGame = AGame.load(AGame.splitString(string));
+                        gamePanel.loadChessboard(gamePanel.currentGame);
+                        MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game" );
+
+//                    gamePanel.currentGame=AGame.load(AGame.splitString(string));
+                    } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+                        WrongDialog wrongDialog=new WrongDialog();
+                        TextField textField = new TextField();
+                        textField.setText("错误代码：104");
+                        wrongDialog.add(textField);
+                        wrongDialog.setVisible(true);
+                        System.out.println("104");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        System.out.println("104.");
+                        WrongDialog wrongDialog=new WrongDialog();
+                        TextField textField = new TextField();
+                        textField.setText("错误代码：104");
+                        wrongDialog.add(textField);
+                        wrongDialog.setVisible(true);
+                        System.out.println("104");
+                    }
+                }else{
+                    WrongDialog wrongDialog=new WrongDialog();
+                    TextField textField = new TextField();
+                    textField.setText("错误代码：104");
+                    wrongDialog.add(textField);
+                    wrongDialog.setVisible(true);
+                    System.out.println("104");
+                }
+
 
                 //TODO: do sth
             }
@@ -73,145 +119,6 @@ public class LoadPanel extends JPanel{
         }
     }
 
-
-//public void load(){
-//
-//    ImageIcon buttonImages[][] = new ImageIcon[2][4];
-//    for (int i = 0; i < 3; i++) {
-//        for (int j = 0; j < 2; j++) {
-//            ImageIcon img = new ImageIcon("pic" + File.separator + "back1" + j + i + ".png");
-//            img.setImage(img.getImage().getScaledInstance(MainFrame_LD.WIDTH / 8, MainFrame_LD.HEIGHT * 10 / 72, Image.SCALE_DEFAULT));
-//            buttonImages[j][i] = img;
-//        }
-//    }
-//
-//
-//    JPanel loadMenu = new JPanel();
-//    loadMenu.setOpaque(false);         //透明度
-//    loadMenu.setBounds((int)(WIDTH * 7/16), (int)(HEIGHT / 2), 160, 200);
-//
-//
-//
-//    JButton buttonLoad1 = new MenuButton();
-//    buttonLoad1.setBounds(0, 0, 100, 100);
-//    buttonLoad1.setIcon(buttonImages[0][0]);
-//    buttonLoad1.setVisible(true);
-//    buttonLoad1.addMouseListener(new MouseListener() {
-//
-//        @Override
-//        public void mouseReleased(MouseEvent e) {           //松开
-//            // TODO Auto-generated method stub
-//            buttonLoad1.setIcon(buttonImages[0][1]);
-//            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game");
-//        }
-//
-//        @Override
-//        public void mousePressed(MouseEvent e) {            //按下
-//            // TODO Auto-generated method stub
-//            buttonLoad1.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseExited(MouseEvent e) {             //移开
-//            // TODO Auto-generated method stub
-//            buttonLoad1.setIcon(buttonImages[0][0]);
-//        }
-//
-//        @Override
-//        public void mouseEntered(MouseEvent e) {            //移入
-//            // TODO Auto-generated method stub
-//            buttonLoad1.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseClicked(MouseEvent e) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//    });
-//
-//    JButton buttonLoad2 = new MenuButton();
-//    buttonLoad2.setBounds(0, 0, 100, 100);
-//    buttonLoad2.setIcon(buttonImages[0][0]);
-//    buttonLoad2.setVisible(true);
-//    buttonLoad2.addMouseListener(new MouseListener() {
-//
-//        @Override
-//        public void mouseReleased(MouseEvent e) {           //松开
-//            // TODO Auto-generated method stub
-//            buttonLoad2.setIcon(buttonImages[0][1]);
-//            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game");
-//        }
-//
-//        @Override
-//        public void mousePressed(MouseEvent e) {            //按下
-//            // TODO Auto-generated method stub
-//            buttonLoad2.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseExited(MouseEvent e) {             //移开
-//            // TODO Auto-generated method stub
-//            buttonLoad2.setIcon(buttonImages[0][0]);
-//        }
-//
-//        @Override
-//        public void mouseEntered(MouseEvent e) {            //移入
-//            // TODO Auto-generated method stub
-//            buttonLoad2.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseClicked(MouseEvent e) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//    });
-//
-//    JButton buttonLoad3 = new MenuButton();
-//    buttonLoad3.setBounds(0, 0, 100, 100);
-//    buttonLoad3.setIcon(buttonImages[0][0]);
-//    buttonLoad3.setVisible(true);
-//    buttonLoad3.addMouseListener(new MouseListener() {
-//
-//        @Override
-//        public void mouseReleased(MouseEvent e) {           //松开
-//            // TODO Auto-generated method stub
-//            buttonLoad3.setIcon(buttonImages[0][1]);
-//            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game");
-//        }
-//
-//        @Override
-//        public void mousePressed(MouseEvent e) {            //按下
-//            // TODO Auto-generated method stub
-//            buttonLoad3.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseExited(MouseEvent e) {             //移开
-//            // TODO Auto-generated method stub
-//            buttonLoad3.setIcon(buttonImages[0][0]);
-//        }
-//
-//        @Override
-//        public void mouseEntered(MouseEvent e) {            //移入
-//            // TODO Auto-generated method stub
-//            buttonLoad3.setIcon(buttonImages[0][1]);
-//        }
-//
-//        @Override
-//        public void mouseClicked(MouseEvent e) {
-//            // TODO Auto-generated method stub
-//
-//        }
-//    });
-//
-//    loadMenu.setVisible(true);
-//    loadMenu.setLayout(new FlowLayout());
-//    loadMenu.add(buttonLoad1);
-//    loadMenu.add(buttonLoad2);
-//    loadMenu.add(buttonLoad3);
-//    this.add(loadMenu);
 
 }
 
