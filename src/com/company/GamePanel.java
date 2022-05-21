@@ -266,7 +266,7 @@ public class GamePanel extends JPanel {
 
     //导入棋盘
     public void loadChessboard(){
-
+        board = new Board();
             currentGame = Play.initializeGame(board);
 //        System.out.println(currentGame.board.positions[0][0]);
             pieces=currentGame.pieces;
