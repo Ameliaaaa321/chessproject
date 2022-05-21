@@ -274,18 +274,18 @@ public class GamePanel extends JPanel {
     public void loadChessboard(){
         board = new Board();
             currentGame = Play.initializeGame(board);
-//        System.out.println(currentGame.board.positions[0][0].piece.name);
+
             pieces=currentGame.pieces;
             board=currentGame.board;
-//            System.out.println(board.positions[0][0].piece.name);
+
             round=currentGame.round;
             System.out.println(round);
             currentPlayer= currentGame.currentPlayer;
             storeBoard=currentGame.storeBoard;
 
-//        System.out.println(board.positions[0][0]);
+
         storeBoard.addInBoard(board,round,currentPlayer);
-//        System.out.println(storeBoard.stored.get(0));
+
     }
 
     public void loadChessboard(AGame currentGame){

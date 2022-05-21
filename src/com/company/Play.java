@@ -126,43 +126,43 @@ public class Play {
     for循环：对于每一个黑方棋子，移动它，产生新的复制的棋盘，计算棋盘的价值
     返回结果
      */
-    static AIMovement maxMin(AIMovement result, int depth, int side, Board board, int a, int b) {
-        Board temp = new Board();
-        for (int i = 0; i <= 7; i++) {
-            for (int j = 0; j <= 7; j++) {
-                temp.positions[i][j].piece = board.positions[i][j].piece;
-            }
-        }
-        // 该棋盘上所有可以移动的方式，即产生子棋盘
-
-        if (piece.findValidMovement().size() <= 0 || depth <= 0) {
-            result = new AIMovement(piece, piece.getPosition())
-            return result;
-        }
-
-        // beta，也就是AI方，找子节点中的最小值
-        if (side == 0) {
-            int min = Integer.MAX_VALUE;    // 向下搜索时，最小值初始化为正无穷
-            int index = 0;    // 标记搜索到哪个孩子了
-
-            for (int i = 0; i < piece.findValidMovement().size(); i++) {
-                index++;
-                AIMovement temp = maxMin(result, piece.findValidMovement().get(i).piece, depth-1, 1, board, a, b);
-
-                // beta表示从当前节点往下搜索，至少能达到的最小值
-                b = Math.min(b, temp.piece.val);
-                piece.val = b;
-
-                // 如果从当前节点继续搜索，不会比父节点已知解更大了，则剪枝
-                if (b <= a) {
-
-                }
-            }
-        }
-
-
-        return null;
-    }
+//    static AIMovement maxMin(AIMovement result, int depth, int side, Board board, int a, int b) {
+//        Board temp = new Board();
+//        for (int i = 0; i <= 7; i++) {
+//            for (int j = 0; j <= 7; j++) {
+//                temp.positions[i][j].piece = board.positions[i][j].piece;
+//            }
+//        }
+//        // 该棋盘上所有可以移动的方式，即产生子棋盘
+//
+//        if (piece.findValidMovement().size() <= 0 || depth <= 0) {
+//            result = new AIMovement(piece, piece.getPosition())
+//            return result;
+//        }
+//
+//        // beta，也就是AI方，找子节点中的最小值
+//        if (side == 0) {
+//            int min = Integer.MAX_VALUE;    // 向下搜索时，最小值初始化为正无穷
+//            int index = 0;    // 标记搜索到哪个孩子了
+//
+//            for (int i = 0; i < piece.findValidMovement().size(); i++) {
+//                index++;
+//                AIMovement temp = maxMin(result, piece.findValidMovement().get(i).piece, depth-1, 1, board, a, b);
+//
+//                // beta表示从当前节点往下搜索，至少能达到的最小值
+//                b = Math.min(b, temp.piece.val);
+//                piece.val = b;
+//
+//                // 如果从当前节点继续搜索，不会比父节点已知解更大了，则剪枝
+//                if (b <= a) {
+//
+//                }
+//            }
+//        }
+//
+//
+//        return null;
+//    }
 
 
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
