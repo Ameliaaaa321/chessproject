@@ -18,7 +18,7 @@ public class Play {
         for(Piece item:initialize(board, 1, 7, 6)){
             pieces.add(item);
         }
-        AGame game = new AGame(storeBoard,board,pieces,1,1);
+        AGame game = new AGame(storeBoard,board,pieces,0,1);
         return game;
     }
 
@@ -165,7 +165,7 @@ public class Play {
             System.out.println("移动之后的原位置：null");
         }
 
-        MoveResult result = new MoveResult(isOver, null, isDraw, false);
+        MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
         return result;
     }
 
@@ -338,14 +338,15 @@ class MoveResult {
     Piece eaten;
     boolean isDraw;
     boolean isPromotion;
+    Board board;
 
 
-    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion) {
+    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion,Board board) {
         this.isOver = isOver;
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
-//        this.board =board;
+        this.board =board;
     }
 }
 

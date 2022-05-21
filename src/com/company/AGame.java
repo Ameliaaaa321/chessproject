@@ -34,6 +34,9 @@ public class AGame {
     public static ArrayList<ArrayList<String>> splitString(String s){
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         String []  strings = s.split("\n");
+        for (String St : strings){
+            St.replace("\n","");
+        }
         try {
             for (int i = 0; 10 * i < strings.length; i++) {
                 ArrayList<String> aGameList = new ArrayList<>();
@@ -64,43 +67,89 @@ public class AGame {
             try {
                 for (int j=0;j<10;j++){
                     if(j==0){
-                        round =s.get(i).get(j).charAt(0);
+                        round =Integer.parseInt(String.valueOf(s.get(i).get(j).charAt(0)));
+                        System.out.println(round);
                     }
                     if((j>0)&&(j<9)){
                         for (int k = 0; k < 8; k++) {
                             switch (s.get(i).get(j).charAt(k)) {
-                                case 'P' & 'P':
-                                    Piece p1 = new P(j, k, 0, currentBoard);
+                                case 'P':
+                                    Piece P1;
+                                    P1 = new P(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = P1;
+                                    currentPieces.add(P1);
+                                    System.out.print("P");
+                                    break;
+                                case 'p':
+                                    Piece p1 = new P(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = p1;
                                     currentPieces.add(p1);
+                                    System.out.print("p");
                                     break;
-                                case 'R' & 'r':
-                                    Piece r1 = new R(j, k, 0, currentBoard);
+                                case 'R':
+                                    Piece R1;
+                                    R1 = new R(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = R1;
+                                    currentPieces.add(R1);
+                                    System.out.print("R");
+                                    break;
+                                case 'r':
+                                    Piece r1 = new R(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = r1;
                                     currentPieces.add(r1);
+                                    System.out.print("r");
                                     break;
-                                case 'B' & 'b':
-                                    Piece b1 = new B(j, k, 0, currentBoard);
+                                case 'B':
+                                    Piece B1 = new B(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = B1;
+                                    currentPieces.add(B1);
+                                    System.out.print("B");
+                                    break;
+                                case 'b':
+                                    Piece b1 = new B(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = b1;
                                     currentPieces.add(b1);
+                                    System.out.print("b");
                                     break;
-                                case 'N' & 'n':
-                                    Piece n1 = new N(j, k, 0, currentBoard);
+                                case 'N':
+                                    Piece N1 = new N(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = N1;
+                                    currentPieces.add(N1);
+                                    System.out.print("N");
+                                    break;
+                                case 'n':
+                                    Piece n1 = new N(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = n1;
                                     currentPieces.add(n1);
+                                    System.out.print("n");
                                     break;
-                                case 'K' & 'k':
-                                    Piece k1 = new K(j, k, 0, currentBoard);
+                                case 'K':
+                                    Piece K1 = new K(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = K1;
+                                    currentPieces.add(K1);
+                                    System.out.print("K");
+                                    break;
+                                case 'k':
+                                    Piece k1 = new K(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = k1;
                                     currentPieces.add(k1);
+                                    System.out.print("k");
                                     break;
-                                case 'Q' & 'q':
-                                    Piece q1 = new Q(j, k, 0, currentBoard);
+                                case 'Q':
+                                    Piece Q1 = new Q(j, k, 0, currentBoard);
+                                    currentBoard.positions[j][k].piece = Q1;
+                                    currentPieces.add(Q1);
+                                    System.out.print("Q");
+                                    break;
+                                case 'q':
+                                    Piece q1 = new Q(j, k, 1, currentBoard);
                                     currentBoard.positions[j][k].piece = q1;
                                     currentPieces.add(q1);
+                                    System.out.print("q");
                                     break;
                                 case '_':
                                     currentBoard.positions[j][k].piece=null;
+                                    System.out.print("_");
                                     break;
                                 default:
                                     System.out.println("102");
@@ -109,7 +158,8 @@ public class AGame {
                         }
                     }
                     if (j==9){
-                        currentPlayer = s.get(i).get(j).charAt(0);
+                        currentPlayer = Integer.parseInt(String.valueOf(s.get(i).get(j).charAt(0)));
+                        System.out.println(currentPlayer);
                     }
                 }
             }catch (ArrayIndexOutOfBoundsException e){
@@ -120,58 +170,17 @@ public class AGame {
                 System.out.println("101");
             }
         }
+
         AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);
         return LoadedGame;
     }
 
     public String save(){
-        StringBuilder str = new StringBuilder();
-        for(Board item: storeBoard.stored){
-            str.append(round+"\n");
-            for(Position[] positions:item.positions){
-                for (Position position:positions){
-                    if(position.piece==null){
-                        str.append("_");
-                    }else{
-                        switch (position.piece.getName()){
-                            case "P":
-                                if(position.piece.getSide()==0){str.append("P");}
-                                else{str.append("p");}
-                                System.out.println("P");
-                                break;
-                            case "B":
-                                if(position.piece.getSide()==0){str.append("B");}
-                                else{str.append("b");}
-                                break;
-                            case "N":
-                                if(position.piece.getSide()==0){str.append("N");}
-                                else{str.append("n");}
-                                break;
-                            case "K":
-                                if(position.piece.getSide()==0){str.append("K");}
-                                else{str.append("k");}
-                                break;
-                            case "Q":
-                                if(position.piece.getSide()==0){str.append("Q");}
-                                else{str.append("q");}
-                                break;
-                            case "R":
-                                if(position.piece.getSide()==0){str.append("R");}
-                                else{str.append("r");}
-                                break;
-                            default:
-                                throw new IllegalStateException("Unexpected value: " + position.piece);
-                        }
-                    }
 
-                }
-                str.append("\n");
-            }
-            str.append("\n");
-            str.append(currentPlayer);
-            str.append("\n");
+        StringBuilder str = new StringBuilder();
+        for (String string : storeBoard.stored){
+            str.append(string);
         }
-        System.out.println(str);
        return str.toString();
     }
 

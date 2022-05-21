@@ -205,7 +205,11 @@ public class GamePanel extends JPanel {
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                         chess_noise.play();
-                                        storeBoard.addInBoard(board);
+//                                        board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
+//                                        System.out.println(board);
+                                        round++;
+                                        System.out.println(round);
+                                        storeBoard.addInBoard(board,round,currentPlayer);
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -233,12 +237,14 @@ public class GamePanel extends JPanel {
                                     //记录
                                     System.out.println(selectedPiece.getP());
 //                                    selectedPiece.setP(p);
-                                    board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                    board.positions[p1.x][p1.y].piece=selectedPiece;
+
                                     currentPlayer = currentPlayer !=1?1:0;
                                     selectedPiece=null;
                                     chess_noise.play();
-                                    storeBoard.addInBoard(board);
+//                                    board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
+                                    round++;
+                                    System.out.println(round);
+                                    storeBoard.addInBoard(board,round,currentPlayer);
                                 }else{
                                     System.out.println("不合法移动");
                                 }
@@ -268,14 +274,18 @@ public class GamePanel extends JPanel {
     public void loadChessboard(){
         board = new Board();
             currentGame = Play.initializeGame(board);
-//        System.out.println(currentGame.board.positions[0][0]);
+//        System.out.println(currentGame.board.positions[0][0].piece.name);
             pieces=currentGame.pieces;
             board=currentGame.board;
+//            System.out.println(board.positions[0][0].piece.name);
             round=currentGame.round;
+            System.out.println(round);
             currentPlayer= currentGame.currentPlayer;
             storeBoard=currentGame.storeBoard;
+
 //        System.out.println(board.positions[0][0]);
-            storeBoard.addInBoard(board);
+        storeBoard.addInBoard(board,round,currentPlayer);
+//        System.out.println(storeBoard.stored.get(0));
     }
 
     public void loadChessboard(AGame currentGame){
@@ -285,7 +295,7 @@ public class GamePanel extends JPanel {
         currentPlayer= currentGame.currentPlayer;
         storeBoard=currentGame.storeBoard;
 //        System.out.println(board.positions[0][0]);
-        storeBoard.addInBoard(board);
+        storeBoard.addInBoard(board,round,currentPlayer);
     }
 
     public void backGroundPanel() {
