@@ -105,7 +105,7 @@ public class Play {
         for (int x = 0; x <= 7; x++) {
             Piece p = new P(x, row2, side, board);
             board.positions[x][row2].piece = p;
-            pieces[x+7] = p;
+            pieces[x+8] = p;
         }
 
         if (side == 0) {
@@ -118,7 +118,8 @@ public class Play {
     }
 
 
-    static RobotMovement findBestMove() {
+    static RobotMovement letRobotMove(int side, Board board, int foreseeSteps) {
+        
         return null;
     }
 

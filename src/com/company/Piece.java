@@ -14,6 +14,7 @@ public abstract class Piece {
     int side;    // 0代表黑方，1代表白方
     Board board;
     String name;
+    int weigh;    // 权重，用于AI评估其价值
 
 
     /*一些修改
@@ -96,6 +97,7 @@ class K extends Piece {
     public K(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name = "K";
+        weigh = 10000;
     }
 
     public ArrayList<Position> findValidMovement() {
@@ -169,6 +171,7 @@ class Q extends Piece {
     public Q(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name = "Q";
+        weigh = 10;
     }
 
     public ArrayList<Position> findValidMovement() {
@@ -290,6 +293,7 @@ class R extends Piece {
     public R(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name = "R";
+        weigh = 5;
     }
 
     public ArrayList<Position> findValidMovement() {
@@ -390,6 +394,7 @@ class B extends Piece {
     public B(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name ="B";
+        weigh = 3;
     }
 
     public ArrayList<Position> findValidMovement() {
@@ -479,6 +484,7 @@ class N extends Piece {
     public N(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name = "N";
+        weigh = 3;
     }
 
     public ArrayList<Position> findValidMovement() {
@@ -536,6 +542,7 @@ class P extends Piece {
     public P(int x, int y, int side, Board board) {
         super(x, y, side, board);
         name = "P";
+        weigh = 1;
     }
 
     public boolean getIsEatPasserby(){
