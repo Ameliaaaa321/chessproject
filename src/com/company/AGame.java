@@ -126,8 +126,8 @@ public class AGame {
 
     public String save(){
         StringBuilder str = new StringBuilder();
-        str.append(round+"\n");
         for(Board item: storeBoard.stored){
+            str.append(round+"\n");
             for(Position[] positions:item.positions){
                 for (Position position:positions){
                     if(position.piece==null){
@@ -163,9 +163,11 @@ public class AGame {
                                 throw new IllegalStateException("Unexpected value: " + position.piece);
                         }
                     }
-//                str.append("\n");
+
                 }
+                str.append("\n");
             }
+            str.append("\n");
             str.append(currentPlayer);
             str.append("\n");
         }
