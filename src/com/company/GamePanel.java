@@ -200,10 +200,12 @@ public class GamePanel extends JPanel {
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                         GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).isOver;    // 之前出发和目的地好像反了
 //                                        Play.updatePositions(pieces, board);
+                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+                                        board.positions[p1.x][p1.y].piece=selectedPiece;
                                         currentPlayer = currentPlayer !=1?1:0;
                                         selectedPiece = null;
                                         chess_noise.play();
-                                        storeBoard.addInBoard(Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board);
+                                        storeBoard.addInBoard(board);
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -231,10 +233,12 @@ public class GamePanel extends JPanel {
                                     //记录
                                     System.out.println(selectedPiece.getP());
 //                                    selectedPiece.setP(p);
+                                    board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+                                    board.positions[p1.x][p1.y].piece=selectedPiece;
                                     currentPlayer = currentPlayer !=1?1:0;
                                     selectedPiece=null;
                                     chess_noise.play();
-                                    storeBoard.addInBoard(Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board);
+                                    storeBoard.addInBoard(board);
                                 }else{
                                     System.out.println("不合法移动");
                                 }
@@ -348,7 +352,7 @@ public class GamePanel extends JPanel {
             }
 
         });
-        JButton buttonreset = new MenuButton();          //退出游戏按键
+        JButton buttonreset = new MenuButton();          //冲开游戏按键
         buttonreset.setBounds(1280-160, 160, 160, 80);
         buttonreset.setIcon(buttonImages[0][0]);
         buttonreset.setVisible(true);
@@ -407,7 +411,7 @@ public class GamePanel extends JPanel {
 //                    System.out.println(currentGame.currentPlayer);
 //                    System.out.println(currentGame.round);
 //                    System.out.println(currentGame.board);
-                    System.out.println(currentGame.storeBoard.stored.get(0).positions[0][0]);
+//                    System.out.println(currentGame.storeBoard.stored.get(0).positions[0][0]);
 //                    System.out.println(currentGame.pieces);
                     FileLoad fileLoad =new FileLoad();
                     fileLoad.gameSave(currentGame.save());

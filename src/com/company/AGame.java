@@ -163,7 +163,7 @@ public class AGame {
                                 throw new IllegalStateException("Unexpected value: " + position.piece);
                         }
                     }
-                str.append("\n");
+//                str.append("\n");
                 }
             }
             str.append(currentPlayer);

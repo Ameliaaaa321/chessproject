@@ -164,7 +164,7 @@ public class Play {
             System.out.println("移动之后的原位置：null");
         }
 
-        MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
+        MoveResult result = new MoveResult(isOver, null, isDraw, false);
         return result;
     }
 
@@ -337,14 +337,14 @@ class MoveResult {
     Piece eaten;
     boolean isDraw;
     boolean isPromotion;
-    Board board;
 
-    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion,Board board) {
+
+    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion) {
         this.isOver = isOver;
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
-        this.board =board;
+//        this.board =board;
     }
 }
 
