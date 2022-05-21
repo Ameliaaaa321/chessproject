@@ -68,7 +68,7 @@ public class LoadPanel extends JPanel{
                     extension = file.getName().substring(i+1);
                 }
 //...
-                if("jpg".equals(extension)){
+                if("txt".equals(extension)){
                     try {
                         StringBuffer buffer = new StringBuffer();
                         BufferedReader bf= new BufferedReader(new FileReader(file));
@@ -78,11 +78,11 @@ public class LoadPanel extends JPanel{
                             buffer.append("\n");
                         }
                         String string = buffer.toString();
-                        MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game" );
+
                         GamePanel gamePanel = new GamePanel();
                         gamePanel.currentGame = AGame.load(AGame.splitString(string));
                         gamePanel.loadChessboard(gamePanel.currentGame);
-
+                        MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game" );
 
 //                    gamePanel.currentGame=AGame.load(AGame.splitString(string));
                     } catch (FileNotFoundException ex) {

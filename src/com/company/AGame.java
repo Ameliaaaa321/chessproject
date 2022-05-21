@@ -74,7 +74,7 @@ public class AGame {
         int currentPlayer =1;
         int round =0;
         StoreBoard storeBoard = new StoreBoard();
-        try {
+//        try {
 
             for (int i=0;i<s.size();i++){
                 currentPieces.removeAll(currentPieces);
@@ -195,15 +195,15 @@ public class AGame {
                     wrongDialog.setVisible(true);
                 }
             }
-        }catch (Exception exception){
-            System.out.println("空指针");
-            System.out.println("102");
-            WrongDialog wrongDialog=new WrongDialog();
-            TextField textField = new TextField();
-            textField.setText("错误代码：102");
-            wrongDialog.add(textField);
-            wrongDialog.setVisible(true);
-        }
+//        }catch (Exception exception){
+//            System.out.println("空指针");
+//            System.out.println("102");
+//            WrongDialog wrongDialog=new WrongDialog();
+//            TextField textField = new TextField();
+//            textField.setText("错误代码：102");
+//            wrongDialog.add(textField);
+//            wrongDialog.setVisible(true);
+//        }
 
 
         AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);
