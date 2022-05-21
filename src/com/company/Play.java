@@ -118,14 +118,7 @@ public class Play {
     }
 
 
-    // 传入：结果、最大深度、行棋方、board、alpha、beta
-    // 传出：AIMovement对象包括要移动的棋子、出发地、目的地
     // 设定为：玩家是白方（alpha，找最大值），AI是黑方（beta，找最小值）
-    /*
-    传入棋盘，每一次的改动都放到复制的棋盘中，然后递归
-    for循环：对于每一个黑方棋子，移动它，产生新的复制的棋盘，计算棋盘的价值
-    返回结果
-     */
     static AIMovement maxMin(int depth, int side, Board board, int a, int b, Piece piece, Position destination) {
         // 是否为叶子节点（即是否棋盘上无子可走）
         boolean isLeaf = true;
