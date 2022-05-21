@@ -118,8 +118,49 @@ public class Play {
     }
 
 
-    static RobotMovement letRobotMove(int side, Board board, int foreseeSteps) {
-        
+    // 传入：结果、最大深度、行棋方、board、alpha、beta
+    // 传出：AIMovement对象包括要移动的棋子、出发地、目的地
+    // 设定为：玩家是白方（alpha，找最大值），AI是黑方（beta，找最小值）
+    /*
+    传入棋盘，每一次的改动都放到复制的棋盘中，然后递归
+    for循环：对于每一个黑方棋子，移动它，产生新的复制的棋盘，计算棋盘的价值
+    返回结果
+     */
+    static AIMovement maxMin(AIMovement result, int depth, int side, Board board, int a, int b) {
+        Board temp = new Board();
+        for (int i = 0; i <= 7; i++) {
+            for (int j = 0; j <= 7; j++) {
+                temp.positions[i][j].piece = board.positions[i][j].piece;
+            }
+        }
+        // 该棋盘上所有可以移动的方式，即产生子棋盘
+
+        if (piece.findValidMovement().size() <= 0 || depth <= 0) {
+            result = new AIMovement(piece, piece.getPosition())
+            return result;
+        }
+
+        // beta，也就是AI方，找子节点中的最小值
+        if (side == 0) {
+            int min = Integer.MAX_VALUE;    // 向下搜索时，最小值初始化为正无穷
+            int index = 0;    // 标记搜索到哪个孩子了
+
+            for (int i = 0; i < piece.findValidMovement().size(); i++) {
+                index++;
+                AIMovement temp = maxMin(result, piece.findValidMovement().get(i).piece, depth-1, 1, board, a, b);
+
+                // beta表示从当前节点往下搜索，至少能达到的最小值
+                b = Math.min(b, temp.piece.val);
+                piece.val = b;
+
+                // 如果从当前节点继续搜索，不会比父节点已知解更大了，则剪枝
+                if (b <= a) {
+
+                }
+            }
+        }
+
+
         return null;
     }
 
@@ -159,31 +200,9 @@ public class Play {
 
 //        store(storeBoard, board);
 
-        if (board.positions[startPlace.x][startPlace.y].piece != null) {
-            System.out.println("移动之后的原位置：" + board.positions[startPlace.x][startPlace.y].piece.name);
-        }else {
-            System.out.println("移动之后的原位置：null");
-        }
-
         MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
         return result;
     }
-
-
-
-//    static void updatePositions(ArrayList<Piece> pieces, Board board) {
-
-//        for (int i = 1; i <= 8; i++) {
-//            for (int j = 1; j <= 8; j++) {
-//                board.positions[i][j] = null;
-//            }
-//        }
-//        for (int i = 0; i < pieces.size(); i++) {
-//            Piece temp = pieces.get(i);
-//            board.positions[temp.x][temp.y].piece = temp;
-//        }
-
-//    }
 
 
 
@@ -206,10 +225,7 @@ public class Play {
     static int isOver(boolean isDraw, Board board, Piece k, Piece piece) {
         // 王已经被吃掉啦
         if (k == null) {
-            System.out.println("王都被吃掉啦！");
             return piece.side;
-        }else {
-            System.out.println("王还在哈哈");
         }
 
         // 被将军且无法避免
@@ -222,7 +238,6 @@ public class Play {
                     if (board.positions[i][j].piece == null || board.positions[i][j].piece.side != k.side) {
                         continue;
                     }else {
-                        System.out.println("检查保护王的棋子：" + i + " " + j + " " + board.positions[i][j].piece.name);
                         ArrayList<Position> validPositions = board.positions[i][j].piece.findValidMovement();
                         // 模拟走王方所有棋子的所有可行位置
                         for (int m = 0; m < validPositions.size(); m++) {
@@ -247,25 +262,20 @@ public class Play {
                 }
             }
             if (!canAvoid) {
-                System.out.println("判断结果：被将军且无法避免--------------------");
                 return k.side == 1 ? 0 : 1;
             }
         }
 
         // 和棋
         if (isDraw) {
-            System.out.println("判断结果：和棋--------------------");
             return 2;
         }
 
-        System.out.println("判断结果：继续游戏--------------------");
         return -1;
     }
 
     // 判断是否被将军，输入k为需要被判断的王
     static boolean isChecked(Piece k, Board board) {
-        System.out.println("checking!");
-        System.out.println("王的位置：" + k.x + " " + k.y);
         int side = k.side == 0 ? 1 : 0;
         for (int i = 0; i <= 7; i ++) {
             for (int j = 0; j <= 7; j++) {
@@ -275,14 +285,14 @@ public class Play {
                     ArrayList<Position> positions = board.positions[i][j].piece.findValidMovement();
                     for (int m = 0; m < positions.size(); m++) {
                         if (positions.get(m).x == k.x && positions.get(m).y == k.y) {
-                            System.out.println("危险危险危险！！！" + board.positions[i][j].piece.name + " " + i + " " + j);
+//                            System.out.println("危险危险危险！！！" + board.positions[i][j].piece.name + " " + i + " " + j);
                             return true;
                         }
                     }
                 }
             }
         }
-        System.out.println("安全！");
+//        System.out.println("安全！");
         return false;
     }
 
@@ -346,16 +356,16 @@ class MoveResult {
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
-        this.board =board;
+        this.board = board;
     }
 }
 
-class RobotMovement {
+class AIMovement {
     Piece piece;
     Position startPlace;
     Position destination;
 
-    public RobotMovement(Piece piece, Position startPlace, Position destination) {
+    public AIMovement(Piece piece, Position startPlace, Position destination) {
         this.piece = piece;
         this.startPlace = startPlace;
         this.destination = destination;
