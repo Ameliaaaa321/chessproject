@@ -15,8 +15,6 @@ public abstract class Piece {
     Board board;
     String name;
     int weigh;    // 权重，用于AI评估其价值
-    int val;    // 当前节点的值，用于剪枝搜索，初始值为-1
-
 
     /*一些修改
      * 加一个绘制自身的方法*/
@@ -78,7 +76,6 @@ public abstract class Piece {
         this.y = y;
         this.side = side;
         this.board = board;
-        val = -1;
     }
 
     // 判断某位置是否在棋盘上

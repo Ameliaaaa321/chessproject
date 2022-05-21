@@ -9,6 +9,7 @@ import java.util.ArrayList;
     public class Board {
         Position[][] positions = new Position[8][8];
         Piece k0, k1;    // 双方的王，便于之后判断将军
+        int val = -1;    // 某局面的价值，用于AI，等于棋盘上所有白子的权值和
 
         public Board() {
             for (int i = 0; i <= 7; i++) {
@@ -19,6 +20,28 @@ import java.util.ArrayList;
             }
         }
 
+        // 浅拷贝positions数组
+        public Board shallowCopy() {
+            Board temp = new Board();
+            for (int i = 0; i <= 7; i++) {
+                for (int j = 0; j <= 7; j++) {
+                    if (this.positions[i][j].piece instanceof K) {
+                        temp.positions[i][j].piece = new K(i, j, this.positions[i][j].piece.side, temp);
+                    }else if (this.positions[i][j].piece instanceof Q) {
+                        temp.positions[i][j].piece = new Q(i, j, this.positions[i][j].piece.side, temp);
+                    }else if (this.positions[i][j].piece instanceof R) {
+                        temp.positions[i][j].piece = new R(i, j, this.positions[i][j].piece.side, temp);
+                    }else if (this.positions[i][j].piece instanceof B) {
+                        temp.positions[i][j].piece = new B(i, j, this.positions[i][j].piece.side, temp);
+                    }else if (this.positions[i][j].piece instanceof N) {
+                        temp.positions[i][j].piece = new N(i, j, this.positions[i][j].piece.side, temp);
+                    }else if (this.positions[i][j].piece instanceof P) {
+                        temp.positions[i][j].piece = new P(i, j, this.positions[i][j].piece.side, temp);
+                    }
+                }
+            }
+            return temp;
+        }
     }
 
     class StoreBoard {
