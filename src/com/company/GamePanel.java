@@ -51,6 +51,8 @@ public class GamePanel extends JPanel {
 
     public String backString ;
 
+    public boolean isPvE =false;
+
 
 
     @Override
@@ -150,7 +152,95 @@ public class GamePanel extends JPanel {
 
 //        roundTimer(this);
 
-        if(!lock) {
+        if (!isPvE) {
+            if (!lock) {
+                addMouseMotionListener(new MouseMotionAdapter() {
+                    @Override
+                    public void mouseMoved(MouseEvent e) {
+                        //鼠标移动时触发
+                        Point p = getPointFromXY(e.getX(), e.getY());
+                        if (p != null) {
+                            MouseAt = new Position(p.x, p.y);
+                            repaint();
+                        }
+                    }
+                });
+
+                addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
+                        Point p = getPointFromXY(e.getX(), e.getY());
+                        if (p != null) {
+//                        Position p1 = new Position(p.x, p.y);
+                            Position p1 = board.positions[p.x][p.y];    // 这一行我改了一下哦
+                            System.out.println("点击棋盘的网格坐标对象为：p===" + p);
+                            if (selectedPiece == null) {
+                                selectedPiece = getChessByP(p);
+                                chess_noise.play();
+                                if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
+                                    selectedPiece = null;
+                                    System.out.println("wrong side!");
+                                }
+                            } else {
+                                Piece c = getChessByP(p);
+                                if (c != null) {
+                                    if (c.getSide() == selectedPiece.getSide()) {
+                                        System.out.println("重新选择");
+                                        selectedPiece = c;
+                                        chess_noise.play();
+                                    } else {
+                                        System.out.println("吃子");
+
+
+                                        if (selectedPiece.findValidMovement().contains(p1)) {
+                                            //记录行动
+                                            System.out.println("成功吃子" + c.getName());
+                                            pieces.remove(c);
+                                            System.out.println(selectedPiece.getP());
+                                            GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
+
+                                            board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+                                            board.positions[p1.x][p1.y].piece = selectedPiece;
+                                            currentPlayer = currentPlayer != 1 ? 1 : 0;
+                                            selectedPiece = null;
+                                            chess_noise.play();
+                                            round++;
+                                            System.out.println(round);
+                                            storeBoard.addInBoard(board, round, currentPlayer);
+                                        } else {
+                                            System.out.println("不合法吃子");
+                                        }
+                                    }
+                                } else {
+
+                                    System.out.println("移动");
+                                    if (selectedPiece.findValidMovement().contains(p1)) {
+                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发地和目的地好像反了
+
+                                        System.out.println("成功移动");
+                                        //记录
+                                        System.out.println(selectedPiece.getP());
+
+                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
+                                        selectedPiece = null;
+                                        chess_noise.play();
+                                        round++;
+                                        System.out.println(round);
+                                        storeBoard.addInBoard(board, round, currentPlayer);
+                                    } else {
+                                        System.out.println("不合法移动");
+                                    }
+                                }
+                            }
+                            repaint();
+                            System.out.println(currentPlayer);
+                        }
+                    }
+                });
+            }
+        }else{
+            if (!lock) {
             addMouseMotionListener(new MouseMotionAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
@@ -176,7 +266,7 @@ public class GamePanel extends JPanel {
                         if (selectedPiece == null) {
                             selectedPiece = getChessByP(p);
                             chess_noise.play();
-                            if (selectedPiece != null && selectedPiece.getSide() != currentPlayer) {
+                            if (selectedPiece != null && selectedPiece.getSide() != 1) {
                                 selectedPiece = null;
                                 System.out.println("wrong side!");
                             }
@@ -189,8 +279,6 @@ public class GamePanel extends JPanel {
                                     chess_noise.play();
                                 } else {
                                     System.out.println("吃子");
-
-
                                     if (selectedPiece.findValidMovement().contains(p1)) {
                                         //记录行动
                                         System.out.println("成功吃子" + c.getName());
@@ -201,34 +289,30 @@ public class GamePanel extends JPanel {
                                         GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
 //                                        Play.updatePositions(pieces, board);
                                         board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                        board.positions[p1.x][p1.y].piece=selectedPiece;
-                                        currentPlayer = currentPlayer !=1?1:0;
+                                        board.positions[p1.x][p1.y].piece = selectedPiece;
+                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
                                         selectedPiece = null;
                                         chess_noise.play();
 //                                        board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
 //                                        System.out.println(board);
                                         round++;
                                         System.out.println(round);
+                                        storeBoard.addInBoard(board, round, currentPlayer);
+//                                        Play.maxMin()
+                                        //更新piece board storeboard round currentplayer
+                                        //胜负判断
+                                        chess_noise.play();
                                         storeBoard.addInBoard(board,round,currentPlayer);
+
+
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
-
-//                                    System.out.println("成功吃子" + c.getName());
-//                                    pieces.remove(c);
-//                                    selectedPiece.setP(p);
-//                                    System.out.println(selectedPiece.getP());
-//                                     currentPlayer = currentPlayer !=1?1:0;
-//                                    selectedPiece = null;
-//                                    GameOver = 2;
-
-                                    //一些修改
-
                                 }
                             } else {
 
                                 System.out.println("移动");
-                                if(selectedPiece.findValidMovement().contains(p1)) {
+                                if (selectedPiece.findValidMovement().contains(p1)) {
 
 //                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                     GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发地和目的地好像反了
@@ -238,24 +322,22 @@ public class GamePanel extends JPanel {
                                     System.out.println(selectedPiece.getP());
 //                                    selectedPiece.setP(p);
 
-                                    currentPlayer = currentPlayer !=1?1:0;
-                                    selectedPiece=null;
+                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
+                                    selectedPiece = null;
                                     chess_noise.play();
 //                                    board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
                                     round++;
                                     System.out.println(round);
+                                    storeBoard.addInBoard(board, round, currentPlayer);
+//                                    Play.maxMin()
+                                    //更新piece board storeboard round currentplayer
+                                    //胜负判断
+                                    chess_noise.play();
                                     storeBoard.addInBoard(board,round,currentPlayer);
-                                }else{
+
+                                } else {
                                     System.out.println("不合法移动");
                                 }
-
-//                                System.out.println("成功移动");
-//                                //记录
-//                                System.out.println(selectedPiece.getP());
-//                                selectedPiece.setP(p);
-//                                currentPlayer = currentPlayer !=1?1:0;
-//                                selectedPiece = null;
-////                                GameOver = 1;
                             }
                         }
                         repaint();
@@ -263,8 +345,7 @@ public class GamePanel extends JPanel {
                     }
                 }
             });
-
-
+        }
 
         }
 

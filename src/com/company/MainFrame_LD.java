@@ -80,11 +80,11 @@ public class MainFrame_LD extends JFrame{
 
         JPanel panelMenu = new JPanel();
         panelMenu.setOpaque(false);         //透明度
-        panelMenu.setBounds((int)(WIDTH * 7/16), (int)(HEIGHT / 2), 160, 200);
+        panelMenu.setBounds((int)(WIDTH * 7/16), (int)(HEIGHT / 2), 160, 300);
 
         panelMenu.setVisible(true);
         contentPane.add(panelMenu);
-        panelMenu.setLayout(new GridLayout(2,1,0,0));
+        panelMenu.setLayout(new GridLayout(3,1,0,0));
 
         JButton buttonLocalGame = new MenuButton();         //新游戏按键
         buttonLocalGame.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
@@ -123,6 +123,49 @@ public class MainFrame_LD extends JFrame{
 
             }
         });
+
+        JButton buttonPvEGame = new MenuButton();         //新游戏按键
+        buttonPvEGame.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
+        buttonPvEGame.setIcon(images[0][0]);
+        panelMenu.add(buttonPvEGame);
+        buttonPvEGame.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {           //松开
+                // TODO Auto-generated method stub
+                buttonPvEGame.setIcon(images[0][1]);
+                cardLayout.show(mainPanel, "new game");
+                GamePanel gamePanel = new GamePanel();
+                gamePanel.loadChessboard();
+                gamePanel.isPvE=true;
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {            //按下
+                // TODO Auto-generated method stub
+                buttonPvEGame.setIcon(images[0][1]);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {             //移开
+                // TODO Auto-generated method stub
+                buttonPvEGame.setIcon(images[0][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {            //移入
+                // TODO Auto-generated method stub
+                buttonPvEGame.setIcon(images[0][2]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
 
 
         JButton buttonExit = new MenuButton();          //读档游戏按键

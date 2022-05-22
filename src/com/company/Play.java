@@ -22,54 +22,6 @@ public class Play {
         return game;
     }
 
-//    static void store(StoreBoard storeBoard, Board board) {
-//        for (int i = 1; i <= 8; i ++) {
-//            for (int j = 1; j <= 8; j++) {
-//                int k;
-//                if (board.positions[i][j].piece instanceof K) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 0;
-//                    }else {
-//                        k = 6;
-//                    }
-//                }else if (board.positions[i][j].piece instanceof Q) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 1;
-//                    }else {
-//                        k = 7;
-//                    }
-//                }else if (board.positions[i][j].piece instanceof R) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 2;
-//                    }else {
-//                        k = 8;
-//                    }
-//                }else if (board.positions[i][j].piece instanceof B) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 3;
-//                    }else {
-//                        k = 9;
-//                    }
-//                }else if (board.positions[i][j].piece instanceof N) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 4;
-//                    }else {
-//                        k = 10;
-//                    }
-//                }else if (board.positions[i][j].piece instanceof P) {
-//                    if (board.positions[i][j].piece.side == 0) {
-//                        k = 5;
-//                    }else {
-//                        k = 11;
-//                    }
-//                }else {
-//                    k = -1;
-//                }
-//                storeBoard.stored[i][j][storeBoard.z] = k;
-//            }
-//        }
-//    }
-
     // Board就用main方法里创建的那个board就行，整局游戏一个Board
     // 初始时在棋盘的默认位置上创建棋子, row1是王所在行，row2是兵所在行
     // 整数side储存黑方or白方，0代表黑方，1代表白方
