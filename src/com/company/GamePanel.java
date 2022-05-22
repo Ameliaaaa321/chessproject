@@ -1,5 +1,7 @@
 package com.company;
 
+import javafx.geometry.Pos;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.applet.Applet;
@@ -51,7 +53,7 @@ public class GamePanel extends JPanel {
 
     public String backString ;
 
-    public boolean isPvE =false;
+    public boolean isPvE;
 
 
 
@@ -143,12 +145,13 @@ public class GamePanel extends JPanel {
     }
 
 
-    public GamePanel() {
+    public GamePanel(boolean isPvE) {
 
         URL url1 = GamePanel.class.getResource("/audios/Button23.wav");
         chess_noise =Applet.newAudioClip(url1);
         backGroundPanel();
         loadChessboard();
+        this.isPvE = isPvE;
 
 //        roundTimer(this);
 
@@ -257,6 +260,7 @@ public class GamePanel extends JPanel {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    System.out.println("is");
                     System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                     Point p = getPointFromXY(e.getX(), e.getY());
                     if (p != null) {
@@ -298,13 +302,24 @@ public class GamePanel extends JPanel {
                                         round++;
                                         System.out.println(round);
                                         storeBoard.addInBoard(board, round, currentPlayer);
-//                                        Play.maxMin()
-                                        //更新piece board storeboard round currentplayer
-                                        //胜负判断
+
+
+
+                                        System.out.println("计算机行棋");
+                                        AIMovement aiMovement = Play.maxMin(3,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
+                                        if(aiMovement.destination.piece != null){
+                                            Point point = getPointFromPosition(aiMovement.destination);
+                                            Piece c1 = getChessByP(point);
+                                            pieces.remove(c1);
+                                        }
+                                        GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
+                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+                                        board.positions[p1.x][p1.y].piece = selectedPiece;
+                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
+                                        round++;
+
                                         chess_noise.play();
                                         storeBoard.addInBoard(board,round,currentPlayer);
-
-
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -329,6 +344,21 @@ public class GamePanel extends JPanel {
                                     round++;
                                     System.out.println(round);
                                     storeBoard.addInBoard(board, round, currentPlayer);
+
+                                    System.out.println("计算机行棋");
+
+                                    AIMovement aiMovement = Play.maxMin(3,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
+                                    if(aiMovement.destination.piece != null){
+                                        Point point = getPointFromPosition(aiMovement.destination);
+                                        Piece c1 = getChessByP(point);
+                                        pieces.remove(c1);
+                                    }
+                                    GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
+                                    board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+                                    board.positions[p1.x][p1.y].piece = selectedPiece;
+                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
+                                    round++;
+
 //                                    Play.maxMin()
                                     //更新piece board storeboard round currentplayer
                                     //胜负判断
@@ -697,6 +727,14 @@ public class GamePanel extends JPanel {
     public void setCurrentPlayer(){
         currentPlayer=currentPlayer!=1?1:0;
     }
+
+    public static Point getPointFromPosition(Position position){
+        Point point = new Point();
+        point.x = position.x;
+        point.y = position.y;
+    return point;
+    }
+
 
     public void setRound(){
         round++;

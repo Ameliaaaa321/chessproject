@@ -18,7 +18,8 @@ public class MainFrame_LD extends JFrame{
 
     public static JPanel mainPanel = new JPanel();              //封面
     private JPanel contentPane = new JPanel();                  //中间界面
-    public GamePanel gamePanel = new GamePanel();              //游戏主界面
+    public GamePanel gamePanel = new GamePanel(false);               //游戏主界面
+    public GamePanel aigamePanel =new GamePanel(true);
     private LoadPanel loadPanel = new LoadPanel();              //读档存档界面
 
 
@@ -69,6 +70,7 @@ public class MainFrame_LD extends JFrame{
         mainPanel.add(contentPane, "主界面");         //添加页面及索引
         mainPanel.add(gamePanel, "new game");
         mainPanel.add(loadPanel,"读档界面");
+        mainPanel.add(aigamePanel,"人机对战");
 
         setContentPane(mainPanel);
 
@@ -97,6 +99,7 @@ public class MainFrame_LD extends JFrame{
                 // TODO Auto-generated method stub
                 buttonLocalGame.setIcon(images[0][1]);
                 cardLayout.show(mainPanel, "new game");
+                System.out.println(gamePanel.isPvE);
             }
 
             @Override
@@ -134,10 +137,9 @@ public class MainFrame_LD extends JFrame{
             public void mouseReleased(MouseEvent e) {           //松开
                 // TODO Auto-generated method stub
                 buttonPvEGame.setIcon(images[0][1]);
-                cardLayout.show(mainPanel, "new game");
-                GamePanel gamePanel = new GamePanel();
-                gamePanel.loadChessboard();
-                gamePanel.isPvE=true;
+                cardLayout.show(mainPanel, "人机对战");
+                System.out.println("ispve");
+
 
             }
 

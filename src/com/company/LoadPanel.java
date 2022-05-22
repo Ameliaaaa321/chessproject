@@ -79,7 +79,7 @@ public class LoadPanel extends JPanel{
                         }
                         String string = buffer.toString();
 
-                        GamePanel gamePanel = new GamePanel();
+                        GamePanel gamePanel = new GamePanel(false);
                         gamePanel.currentGame = AGame.load(AGame.splitString(string));
                         gamePanel.loadChessboard(gamePanel.currentGame);
                         MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game" );

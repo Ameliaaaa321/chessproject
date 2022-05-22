@@ -93,7 +93,7 @@ import java.util.ArrayList;
 
                 str.append(currentPlayer);
                 str.append("\n");
-            System.out.println(str);
+//            System.out.println(str);
             stored.add(str.toString());
         }
     }
