@@ -10,6 +10,7 @@ import java.util.ArrayList;
         Position[][] positions = new Position[8][8];
         Piece k0, k1;    // 双方的王，便于之后判断将军
         int val = -1;    // 某局面的价值，用于AI，等于棋盘上所有白子的权值和
+        boolean withRobot = false;    // 是否人机对战
 
         public Board() {
             for (int i = 0; i <= 7; i++) {

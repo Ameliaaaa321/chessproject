@@ -130,6 +130,7 @@ public class Play {
                 }
             }
         }else {
+            // alpha，也就是玩家方，找子节点中的最大值
             board.val = Integer.MIN_VALUE;    // 向下搜索时，最小值初始化为负无穷
             // 该棋盘上所有可以移动的方式，即产生子棋盘
             for (int i = 0; i <= 7; i++) {
@@ -142,12 +143,12 @@ public class Play {
                                     board.positions[i][j].piece.getPosition(),
                                     board.shallowCopy()).board;
 
-                            // 更新board的val，和beta
+                            // 更新board的val，和alpha
                             board.val = Math.max(board.val,
                                     maxMin(depth-1, 0, temp, a, b,
                                             board.positions[i][j].piece,
                                             board.positions[i][j].piece.findValidMovement().get(k)).boardVal);
-                            // beta表示从当前节点往下搜索，至少能达到的最小值
+                            // alpha表示从当前节点往下搜索，至少能达到的最大值
                             a = Math.max(a, temp.val);
 
                             // 如果从当前节点继续搜索，不会比父节点已知解更大了，则剪枝
