@@ -71,6 +71,10 @@ public class Play {
 
 
     // 设定为：玩家是白方（alpha，找最大值），AI是黑方（beta，找最小值）
+    // 传入值：深度、行棋方、board、alpha、beta、最佳移动棋子、棋子移动目的地
+    // 返回值：AIMovement对象，包括 Piece piece（要移动的棋子）、Position startPlace（棋子所在地点坐标）、Position destination（棋子移动目的地）、int boardVal（该情况下board的价值）
+    // 可以尝试的初始调用：(3, 0, board, Integer.MIN_VALUE, Integer.MAX_VALUE, null, null)
+    // 注意！！！需要用到的返回值应该是 AIMovement.startPlace 和 AIMovement.destination，但是这两个是board中position的浅拷贝，所以需要获取到x和y，然后在board中另取board.positions[x][y]！
     static AIMovement maxMin(int depth, int side, Board board, int a, int b, Piece piece, Position destination) {
         // 是否为叶子节点（即是否棋盘上无子可走）
         boolean isLeaf = true;
