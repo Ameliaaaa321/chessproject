@@ -56,6 +56,8 @@ public class GamePanel extends JPanel {
     public boolean isPvE;
     public int depth;
 
+    public boolean inReview =false;
+
 
 
     @Override
@@ -399,7 +401,15 @@ public class GamePanel extends JPanel {
 
         }
 
+//
+//        while(inReview){
+//            System.out.println("kaishi");
+//            flashTimer(this);
+//
+//        }
+
     }
+
 
     //导入棋盘
     public void loadChessboard(){
@@ -589,7 +599,7 @@ public class GamePanel extends JPanel {
             }
         });
 
-        JButton buttonreturn = new MenuButton();          //huiqi
+        JButton buttonreturn = new MenuButton();          //悔棋
         buttonreturn.setBounds(0, 160, 160, 80);
         buttonreturn.setIcon(buttonImages[4][0]);
         buttonreturn.setVisible(true);
@@ -728,6 +738,46 @@ public class GamePanel extends JPanel {
             }
         });
 
+        JButton buttonView = new MenuButton();          //回放步骤
+        buttonView.setBounds(1280-160, 320, 160, 80);
+        buttonView.setIcon(buttonImages[3][0]);
+        buttonView.setVisible(true);
+        bg_image.add(buttonView);
+        buttonView.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonView.setIcon(buttonImages[3][0]);
+               inReview=true;
+               System.out.println("keyi1");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonView.setIcon(buttonImages[3][1]);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonView.setIcon(buttonImages[3][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                buttonView.setIcon(buttonImages[3][1]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
 
 
         this.add(bg_image);// 将背景添加到容器中
@@ -753,8 +803,9 @@ public class GamePanel extends JPanel {
         return null;
     }
 
-    public void setCurrentPlayer(){
-        currentPlayer=currentPlayer!=1?1:0;
+    public void setCurrentPlayer(int i){
+
+        this.currentPlayer = i;
     }
 
     public static Point getPointFromPosition(Position position){
@@ -764,20 +815,37 @@ public class GamePanel extends JPanel {
     return point;
     }
 
+    public int getRound(){
+        return round;
+    }
+    public void setPieces(ArrayList<Piece> pieces){
+        this.pieces=pieces;
+    }
+    public void setBoard(Board  board){
+        this.board=board;
+    }
 
-    public void setRound(){
-        round++;
+    public void setRound(int i){
+
+        this.round =i;
     }
 
     public int getCurrentPlayer(){
         return currentPlayer;
     }
 
-    public void roundTimer(GamePanel gamePanel){
+//    public void roundTimer(GamePanel gamePanel){
+//
+//            Timer timer = new Timer();
+//            timer.schedule(new Task(gamePanel),10*1000,10*1000);
+//        }
 
-            Timer timer = new Timer();
-            timer.schedule(new Task(gamePanel),10*1000,10*1000);
-        }
+    public void flashTimer(GamePanel gamePanel){
+        System.out.println("ok");
+        Timer timer = new Timer();
+        timer.schedule(new FlashTask(gamePanel),1*1000,1*1000);
+
+    }
 
 
 
