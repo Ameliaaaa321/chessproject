@@ -331,7 +331,7 @@ public class GamePanel extends JPanel {
                                         System.out.println("不合法吃子");
                                     }
                                 }
-                            } else {
+                            }else {
 
                                 System.out.println("移动");
                                 if (selectedPiece.findValidMovement().contains(p1)) {
