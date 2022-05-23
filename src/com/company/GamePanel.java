@@ -515,6 +515,7 @@ public class GamePanel extends JPanel {
                 buttonreset.setIcon(buttonImages[5][0]);
                 selectedPiece=null;
                 loadChessboard();
+                repaint();
             }
 
             @Override
