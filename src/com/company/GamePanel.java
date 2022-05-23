@@ -413,7 +413,7 @@ public class GamePanel extends JPanel {
 
     //导入棋盘
     public void loadChessboard(){
-        board = new Board();
+            board = new Board();
             currentGame = Play.initializeGame(board);
 
             pieces=currentGame.pieces;
@@ -423,6 +423,8 @@ public class GamePanel extends JPanel {
             System.out.println(round);
             currentPlayer= currentGame.currentPlayer;
             storeBoard=currentGame.storeBoard;
+            lock=false;
+            GameOver =-1;
 
 
         storeBoard.addInBoard(board,round,currentPlayer);
