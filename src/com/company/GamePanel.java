@@ -294,14 +294,15 @@ public class GamePanel extends JPanel {
 //                                        Play.updatePositions(pieces, board);
                                         board.positions[selectedPiece.x][selectedPiece.y].piece = null;
                                         board.positions[p1.x][p1.y].piece = selectedPiece;
-                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
+//                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
                                         selectedPiece = null;
                                         chess_noise.play();
 //                                        board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
 //                                        System.out.println(board);
                                         round++;
                                         System.out.println(round);
-                                        storeBoard.addInBoard(board, round, currentPlayer);
+                                        storeBoard.addInBoard(board, round,1);
+                                        repaint();
 
 
 
@@ -312,14 +313,20 @@ public class GamePanel extends JPanel {
                                             Piece c1 = getChessByP(point);
                                             pieces.remove(c1);
                                         }
-                                        GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
-                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                        board.positions[p1.x][p1.y].piece = selectedPiece;
-                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
+//                                        GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
+                                        System.out.println("AI最终的返回值：" + aiMovement.piece.name + " " + aiMovement.piece.x + " " + aiMovement.piece.y);
+                                        GameOver = Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
+                                                board.positions[aiMovement.destination.x][aiMovement.destination.y],
+                                                board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
+                                                board).isOver;
+                                        board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
+                                        board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
+//                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
                                         round++;
 
                                         chess_noise.play();
-                                        storeBoard.addInBoard(board,round,currentPlayer);
+                                        storeBoard.addInBoard(board,round,0);
+                                        repaint();
                                     } else {
                                         System.out.println("不合法吃子");
                                     }
@@ -337,13 +344,14 @@ public class GamePanel extends JPanel {
                                     System.out.println(selectedPiece.getP());
 //                                    selectedPiece.setP(p);
 
-                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
+//                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
                                     selectedPiece = null;
                                     chess_noise.play();
 //                                    board=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board, storeBoard).board;
                                     round++;
                                     System.out.println(round);
-                                    storeBoard.addInBoard(board, round, currentPlayer);
+                                    storeBoard.addInBoard(board, round, 1);
+                                    repaint();
 
                                     System.out.println("计算机行棋");
 
@@ -353,17 +361,21 @@ public class GamePanel extends JPanel {
                                         Piece c1 = getChessByP(point);
                                         pieces.remove(c1);
                                     }
-                                    GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
-                                    board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                    board.positions[p1.x][p1.y].piece = selectedPiece;
-                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
+//                                    GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
+                                    System.out.println("返回值：" + aiMovement.piece.x + " " + aiMovement.piece.y);
+                                    GameOver = Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
+                                            board.positions[aiMovement.destination.x][aiMovement.destination.y],
+                                            board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
+                                            board).isOver;
+                                    board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
+                                    board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
+//                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
                                     round++;
 
-//                                    Play.maxMin()
-                                    //更新piece board storeboard round currentplayer
-                                    //胜负判断
+//
                                     chess_noise.play();
-                                    storeBoard.addInBoard(board,round,currentPlayer);
+                                    storeBoard.addInBoard(board,round,0);
+                                    repaint();
 
                                 } else {
                                     System.out.println("不合法移动");

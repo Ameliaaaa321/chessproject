@@ -20,13 +20,18 @@ import java.util.ArrayList;
             }
         }
 
-        // 浅拷贝positions数组
+        // 浅拷贝
         public Board shallowCopy() {
             Board temp = new Board();
             for (int i = 0; i <= 7; i++) {
                 for (int j = 0; j <= 7; j++) {
                     if (this.positions[i][j].piece instanceof K) {
                         temp.positions[i][j].piece = new K(i, j, this.positions[i][j].piece.side, temp);
+                        if (this.positions[i][j].piece.side == 1) {
+                            temp.k1 = temp.positions[i][j].piece;
+                        }else {
+                            temp.k0 = temp.positions[i][j].piece;
+                        }
                     }else if (this.positions[i][j].piece instanceof Q) {
                         temp.positions[i][j].piece = new Q(i, j, this.positions[i][j].piece.side, temp);
                     }else if (this.positions[i][j].piece instanceof R) {
@@ -41,6 +46,18 @@ import java.util.ArrayList;
                 }
             }
             return temp;
+        }
+
+        public int calculateVal() {
+            int val = 0;
+            for (int i = 0; i <= 7; i++) {
+                for (int j = 0; j <= 7; j++) {
+                    if (positions[i][j].piece != null && positions[i][j].piece.side == 1) {
+                        val += positions[i][j].piece.weigh;
+                    }
+                }
+            }
+            return val;
         }
     }
 

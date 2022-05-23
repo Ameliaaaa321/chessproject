@@ -549,6 +549,8 @@ class P extends Piece {
     }
 
     public ArrayList<Position> findValidMovement() {
+        System.out.println("判断兵的可行位置时，" + x + " " + y);
+
         isEatPasserby = false;
         ArrayList<Position> validMovement = new ArrayList<>();
 

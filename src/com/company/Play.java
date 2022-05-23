@@ -73,38 +73,78 @@ public class Play {
     // 设定为：玩家是白方（alpha，找最大值），AI是黑方（beta，找最小值）
     // 传入值：深度、行棋方、board、alpha、beta、最佳移动棋子、棋子移动目的地
     // 返回值：AIMovement对象，包括 Piece piece（要移动的棋子）、Position startPlace（棋子所在地点坐标）、Position destination（棋子移动目的地）、int boardVal（该情况下board的价值）
-    // 可以尝试的初始调用：(3, 0, board, Integer.MIN_VALUE, Integer.MAX_VALUE, null, null)
     // 注意！！！需要用到的返回值应该是 AIMovement.startPlace 和 AIMovement.destination，但是这两个是board中position的浅拷贝，所以需要获取到x和y，然后在board中另取board.positions[x][y]！
+    /*
+    可以尝试的调用：
+    AIMovement aiMovement = maxMin(3, 0, board, Integer.MIN_VALUE, Integer.MAX_VALUE, null, null);
+    Position aiStartPlace = board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y];    // 要移动的棋子的位置
+    Position aiDestination = board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y];    // 移动目的地
+     */
     static AIMovement maxMin(int depth, int side, Board board, int a, int b, Piece piece, Position destination) {
+        System.out.println("当前深度：" + depth);
+        if (piece != null) {
+            System.out.println("当前搜索的棋子：" + piece.name + " " + piece.x + " " + piece.y);
+        }else {
+            System.out.println("当前搜索的棋子：null");
+        }
+
         // 是否为叶子节点（即是否棋盘上无子可走）
         boolean isLeaf = true;
+        label0:
         for (int i = 0; i <= 7; i++) {
             for (int j = 0; j <= 7; j++) {
                 if (board.positions[i][j].piece != null && board.positions[i][j].piece.side == side) {
                     if (board.positions[i][j].piece.findValidMovement().size() > 0) {
                         isLeaf = false;
-                        break;
+                        break label0;
                     }
                 }
             }
         }
 
+        int primeVal = Integer.MAX_VALUE;
+        Piece primePiece = piece;
+        Position primeDestination = destination;
+
         // 若达到递归深度，或者为叶子节点，则返回
         if (depth <= 0 || isLeaf) {
-            // 计算棋盘上所有白子的权值和，即该棋盘的价值
+            System.out.println("到达叶子节点！");
+            // 遍历查找最优解（非递归）
             for (int i = 0; i <= 7; i++) {
                 for (int j = 0; j <= 7; j++) {
-                    if (board.positions[i][j].piece != null && board.positions[i][j].piece.side == 1) {
-                        board.val += board.positions[i][j].piece.weigh;
+                    if (board.positions[i][j].piece != null) {
+                        if (board.positions[i][j].piece.side == 0) {
+                            for (int k = 0; k < board.positions[i][j].piece.findValidMovement().size(); k++) {
+                                Piece tempAttacker = board.positions[i][j].piece;
+                                Piece tempAttacked = board.positions[i][j].piece.findValidMovement().get(k).piece;
+                                Position tempDestination = board.positions[i][j].piece.findValidMovement().get(k);
+                                MoveResult moveResult = movePiece(board.positions[i][j].piece,
+                                        tempDestination,
+                                        board.positions[i][j].piece.getPosition(),
+                                        board);
+                                int thisVal = board.calculateVal();
+                                if (thisVal < primeVal) {
+                                    primeVal = thisVal;
+                                    primePiece = tempAttacker;
+                                    primeDestination = tempDestination;
+                                }
+                                // 这里只是尝试简单复位，之后应该改为悔棋！！！！！！！！！！！！！！！！！！！！！！！
+                                board.positions[i][j].piece = tempAttacker;
+                                tempDestination.piece = tempAttacked;
+                            }
+                        }
                     }
                 }
             }
-            AIMovement result = new AIMovement(piece, piece.getPosition(), destination, board.val);
+            board.val = primeVal;
+            System.out.println("叶子节点返回的值：" + primePiece.name + " " + piece.getPosition().x + " " +piece.getPosition().y);
+            AIMovement result = new AIMovement(primePiece, piece.getPosition(), primeDestination, board.val);
             return result;
         }
 
         // beta，也就是AI方，找子节点中的最小值
         if (side == 0) {
+            System.out.println("beta!");
             board.val = Integer.MAX_VALUE;    // 向下搜索时，最小值初始化为正无穷
             // 该棋盘上所有可以移动的方式，即产生子棋盘
             for (int i = 0; i <= 7; i++) {
@@ -112,16 +152,24 @@ public class Play {
                     if (board.positions[i][j].piece != null && board.positions[i][j].piece.side == side) {
                         for (int k = 0; k < board.positions[i][j].piece.findValidMovement().size(); k++) {
                             // 移动temp中的一步，产生新棋盘
-                            Board temp = movePiece(board.positions[i][j].piece,
-                                    board.positions[i][j].piece.findValidMovement().get(k),
-                                    board.positions[i][j].piece.getPosition(),
-                                    board.shallowCopy()).board;
+                            Board temp = board.shallowCopy();
+                            temp = movePiece(temp.positions[i][j].piece,
+                                    temp.positions[i][j].piece.findValidMovement().get(k),
+                                    temp.positions[i][j].piece.getPosition(),
+                                    temp).board;
 
                             // 更新board的val，和beta
-                            board.val = Math.min(board.val,
-                                    maxMin(depth-1, 1, temp, a, b,
-                                            board.positions[i][j].piece,
-                                            board.positions[i][j].piece.findValidMovement().get(k)).boardVal);
+                            AIMovement aiMovement = maxMin(depth-1, 1, temp, a, b,
+                                    board.positions[i][j].piece,
+                                    board.positions[i][j].piece.findValidMovement().get(k));
+                            if (board.val > aiMovement.boardVal) {
+                                board.val = aiMovement.boardVal;
+                                piece = board.positions[i][j].piece;
+                                destination = board.positions[board.positions[i][j].piece.findValidMovement().get(k).x][board.positions[i][j].piece.findValidMovement().get(k).y];
+                            }
+//                            board.val = Math.min(board.val, aiMovement.boardVal);
+//                            piece = board.positions[aiMovement.piece.x][aiMovement.piece.y].piece;
+//                            destination = board.positions[aiMovement.destination.x][aiMovement.destination.y];
                             // beta表示从当前节点往下搜索，至少能达到的最小值
                             b = Math.min(b, board.val);
 
@@ -134,6 +182,7 @@ public class Play {
                 }
             }
         }else {
+            System.out.println("alpha!");
             // alpha，也就是玩家方，找子节点中的最大值
             board.val = Integer.MIN_VALUE;    // 向下搜索时，最小值初始化为负无穷
             // 该棋盘上所有可以移动的方式，即产生子棋盘
@@ -142,16 +191,24 @@ public class Play {
                     if (board.positions[i][j].piece != null && board.positions[i][j].piece.side == side) {
                         for (int k = 0; k < board.positions[i][j].piece.findValidMovement().size(); k++) {
                             // 移动temp中的一步，产生新棋盘
-                            Board temp = movePiece(board.positions[i][j].piece,
-                                    board.positions[i][j].piece.findValidMovement().get(k),
-                                    board.positions[i][j].piece.getPosition(),
-                                    board.shallowCopy()).board;
+                            Board temp = board.shallowCopy();
+                            temp = movePiece(temp.positions[i][j].piece,
+                                    temp.positions[i][j].piece.findValidMovement().get(k),
+                                    temp.positions[i][j].piece.getPosition(),
+                                    temp).board;
 
                             // 更新board的val，和alpha
-                            board.val = Math.max(board.val,
-                                    maxMin(depth-1, 0, temp, a, b,
-                                            board.positions[i][j].piece,
-                                            board.positions[i][j].piece.findValidMovement().get(k)).boardVal);
+                            AIMovement aiMovement = maxMin(depth-1, 0, temp, a, b,
+                                    board.positions[i][j].piece,
+                                    board.positions[i][j].piece.findValidMovement().get(k));
+                            if (board.val < aiMovement.boardVal) {
+                                board.val = aiMovement.boardVal;
+                                piece = board.positions[i][j].piece;
+                                destination = board.positions[board.positions[i][j].piece.findValidMovement().get(k).x][board.positions[i][j].piece.findValidMovement().get(k).y];
+                            }
+//                            board.val = Math.max(board.val, aiMovement.boardVal);
+//                            piece = board.positions[aiMovement.piece.x][aiMovement.piece.y].piece;
+//                            destination = board.positions[aiMovement.destination.x][aiMovement.destination.y];
                             // alpha表示从当前节点往下搜索，至少能达到的最大值
                             a = Math.max(a, temp.val);
 
@@ -165,6 +222,15 @@ public class Play {
             }
         }
 
+        if (piece == null) {
+            System.out.println("piece 是 null");
+        }
+        if (destination == null) {
+            System.out.println("destination 是 null");
+        }else {
+            System.out.println("maxMin本次返回值没有空指针");
+        }
+
         AIMovement result = new AIMovement(piece, piece.getPosition(), destination, board.val);
         return result;
     }
@@ -173,6 +239,10 @@ public class Play {
     // 移动棋子，同时会自动调用各个函数，判断是否胜负已定，是否有子被吃，是否是和棋，是否必须进行兵的升变
     // 返回结果是对象MoveResult，包含以上各函数的结果
     static MoveResult movePiece(Piece piece, Position destination, Position startPlace, Board board) {
+
+        if (piece == null) {
+            System.out.println("hhhhhhhhhhhhhhhhhhhhhhh");
+        }
 
         if (destination.piece != null && destination.piece instanceof K) {
             if (destination.piece.side == 0) {
