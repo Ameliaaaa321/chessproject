@@ -139,7 +139,7 @@ public class MainFrame_LD extends JFrame{
                 buttonPvEGame1.setIcon(images[1][0]);
                 cardLayout.show(mainPanel, "人机对战");
                 System.out.println("ispve");
-                aigamePanel.depth=3;
+                aigamePanel.depth= 1;
             }
 
             @Override
@@ -180,7 +180,7 @@ public class MainFrame_LD extends JFrame{
                 buttonPvEGame2.setIcon(images[2][0]);
                 cardLayout.show(mainPanel, "人机对战");
                 System.out.println("ispve");
-                aigamePanel.depth = 5;
+                aigamePanel.depth = 3;
 
 
             }

@@ -167,9 +167,6 @@ public class Play {
                                 piece = board.positions[i][j].piece;
                                 destination = board.positions[board.positions[i][j].piece.findValidMovement().get(k).x][board.positions[i][j].piece.findValidMovement().get(k).y];
                             }
-//                            board.val = Math.min(board.val, aiMovement.boardVal);
-//                            piece = board.positions[aiMovement.piece.x][aiMovement.piece.y].piece;
-//                            destination = board.positions[aiMovement.destination.x][aiMovement.destination.y];
                             // beta表示从当前节点往下搜索，至少能达到的最小值
                             b = Math.min(b, board.val);
 
@@ -206,9 +203,6 @@ public class Play {
                                 piece = board.positions[i][j].piece;
                                 destination = board.positions[board.positions[i][j].piece.findValidMovement().get(k).x][board.positions[i][j].piece.findValidMovement().get(k).y];
                             }
-//                            board.val = Math.max(board.val, aiMovement.boardVal);
-//                            piece = board.positions[aiMovement.piece.x][aiMovement.piece.y].piece;
-//                            destination = board.positions[aiMovement.destination.x][aiMovement.destination.y];
                             // alpha表示从当前节点往下搜索，至少能达到的最大值
                             a = Math.max(a, temp.val);
 
@@ -276,22 +270,6 @@ public class Play {
         MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
         return result;
     }
-
-
-
-//    // 判断是否有棋子被吃，有的话返回值为被吃的棋子，没有的话返回null
-//    static Piece isEaten(Piece piece, Position destination, Position startPlace, Board board) {
-//        // 除了吃过路兵以外，吃子都吃的是落子处的
-//        if (destination.piece == null) {
-//            if (piece instanceof P && ((P) piece).isEatPasserby &&
-//                    Math.abs(destination.x - startPlace.x) == 1) {
-//                return board.positions[destination.x][startPlace.y].piece;
-//            }
-//            return null;
-//        }else {
-//            return destination.piece;
-//        }
-//    }
 
     // 判断是否胜负已定，-1代表棋局继续，0代表黑方胜，1代表白方胜, 2代表和棋
     // 包括：被将军且无法避免；和棋
