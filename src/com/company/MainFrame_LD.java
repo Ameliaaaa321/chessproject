@@ -251,26 +251,26 @@ public class MainFrame_LD extends JFrame{
                         } catch (FileNotFoundException ex) {
 //                    ex.printStackTrace();
                             WrongDialog wrongDialog=new WrongDialog();
-                            TextField textField = new TextField();
-                            textField.setText("错误代码：104");
-                            wrongDialog.add(textField);
+                            Label label = new Label();
+                            label.setText("错误代码：104");
+                            wrongDialog.add(label);
                             wrongDialog.setVisible(true);
                             System.out.println("104");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             System.out.println("104.");
                             WrongDialog wrongDialog=new WrongDialog();
-                            TextField textField = new TextField();
-                            textField.setText("错误代码：104");
-                            wrongDialog.add(textField);
+                            Label label = new Label();
+                            label.setText("错误代码：104");
+                            wrongDialog.add(label);
                             wrongDialog.setVisible(true);
                             System.out.println("104");
                         }
                     }else{
                         WrongDialog wrongDialog=new WrongDialog();
-                        TextField textField = new TextField();
-                        textField.setText("错误代码：104");
-                        wrongDialog.add(textField);
+                        Label label = new Label();
+                        label.setText("错误代码：104");
+                        wrongDialog.add(label);
                         wrongDialog.setVisible(true);
                         System.out.println("104");
                     }

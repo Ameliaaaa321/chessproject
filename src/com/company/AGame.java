@@ -168,9 +168,9 @@ public class AGame {
                                     default:
                                         System.out.println("102");
                                         WrongDialog wrongDialog=new WrongDialog();
-                                        TextField textField = new TextField();
-                                        textField.setText("错误代码：102");
-                                        wrongDialog.add(textField);
+                                        Label label = new Label();
+                                        label.setText("错误代码：102");
+                                        wrongDialog.add(label);
                                         wrongDialog.setVisible(true);
 
 //                                    throw new IllegalStateException("102: Unexpected value: " + s.get(i).get(j).charAt(k));
@@ -189,9 +189,9 @@ public class AGame {
                     System.out.println("空指针");
                     System.out.println("101");
                     WrongDialog wrongDialog=new WrongDialog();
-                    TextField textField = new TextField();
-                    textField.setText("错误代码：101");
-                    wrongDialog.add(textField);
+                    Label label = new Label();
+                    label.setText("错误代码：101");
+                    wrongDialog.add(label);
                     wrongDialog.setVisible(true);
                 }
             }

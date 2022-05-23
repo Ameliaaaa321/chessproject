@@ -7,7 +7,7 @@ public class WrongDialog extends JDialog {
     public WrongDialog() {
         // TODO Auto-generated constructor stub
 
-        setSize(500,250);
+        setSize(250,200);
         setLocationRelativeTo(null);
     }
 
