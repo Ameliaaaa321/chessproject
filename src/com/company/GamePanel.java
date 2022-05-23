@@ -54,6 +54,7 @@ public class GamePanel extends JPanel {
     public String backString ;
 
     public boolean isPvE;
+    public int depth;
 
 
 
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel {
         String bg1 = "pic"+File.separator+"gamePage2.png";
         Image bgimg1=Toolkit.getDefaultToolkit().getImage(bg1);
 
-        String bg2 = "pic"+File.separator+"gamePage21.png";
+        String bg2 = "pic"+File.separator+"gamePage22.png";
         Image bgimg2=Toolkit.getDefaultToolkit().getImage(bg2);
 
         if(backGround){
@@ -80,13 +81,13 @@ public class GamePanel extends JPanel {
         String WWin = "pic"+File.separator+"WWin.png";
         Image WWinImg = Toolkit.getDefaultToolkit().getImage(WWin);
 
-        String Draw = "pic"+File.separator+"Draw.png";
+        String Draw = "pic"+File.separator+"Isdraw.png";
         Image DrawImg = Toolkit.getDefaultToolkit().getImage(Draw);
 
-        String sideBlack = "pic"+File.separator+ "sideBlack.png";
+        String sideBlack = "pic"+File.separator+ "side0.png";
         Image sideBlackImg = Toolkit.getDefaultToolkit().getImage(sideBlack);
 
-        String sideWhite = "pic" +File.separator+"sideWhite.png";
+        String sideWhite = "pic" +File.separator+"side1.png";
         Image sideWhiteImg = Toolkit.getDefaultToolkit().getImage(sideWhite);
 
         String islock = "pic"+File.separator+"lockboard.png";
@@ -115,16 +116,16 @@ public class GamePanel extends JPanel {
 
         //输赢平
         switch (GameOver){
-            case 1:
+            case 0:
                 g.drawImage(BWinImg,0,0,this);
                 lock=true;
                 break;
-            case 0:
+            case 1:
                 g.drawImage(WWinImg,0,0,this);
                 lock=true;
                 break;
             case 2:
-                g.drawImage(DrawImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+                g.drawImage(DrawImg,0,0,this);
                 lock=true;
                 break;
             case -1:
@@ -307,7 +308,7 @@ public class GamePanel extends JPanel {
 
 
                                         System.out.println("计算机行棋");
-                                        AIMovement aiMovement = Play.maxMin(3,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
+                                        AIMovement aiMovement = Play.maxMin(depth,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
                                         if(aiMovement.destination.piece != null){
                                             Point point = getPointFromPosition(aiMovement.destination);
                                             Piece c1 = getChessByP(point);
@@ -355,7 +356,7 @@ public class GamePanel extends JPanel {
 
                                     System.out.println("计算机行棋");
 
-                                    AIMovement aiMovement = Play.maxMin(3,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
+                                    AIMovement aiMovement = Play.maxMin(depth,0,board,Integer.MAX_VALUE,Integer.MIN_VALUE,null,null);
                                     if(aiMovement.destination.piece != null){
                                         Point point = getPointFromPosition(aiMovement.destination);
                                         Piece c1 = getChessByP(point);
@@ -426,8 +427,8 @@ public class GamePanel extends JPanel {
         //退出按钮和其他交互
 
         //图片传入
-        ImageIcon buttonImages[][] = new ImageIcon[4][2];
-        for (int i = 0; i < 4; i++) {
+        ImageIcon buttonImages[][] = new ImageIcon[6][2];
+        for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 2; j++) {
                 ImageIcon img = new ImageIcon("pic" + File.separator + "gp" + i + j + ".png");
                 img.setImage(img.getImage().getScaledInstance(160, 80, Image.SCALE_DEFAULT));
@@ -487,14 +488,14 @@ public class GamePanel extends JPanel {
         });
         JButton buttonreset = new MenuButton();          //冲开游戏按键
         buttonreset.setBounds(1280-160, 160, 160, 80);
-        buttonreset.setIcon(buttonImages[0][0]);
+        buttonreset.setIcon(buttonImages[5][0]);
         buttonreset.setVisible(true);
         bg_image.add(buttonreset);
         buttonreset.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonreset.setIcon(buttonImages[0][0]);
+                buttonreset.setIcon(buttonImages[5][0]);
                 selectedPiece=null;
                 loadChessboard();
             }
@@ -507,20 +508,20 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonreset.setIcon(buttonImages[0][1]);
+                buttonreset.setIcon(buttonImages[5][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonreset.setIcon(buttonImages[0][0]);
+                buttonreset.setIcon(buttonImages[5][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonreset.setIcon(buttonImages[0][1]);
+                buttonreset.setIcon(buttonImages[5][1]);
             }
 
         });
@@ -581,37 +582,46 @@ public class GamePanel extends JPanel {
             }
         });
 
-        JButton buttonstart = new MenuButton();          //
-        buttonstart.setBounds(0, 160, 160, 80);
-        buttonstart.setIcon(buttonImages[2][0]);
-        buttonstart.setVisible(true);
-        bg_image.add(buttonstart);
-        buttonstart.addMouseListener(new MouseListener() {
+        JButton buttonreturn = new MenuButton();          //huiqi
+        buttonreturn.setBounds(0, 160, 160, 80);
+        buttonreturn.setIcon(buttonImages[4][0]);
+        buttonreturn.setVisible(true);
+        bg_image.add(buttonreturn);
+        buttonreturn.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonstart.setIcon(buttonImages[0][0]);
-                lock=!lock;
+                buttonreturn.setIcon(buttonImages[4][0]);
+                selectedPiece = null;
+                if(storeBoard.stored.size()!=1){
+                    storeBoard.stored.remove(storeBoard.stored.size()-1);
+                }
+                currentGame = AGame.huiqi(storeBoard.getstring());
+                board = currentGame.board;
+                pieces=currentGame.pieces;
+                round = currentGame.round;
+                currentPlayer = currentGame.currentPlayer;
                 repaint();
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonstart.setIcon(buttonImages[0][1]);
+                buttonreturn.setIcon(buttonImages[4][1]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonstart.setIcon(buttonImages[0][0]);
+                buttonreturn.setIcon(buttonImages[4][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonstart.setIcon(buttonImages[0][1]);
+                buttonreturn.setIcon(buttonImages[4][1]);
             }
 
             @Override
@@ -720,7 +730,7 @@ public class GamePanel extends JPanel {
         Point p = new Point();
         p.x = (x - CHESSBOARD_LEFTSIDE )/CHESS_OFFSET ;
         p.y = (y - CHESSBOARD_UPSIDE)/CHESS_OFFSET ;
-        if(p.x<0||p.y<0||p.x>8||p.y>8){
+        if(p.x<0||p.y<0||p.x>7||p.y>7){
             return  null;
         }
         return p;

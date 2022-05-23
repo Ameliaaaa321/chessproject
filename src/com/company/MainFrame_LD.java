@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
+import java.io.*;
 
 
 public class MainFrame_LD extends JFrame{
@@ -20,7 +20,7 @@ public class MainFrame_LD extends JFrame{
     private JPanel contentPane = new JPanel();                  //中间界面
     public GamePanel gamePanel = new GamePanel(false);               //游戏主界面
     public GamePanel aigamePanel =new GamePanel(true);
-    private LoadPanel loadPanel = new LoadPanel();              //读档存档界面
+
 
 
 //尝试新建一个窗口并使其出现
@@ -58,18 +58,18 @@ public class MainFrame_LD extends JFrame{
 
 /*封面按键？
 * */
-        ImageIcon images[][] = new  ImageIcon[2][4];
-        for (int i =0;i<3;i++){
-            for (int j =0;j<2;j++){
-              ImageIcon img = new ImageIcon("pic"+File.separator+ j + i +".png");
+        ImageIcon images[][] = new  ImageIcon[4][3];
+        for (int i =0;i<4;i++){
+            for (int j =0;j<3;j++){
+              ImageIcon img = new ImageIcon("pic"+File.separator+"botton0"+ i + j +".png");
               img.setImage(img.getImage().getScaledInstance(WIDTH/8,HEIGHT*10/72,Image.SCALE_DEFAULT));
-              images[j][i] = img;
+              images[i][j] = img;
             }
         }
 
         mainPanel.add(contentPane, "主界面");         //添加页面及索引
         mainPanel.add(gamePanel, "new game");
-        mainPanel.add(loadPanel,"读档界面");
+
         mainPanel.add(aigamePanel,"人机对战");
 
         setContentPane(mainPanel);
@@ -77,16 +77,16 @@ public class MainFrame_LD extends JFrame{
         JLabel lblNewLabel = new JLabel();
         lblNewLabel.setSize(WIDTH,HEIGHT);
         ImageIcon imageIcon = new ImageIcon("pic"+ File.separator+"coverPage1.png");
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(WIDTH,HEIGHT,Image.SCALE_DEFAULT));
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(WIDTH,HEIGHT,Image.SCALE_AREA_AVERAGING));
         lblNewLabel.setIcon(imageIcon);
 
         JPanel panelMenu = new JPanel();
         panelMenu.setOpaque(false);         //透明度
-        panelMenu.setBounds((int)(WIDTH * 7/16), (int)(HEIGHT / 2), 160, 300);
+        panelMenu.setBounds((int)(WIDTH * 7/16), (int)(HEIGHT / 2), 160, 320);
 
         panelMenu.setVisible(true);
         contentPane.add(panelMenu);
-        panelMenu.setLayout(new GridLayout(3,1,0,0));
+        panelMenu.setLayout(new GridLayout(4,1,0,0));
 
         JButton buttonLocalGame = new MenuButton();         //新游戏按键
         buttonLocalGame.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
@@ -97,7 +97,7 @@ public class MainFrame_LD extends JFrame{
             @Override
             public void mouseReleased(MouseEvent e) {           //松开
                 // TODO Auto-generated method stub
-                buttonLocalGame.setIcon(images[0][1]);
+                buttonLocalGame.setIcon(images[0][0]);
                 cardLayout.show(mainPanel, "new game");
                 System.out.println(gamePanel.isPvE);
             }
@@ -105,7 +105,7 @@ public class MainFrame_LD extends JFrame{
             @Override
             public void mousePressed(MouseEvent e) {            //按下
                 // TODO Auto-generated method stub
-                buttonLocalGame.setIcon(images[0][1]);
+                buttonLocalGame.setIcon(images[0][2]);
             }
 
             @Override
@@ -117,7 +117,7 @@ public class MainFrame_LD extends JFrame{
             @Override
             public void mouseEntered(MouseEvent e) {            //移入
                 // TODO Auto-generated method stub
-                buttonLocalGame.setIcon(images[0][2]);
+                buttonLocalGame.setIcon(images[0][1]);
             }
 
             @Override
@@ -127,18 +127,60 @@ public class MainFrame_LD extends JFrame{
             }
         });
 
-        JButton buttonPvEGame = new MenuButton();         //新游戏按键
-        buttonPvEGame.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
-        buttonPvEGame.setIcon(images[0][0]);
-        panelMenu.add(buttonPvEGame);
-        buttonPvEGame.addMouseListener(new MouseListener() {
+        JButton buttonPvEGame1 = new MenuButton();         //人机简单按键
+        buttonPvEGame1.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
+        buttonPvEGame1.setIcon(images[1][0]);
+        panelMenu.add(buttonPvEGame1);
+        buttonPvEGame1.addMouseListener(new MouseListener() {
 
             @Override
             public void mouseReleased(MouseEvent e) {           //松开
                 // TODO Auto-generated method stub
-                buttonPvEGame.setIcon(images[0][1]);
+                buttonPvEGame1.setIcon(images[1][0]);
                 cardLayout.show(mainPanel, "人机对战");
                 System.out.println("ispve");
+                aigamePanel.depth=3;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {            //按下
+                // TODO Auto-generated method stub
+                buttonPvEGame1.setIcon(images[1][2]);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {             //移开
+                // TODO Auto-generated method stub
+                buttonPvEGame1.setIcon(images[1][0]);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {            //移入
+                // TODO Auto-generated method stub
+                buttonPvEGame1.setIcon(images[1][1]);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+
+        JButton buttonPvEGame2 = new MenuButton();         //人机难按键
+        buttonPvEGame2.setPreferredSize(new Dimension(WIDTH/8,HEIGHT*10/36));
+        buttonPvEGame2.setIcon(images[2][0]);
+        panelMenu.add(buttonPvEGame2);
+        buttonPvEGame2.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {           //松开
+                // TODO Auto-generated method stub
+                buttonPvEGame2.setIcon(images[2][0]);
+                cardLayout.show(mainPanel, "人机对战");
+                System.out.println("ispve");
+                aigamePanel.depth = 5;
 
 
             }
@@ -146,19 +188,19 @@ public class MainFrame_LD extends JFrame{
             @Override
             public void mousePressed(MouseEvent e) {            //按下
                 // TODO Auto-generated method stub
-                buttonPvEGame.setIcon(images[0][1]);
+                buttonPvEGame2.setIcon(images[2][2]);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {             //移开
                 // TODO Auto-generated method stub
-                buttonPvEGame.setIcon(images[0][0]);
+                buttonPvEGame2.setIcon(images[2][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {            //移入
                 // TODO Auto-generated method stub
-                buttonPvEGame.setIcon(images[0][2]);
+                buttonPvEGame2.setIcon(images[2][1]);
             }
 
             @Override
@@ -171,34 +213,91 @@ public class MainFrame_LD extends JFrame{
 
 
         JButton buttonExit = new MenuButton();          //读档游戏按键
-        buttonExit.setIcon(images[0][0]);
+        buttonExit.setIcon(images[3][0]);
         panelMenu.add(buttonExit);
         buttonExit.addMouseListener(new MouseListener() {
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[0][0]);
-                cardLayout.show(mainPanel, "读档界面");
+                buttonExit.setIcon(images[3][0]);
+//                cardLayout.show(mainPanel, "读档界面");
+                JFileChooser jfc=new JFileChooser();
+                jfc.showOpenDialog(new JLabel());
+                File file=jfc.getSelectedFile();
+                if(file.isFile()){ //是文件
+                    System.out.println("文件:"+file.getAbsolutePath());
+                    String extension = "";
+                    int i = file.getName().lastIndexOf('.');
+                    if (i > 0) {
+                        extension = file.getName().substring(i+1);
+                    }
+//...
+                    if("txt".equals(extension)){
+                        try {
+                            StringBuffer buffer = new StringBuffer();
+                            BufferedReader bf= new BufferedReader(new FileReader(file));
+                            String s = null;
+                            while((s = bf.readLine())!=null){//使用readLine方法，一次读一行
+                                buffer.append(s.trim());
+                                buffer.append("\n");
+                            }
+                            String string = buffer.toString();
+                            gamePanel.currentGame = AGame.load(AGame.splitString(string));
+                            gamePanel.loadChessboard(gamePanel.currentGame);
+                            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "new game" );
+
+//                    gamePanel.currentGame=AGame.load(AGame.splitString(string));
+                        } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+                            WrongDialog wrongDialog=new WrongDialog();
+                            TextField textField = new TextField();
+                            textField.setText("错误代码：104");
+                            wrongDialog.add(textField);
+                            wrongDialog.setVisible(true);
+                            System.out.println("104");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            System.out.println("104.");
+                            WrongDialog wrongDialog=new WrongDialog();
+                            TextField textField = new TextField();
+                            textField.setText("错误代码：104");
+                            wrongDialog.add(textField);
+                            wrongDialog.setVisible(true);
+                            System.out.println("104");
+                        }
+                    }else{
+                        WrongDialog wrongDialog=new WrongDialog();
+                        TextField textField = new TextField();
+                        textField.setText("错误代码：104");
+                        wrongDialog.add(textField);
+                        wrongDialog.setVisible(true);
+                        System.out.println("104");
+                    }
+
+
+                    //TODO: do sth
+                }
+                System.out.println(jfc.getSelectedFile().getName());
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[0][1]);
+                buttonExit.setIcon(images[3][2]);
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[0][0]);
+                buttonExit.setIcon(images[3][0]);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 // TODO Auto-generated method stub
-                buttonExit.setIcon(images[0][2]);
+                buttonExit.setIcon(images[3][1]);
             }
 
             @Override

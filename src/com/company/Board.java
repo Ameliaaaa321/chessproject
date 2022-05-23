@@ -113,5 +113,13 @@ import java.util.ArrayList;
 //            System.out.println(str);
             stored.add(str.toString());
         }
+
+        public String getstring(){
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String s :stored){
+                stringBuilder.append(s);
+            }
+            return stringBuilder.toString();
+        }
     }
 
