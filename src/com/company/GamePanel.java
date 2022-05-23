@@ -75,11 +75,18 @@ public class GamePanel extends JPanel {
         }
 
 
-        String BWin = "pic"+File.separator+"BWin.png";
+//        String BWin = "pic"+File.separator+"BWin.png";
+//        Image BWinImg = Toolkit.getDefaultToolkit().getImage(BWin);
+//
+//        String WWin = "pic"+File.separator+"WWin.png";
+//        Image WWinImg = Toolkit.getDefaultToolkit().getImage(WWin);
+
+        String BWin = "pic"+File.separator+"0.png";
         Image BWinImg = Toolkit.getDefaultToolkit().getImage(BWin);
 
-        String WWin = "pic"+File.separator+"WWin.png";
+        String WWin = "pic"+File.separator+"1.png";
         Image WWinImg = Toolkit.getDefaultToolkit().getImage(WWin);
+
 
         String Draw = "pic"+File.separator+"Isdraw.png";
         Image DrawImg = Toolkit.getDefaultToolkit().getImage(Draw);
@@ -132,9 +139,9 @@ public class GamePanel extends JPanel {
                 break;
         }
 
-        if(lock){
-            g.drawImage(islockImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
-        }
+//        if(lock){
+//            g.drawImage(islockImg,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
+//        }
     }
 
     private void drawPieces(Graphics g) {
@@ -602,7 +609,7 @@ public class GamePanel extends JPanel {
                 round = currentGame.round;
                 currentPlayer = currentGame.currentPlayer;
                 repaint();
-
+                
             }
 
             @Override

@@ -185,6 +185,11 @@ public class AGame {
                 }catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("下标异常");
                     System.out.println("101");
+                    WrongDialog wrongDialog=new WrongDialog();
+                    Label label = new Label();
+                    label.setText("错误代码：101");
+                    wrongDialog.add(label);
+                    wrongDialog.setVisible(true);
                 }catch (NullPointerException e){
                     System.out.println("空指针");
                     System.out.println("101");
@@ -195,15 +200,7 @@ public class AGame {
                     wrongDialog.setVisible(true);
                 }
             }
-//        }catch (Exception exception){
-//            System.out.println("空指针");
-//            System.out.println("102");
-//            WrongDialog wrongDialog=new WrongDialog();
-//            TextField textField = new TextField();
-//            textField.setText("错误代码：102");
-//            wrongDialog.add(textField);
-//            wrongDialog.setVisible(true);
-//        }
+//
 
 
         AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);
