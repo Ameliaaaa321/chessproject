@@ -200,7 +200,17 @@ public class AGame {
                     wrongDialog.setVisible(true);
                 }
             }
-//
+
+        for (Piece piece :currentPieces){
+            if (piece instanceof K){
+                if(piece.getSide()==0){
+                    currentBoard.k0 = piece;
+                }else{
+                    currentBoard.k1 = piece;
+                }
+
+            }
+        }
 
 
         AGame LoadedGame =new AGame(storeBoard,currentBoard,currentPieces,round,currentPlayer);

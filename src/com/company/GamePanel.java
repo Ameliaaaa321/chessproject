@@ -212,9 +212,9 @@ public class GamePanel extends JPanel {
                                             pieces.remove(c);
                                             System.out.println(selectedPiece.getP());
                                             GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
-
-                                            board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                            board.positions[p1.x][p1.y].piece = selectedPiece;
+//
+//                                            board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+//                                            board.positions[p1.x][p1.y].piece = selectedPiece;
                                             currentPlayer = currentPlayer != 1 ? 1 : 0;
                                             selectedPiece = null;
                                             chess_noise.play();
@@ -302,8 +302,8 @@ public class GamePanel extends JPanel {
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
                                         GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
 //                                        Play.updatePositions(pieces, board);
-                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
-                                        board.positions[p1.x][p1.y].piece = selectedPiece;
+//                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
+//                                        board.positions[p1.x][p1.y].piece = selectedPiece;
 //                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
                                         selectedPiece = null;
                                         chess_noise.play();
@@ -329,8 +329,8 @@ public class GamePanel extends JPanel {
                                                 board.positions[aiMovement.destination.x][aiMovement.destination.y],
                                                 board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
                                                 board).isOver;
-                                        board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
-                                        board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
+//                                        board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
+//                                        board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
 //                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
                                         round++;
 
@@ -377,8 +377,8 @@ public class GamePanel extends JPanel {
                                             board.positions[aiMovement.destination.x][aiMovement.destination.y],
                                             board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
                                             board).isOver;
-                                    board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
-                                    board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
+//                                    board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
+//                                    board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
 //                                    currentPlayer = currentPlayer != 1 ? 1 : 0;
                                     round++;
 
@@ -739,45 +739,45 @@ public class GamePanel extends JPanel {
             }
         });
 
-        JButton buttonView = new MenuButton();          //回放步骤
-        buttonView.setBounds(1280-160, 320, 160, 80);
-        buttonView.setIcon(buttonImages[3][0]);
-        buttonView.setVisible(true);
-        bg_image.add(buttonView);
-        buttonView.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                // TODO Auto-generated method stub
-                buttonView.setIcon(buttonImages[3][0]);
-               inReview=true;
-               System.out.println("keyi1");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                // TODO Auto-generated method stub
-                buttonView.setIcon(buttonImages[3][1]);
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-                buttonView.setIcon(buttonImages[3][0]);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // TODO Auto-generated method stub
-                buttonView.setIcon(buttonImages[3][1]);
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // TODO Auto-generated method stub
-
-            }
-        });
+//        JButton buttonView = new MenuButton();          //回放步骤
+//        buttonView.setBounds(1280-160, 320, 160, 80);
+//        buttonView.setIcon(buttonImages[3][0]);
+//        buttonView.setVisible(true);
+//        bg_image.add(buttonView);
+//        buttonView.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                // TODO Auto-generated method stub
+//                buttonView.setIcon(buttonImages[3][0]);
+//               inReview=true;
+//               System.out.println("keyi1");
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                // TODO Auto-generated method stub
+//                buttonView.setIcon(buttonImages[3][1]);
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//                // TODO Auto-generated method stub
+//                buttonView.setIcon(buttonImages[3][0]);
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//                // TODO Auto-generated method stub
+//                buttonView.setIcon(buttonImages[3][1]);
+//            }
+//
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
 
 
 
