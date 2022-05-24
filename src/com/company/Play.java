@@ -252,11 +252,18 @@ public class Play {
         piece.x = destination.x;
         piece.y = destination.y;
 
+        Piece kTemp;
+        if (piece.side == 0) {
+            kTemp = board.k1;
+        }else {
+            kTemp = board.k0;
+        }
+        boolean isChecked = isChecked(kTemp, board);
         boolean isDraw = isDraw(piece, board);
         Piece k = piece.side == 0 ? board.k1 : board.k0;
         int isOver = isOver(isDraw, board, k, piece);
 //        Piece eaten = isEaten(piece, destination, startPlace, board);
-//        boolean isPromotion = isPromotion(piece, destination);
+        boolean isPromotion = isPromotion(piece, destination);
 
 
 //        MoveResult result = new MoveResult(-1, null, false, false);
@@ -267,7 +274,7 @@ public class Play {
             ((P) piece).countSteps = Math.abs(startPlace.y - destination.y);
         }
 
-        MoveResult result = new MoveResult(isOver, null, isDraw, false,board);
+        MoveResult result = new MoveResult(isOver, null, isDraw, isPromotion, isChecked, board);
         return result;
     }
 
@@ -410,14 +417,16 @@ class MoveResult {
     Piece eaten;
     boolean isDraw;
     boolean isPromotion;
+    boolean isChecked;
     Board board;
 
 
-    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion,Board board) {
+    public MoveResult(int isOver, Piece eaten, boolean isDraw, boolean isPromotion, boolean isChecked, Board board) {
         this.isOver = isOver;
         this.eaten = eaten;
         this.isDraw = isDraw;
         this.isPromotion = isPromotion;
+        this.isChecked = isChecked;
         this.board = board;
     }
 }
