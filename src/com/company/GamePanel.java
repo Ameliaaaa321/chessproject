@@ -562,14 +562,9 @@ public class GamePanel extends JPanel {
                     currentGame.storeBoard=storeBoard;
                     currentGame.currentPlayer=currentPlayer;
                     currentGame.round=round;
-//                    System.out.println(currentGame.currentPlayer);
-//                    System.out.println(currentGame.round);
-//                    System.out.println(currentGame.board);
-//                    System.out.println(currentGame.storeBoard.stored.get(0).positions[0][0]);
-//                    System.out.println(currentGame.pieces);
                     FileLoad fileLoad =new FileLoad();
                     fileLoad.gameSave(currentGame.save());
-                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "读档界面");
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
