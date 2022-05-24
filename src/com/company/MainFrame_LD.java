@@ -31,7 +31,7 @@ public class MainFrame_LD extends JFrame{
                     MainFrame_LD frm = new MainFrame_LD();
                     frm.setVisible(true);
                     Music test = new Music("audio"+File.separator+"Sergei Prokofiev - Dance Of The Knights_01.wav");
-//                    test.start();
+                    test.start();
 
                 } catch (Exception e) {
                     e.printStackTrace();
