@@ -16,6 +16,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -233,6 +234,19 @@ public class GamePanel extends JPanel {
                                             }else{
                                                 bischecked=moveResult.isChecked;
                                             }
+                                            if(moveResult.isPromotion){
+                                                JDialog jDialog = new JDialog();
+                                                TextField textField = new TextField();
+
+                                                jDialog.add(textField);
+                                                textField.setText("请输入N，R，Q，B\n");
+                                                char ch ;
+                                                ch = textField.getText().charAt(0);
+                                                if((ch!='N')&&(ch!='Q')&&(ch!='R')&&(ch!='B')){
+                                                    textField.setText("请输入N，R，Q，B\n");
+                                                }
+                                                Play.promotion(selectedPiece,ch,board);
+                                            }
 //                                            board.positions[selectedPiece.x][selectedPiece.y].piece = null;
 //                                            board.positions[p1.x][p1.y].piece = selectedPiece;
                                             currentPlayer = currentPlayer != 1 ? 1 : 0;
@@ -256,6 +270,20 @@ public class GamePanel extends JPanel {
                                             wischecked= moveResult.isChecked;
                                         }else{
                                             bischecked=moveResult.isChecked;
+                                        }
+                                        if(moveResult.isPromotion){
+                                            System.out.println("shengbian");
+                                            JDialog jDialog = new JDialog();
+                                            TextField textField = new TextField();
+
+                                            jDialog.add(textField);
+                                            textField.setText("请输入N，R，Q，B\n");
+                                            char ch ;
+                                            ch = textField.getText().charAt(0);
+                                            if((ch!='N')&&(ch!='Q')&&(ch!='R')&&(ch!='B')){
+                                                textField.setText("请输入N，R，Q，B\n");
+                                            }
+                                            Play.promotion(selectedPiece,ch,board);
                                         }
                                         System.out.println("成功移动");
                                         //记录
@@ -332,6 +360,19 @@ public class GamePanel extends JPanel {
                                             wischecked= moveResult.isChecked;
                                         }else{
                                             bischecked=moveResult.isChecked;
+                                        }
+                                        if(moveResult.isPromotion){
+                                            JDialog jDialog = new JDialog();
+                                            TextField textField = new TextField();
+
+                                            jDialog.add(textField);
+                                            textField.setText("请输入N，R，Q，B\n");
+                                            char ch ;
+                                            ch = textField.getText().charAt(0);
+                                            if((ch!='N')&&(ch!='Q')&&(ch!='R')&&(ch!='B')){
+                                                textField.setText("请输入N，R，Q，B\n");
+                                            }
+                                            Play.promotion(selectedPiece,ch,board);
                                         }
                                         // 之前出发和目的地好像反了
 //                                        Play.updatePositions(pieces, board);
