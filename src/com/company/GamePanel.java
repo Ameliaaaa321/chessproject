@@ -57,6 +57,8 @@ public class GamePanel extends JPanel {
     public int depth;
 
     public boolean inReview =false;
+    public boolean bischecked;
+    public boolean wischecked;
 
 
 
@@ -69,6 +71,19 @@ public class GamePanel extends JPanel {
 
         String bg2 = "pic"+File.separator+"gamePage22.png";
         Image bgimg2=Toolkit.getDefaultToolkit().getImage(bg2);
+
+
+        String checked = "pic"+File.separator+"check.png";
+        Image ckeckedimg =Toolkit.getDefaultToolkit().getImage(checked);
+
+
+
+        if(bischecked){
+            g.drawImage(ckeckedimg,CHESSBOARD_LEFTSIDE+CHESSBOARD_SIZE+60,CHESSBOARD_UPSIDE,this);
+        }
+        if(wischecked){
+            g.drawImage(ckeckedimg,CHESSBOARD_LEFTSIDE-300,CHESSBOARD_UPSIDE+CHESSBOARD_SIZE-120,this);
+        }
 
         if(backGround){
             g.drawImage(bgimg1,CHESSBOARD_LEFTSIDE,CHESSBOARD_UPSIDE,this);
@@ -211,8 +226,13 @@ public class GamePanel extends JPanel {
                                             System.out.println("成功吃子" + c.getName());
                                             pieces.remove(c);
                                             System.out.println(selectedPiece.getP());
-                                            GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
-//
+                                            MoveResult moveResult = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board);
+                                            GameOver = moveResult.isOver;    // 之前出发和目的地好像反了
+                                            if(selectedPiece.side==0){
+                                                wischecked= moveResult.isChecked;
+                                            }else{
+                                                bischecked=moveResult.isChecked;
+                                            }
 //                                            board.positions[selectedPiece.x][selectedPiece.y].piece = null;
 //                                            board.positions[p1.x][p1.y].piece = selectedPiece;
                                             currentPlayer = currentPlayer != 1 ? 1 : 0;
@@ -229,8 +249,14 @@ public class GamePanel extends JPanel {
 
                                     System.out.println("移动");
                                     if (selectedPiece.findValidMovement().contains(p1)) {
-                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发地和目的地好像反了
+                                        MoveResult moveResult = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board);    // 之前出发地和目的地好像反了
 
+                                        GameOver = moveResult.isOver;    // 之前出发和目的地好像反了
+                                        if(selectedPiece.side==0){
+                                            wischecked= moveResult.isChecked;
+                                        }else{
+                                            bischecked=moveResult.isChecked;
+                                        }
                                         System.out.println("成功移动");
                                         //记录
                                         System.out.println(selectedPiece.getP());
@@ -300,7 +326,14 @@ public class GamePanel extends JPanel {
 //                                        selectedPiece.setP(p);
                                         System.out.println(selectedPiece.getP());
 //                                        GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
-                                        GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发和目的地好像反了
+                                        MoveResult moveResult=Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board);
+                                        GameOver = moveResult.isOver;    // 之前出发和目的地好像反了
+                                        if(selectedPiece.side==0){
+                                            wischecked= moveResult.isChecked;
+                                        }else{
+                                            bischecked=moveResult.isChecked;
+                                        }
+                                        // 之前出发和目的地好像反了
 //                                        Play.updatePositions(pieces, board);
 //                                        board.positions[selectedPiece.x][selectedPiece.y].piece = null;
 //                                        board.positions[p1.x][p1.y].piece = selectedPiece;
@@ -325,10 +358,16 @@ public class GamePanel extends JPanel {
                                         }
 //                                        GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
                                         System.out.println("AI最终的返回值：" + aiMovement.piece.name + " " + aiMovement.piece.x + " " + aiMovement.piece.y);
-                                        GameOver = Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
+                                        MoveResult moveResult1= Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
                                                 board.positions[aiMovement.destination.x][aiMovement.destination.y],
                                                 board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
-                                                board).isOver;
+                                                board);
+                                        GameOver = moveResult1.isOver;// 之前出发和目的地好像反了
+                                        if(selectedPiece.side==0){
+                                            wischecked= moveResult1.isChecked;
+                                        }else{
+                                            bischecked=moveResult1.isChecked;
+                                        }
 //                                        board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
 //                                        board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
 //                                        currentPlayer = currentPlayer != 1 ? 1 : 0;
@@ -347,7 +386,13 @@ public class GamePanel extends JPanel {
                                 if (selectedPiece.findValidMovement().contains(p1)) {
 
 //                                    GameOver = Play.movePiece(selectedPiece, selectedPiece.getPosition(), p1, board, storeBoard).isOver;
-                                    GameOver = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board).isOver;    // 之前出发地和目的地好像反了
+                                    MoveResult moveResult = Play.movePiece(selectedPiece, p1, selectedPiece.getPosition(), board);    // 之前出发地和目的地好像反了
+                                    GameOver = moveResult.isOver;    // 之前出发和目的地好像反了
+                                    if(selectedPiece.side==0){
+                                        wischecked= moveResult.isChecked;
+                                    }else{
+                                        bischecked=moveResult.isChecked;
+                                    }
 //                                    Play.updatePositions(pieces, board);
                                     System.out.println("成功移动");
                                     //记录
@@ -373,10 +418,16 @@ public class GamePanel extends JPanel {
                                     }
 //                                    GameOver = Play.movePiece(aiMovement.piece, aiMovement.destination, aiMovement.startPlace, board).isOver;
                                     System.out.println("返回值：" + aiMovement.piece.x + " " + aiMovement.piece.y);
-                                    GameOver = Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
+                                    MoveResult moveResult1= Play.movePiece(board.positions[aiMovement.piece.x][aiMovement.piece.y].piece,
                                             board.positions[aiMovement.destination.x][aiMovement.destination.y],
                                             board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y],
-                                            board).isOver;
+                                            board);
+                                    GameOver = moveResult1.isOver;    // 之前出发和目的地好像反了
+                                    if(selectedPiece.side==0){
+                                        wischecked= moveResult1.isChecked;
+                                    }else{
+                                        bischecked=moveResult1.isChecked;
+                                    }
 //                                    board.positions[aiMovement.startPlace.x][aiMovement.startPlace.y].piece = null;
 //                                    board.positions[aiMovement.destination.x][aiMovement.destination.y].piece = aiMovement.piece;
 //                                    currentPlayer = currentPlayer != 1 ? 1 : 0;

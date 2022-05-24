@@ -330,6 +330,9 @@ public class Play {
                     }
                 }
             }
+
+
+
             if (!canAvoid) {
                 return k.side == 1 ? 0 : 1;
             }

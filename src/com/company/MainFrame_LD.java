@@ -100,6 +100,7 @@ public class MainFrame_LD extends JFrame{
                 buttonLocalGame.setIcon(images[0][0]);
                 cardLayout.show(mainPanel, "new game");
                 System.out.println(gamePanel.isPvE);
+                gamePanel.loadChessboard();
             }
 
             @Override

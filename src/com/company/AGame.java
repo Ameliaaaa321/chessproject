@@ -49,21 +49,32 @@ public class AGame {
         }catch (ArrayIndexOutOfBoundsException e){
 
             WrongDialog wrongDialog=new WrongDialog();
-            TextField textField = new TextField();
-            textField.setText("错误代码：103");
-            wrongDialog.add(textField);
+            Label label = new Label();
+            label.setText("错误代码：103");
+            wrongDialog.add(label);
             wrongDialog.setVisible(true);
             System.out.println("下标异常");
             System.out.println("103");
+            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
         }catch (NullPointerException e){
 
             WrongDialog wrongDialog=new WrongDialog();
-            TextField textField = new TextField();
-            textField.setText("错误代码：103");
-            wrongDialog.add(textField);
+            Label label = new Label();
+            label.setText("错误代码：103");
+            wrongDialog.add(label);
             wrongDialog.setVisible(true);
             System.out.println("空指针");
             System.out.println("103");
+            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
+        }catch (StringIndexOutOfBoundsException e){
+            WrongDialog wrongDialog=new WrongDialog();
+            Label label = new Label();
+            label.setText("错误代码：103");
+            wrongDialog.add(label);
+            wrongDialog.setVisible(true);
+            System.out.println("空指针");
+            System.out.println("103");
+            MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
         }
         return lists;
     }
@@ -76,128 +87,139 @@ public class AGame {
         StoreBoard storeBoard = new StoreBoard();
 //        try {
 
-            for (int i=0;i<s.size();i++){
+            for (int i=0;i<s.size();i++) {
                 currentPieces.removeAll(currentPieces);
                 try {
-                    for (int j=0;j<10;j++){
-                        if(j==0){
-                            round =Integer.parseInt(String.valueOf(s.get(i).get(j).charAt(0)));
+                    for (int j = 0; j < 10; j++) {
+                        if (j == 0) {
+                            round = Integer.parseInt(String.valueOf(s.get(i).get(j).charAt(0)));
                             System.out.println(round);
                         }
-                        if((j>0)&&(j<9)){
+                        if ((j > 0) && (j < 9)) {
                             for (int k = 0; k < 8; k++) {
                                 switch (s.get(i).get(j).charAt(k)) {
                                     case 'P':
                                         Piece P1;
-                                        P1 = new P(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = P1;
+                                        P1 = new P(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = P1;
                                         currentPieces.add(P1);
                                         System.out.print("P");
                                         break;
                                     case 'p':
-                                        Piece p1 = new P(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = p1;
+                                        Piece p1 = new P(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = p1;
                                         currentPieces.add(p1);
                                         System.out.print("p");
                                         break;
                                     case 'R':
                                         Piece R1;
-                                        R1 = new R(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = R1;
+                                        R1 = new R(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = R1;
                                         currentPieces.add(R1);
                                         System.out.print("R");
                                         break;
                                     case 'r':
-                                        Piece r1 = new R(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = r1;
+                                        Piece r1 = new R(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = r1;
                                         currentPieces.add(r1);
                                         System.out.print("r");
                                         break;
                                     case 'B':
-                                        Piece B1 = new B(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = B1;
+                                        Piece B1 = new B(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = B1;
                                         currentPieces.add(B1);
                                         System.out.print("B");
                                         break;
                                     case 'b':
-                                        Piece b1 = new B(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = b1;
+                                        Piece b1 = new B(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = b1;
                                         currentPieces.add(b1);
                                         System.out.print("b");
                                         break;
                                     case 'N':
-                                        Piece N1 = new N(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = N1;
+                                        Piece N1 = new N(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = N1;
                                         currentPieces.add(N1);
                                         System.out.print("N");
                                         break;
                                     case 'n':
-                                        Piece n1 = new N(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = n1;
+                                        Piece n1 = new N(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = n1;
                                         currentPieces.add(n1);
                                         System.out.print("n");
                                         break;
                                     case 'K':
-                                        Piece K1 = new K(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = K1;
+                                        Piece K1 = new K(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = K1;
                                         currentPieces.add(K1);
                                         System.out.print("K");
                                         break;
                                     case 'k':
-                                        Piece k1 = new K(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = k1;
+                                        Piece k1 = new K(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = k1;
                                         currentPieces.add(k1);
                                         System.out.print("k");
                                         break;
                                     case 'Q':
-                                        Piece Q1 = new Q(j-1, k, 0, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = Q1;
+                                        Piece Q1 = new Q(j - 1, k, 0, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = Q1;
                                         currentPieces.add(Q1);
                                         System.out.print("Q");
                                         break;
                                     case 'q':
-                                        Piece q1 = new Q(j-1, k, 1, currentBoard);
-                                        currentBoard.positions[j-1][k].piece = q1;
+                                        Piece q1 = new Q(j - 1, k, 1, currentBoard);
+                                        currentBoard.positions[j - 1][k].piece = q1;
                                         currentPieces.add(q1);
                                         System.out.print("q");
                                         break;
                                     case '_':
-                                        currentBoard.positions[j-1][k].piece=null;
+                                        currentBoard.positions[j - 1][k].piece = null;
                                         System.out.print("_");
                                         break;
                                     default:
                                         System.out.println("102");
-                                        WrongDialog wrongDialog=new WrongDialog();
+                                        WrongDialog wrongDialog = new WrongDialog();
                                         Label label = new Label();
                                         label.setText("错误代码：102");
                                         wrongDialog.add(label);
                                         wrongDialog.setVisible(true);
-
+                                        MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
 //                                    throw new IllegalStateException("102: Unexpected value: " + s.get(i).get(j).charAt(k));
                                 }
                             }
                         }
-                        if (j==9){
+                        if (j == 9) {
                             currentPlayer = Integer.parseInt(String.valueOf(s.get(i).get(j).charAt(0)));
                             System.out.println(currentPlayer);
                         }
                     }
-                }catch (ArrayIndexOutOfBoundsException e){
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("下标异常");
                     System.out.println("101");
-                    WrongDialog wrongDialog=new WrongDialog();
+                    WrongDialog wrongDialog = new WrongDialog();
                     Label label = new Label();
                     label.setText("错误代码：101");
                     wrongDialog.add(label);
                     wrongDialog.setVisible(true);
-                }catch (NullPointerException e){
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
+                } catch (NullPointerException e) {
                     System.out.println("空指针");
                     System.out.println("101");
-                    WrongDialog wrongDialog=new WrongDialog();
+                    WrongDialog wrongDialog = new WrongDialog();
                     Label label = new Label();
                     label.setText("错误代码：101");
                     wrongDialog.add(label);
                     wrongDialog.setVisible(true);
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
+                } catch (StringIndexOutOfBoundsException e) {
+                    WrongDialog wrongDialog = new WrongDialog();
+                    Label label = new Label();
+                    label.setText("错误代码：101");
+                    wrongDialog.add(label);
+                    wrongDialog.setVisible(true);
+                    System.out.println("空指针");
+                    System.out.println("103");
+                    MainFrame_LD.cardLayout.show(MainFrame_LD.mainPanel, "主界面");
                 }
             }
 
