@@ -409,9 +409,27 @@ public class Play {
     }
 
     // 进行兵的升变
-    static void promotion(Piece p, Piece aim, StoreBoard storeBoard, Board board) {
-        p = aim;
-//        store(storeBoard, board);
+    // p是进行升变的棋子，注意传入的必须是board中刚刚移动的那个，aim是字符四选一
+    static void promotion(Piece p, char aim, Board board) {
+        int x = p.x;
+        int y = p.y;
+        int side = p.side;
+        switch (aim) {
+            case 'Q':    // 后
+                p = new Q(x, y, side, board);
+                break;
+            case 'R':    // 车
+                p = new R(x, y, side, board);
+                break;
+            case 'N':    // 马
+                p = new N(x, y, side, board);
+                break;
+            case 'B':    // 象
+                p = new B(x, y, side, board);
+                break;
+        }
+
+        board.positions[x][y].piece = p;
     }
 }
 
