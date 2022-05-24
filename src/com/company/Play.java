@@ -217,10 +217,10 @@ public class Play {
         }
 
         if (piece == null) {
-            System.out.println("piece 是 null");
+            System.out.println("piece是null");
         }
         if (destination == null) {
-            System.out.println("destination 是 null");
+            System.out.println("destination是null");
         }else {
             System.out.println("maxMin本次返回值没有空指针");
         }
@@ -297,14 +297,25 @@ public class Play {
                             int b = validPositions.get(m).y;
                             Piece temp0 = board.positions[i][j].piece;    // 某个可能可以守卫王的棋子
                             Piece temp1 = board.positions[t][b].piece;    // 该棋子的一个可行位置（王方棋子目的地原本的棋子）
+//                            if (temp0 instanceof K) {
+//                                if (temp0.side == 1) {
+//                                    board.k1 =
+//                                }
+//                            }
                             board.positions[t][b].piece = temp0;
                             board.positions[i][j].piece = null;
+                            temp0.x = t;
+                            temp0.y = b;
                             if (!isChecked(k, board)) {
                                 canAvoid = true;
+                                temp0.x = i;
+                                temp0.y = j;
                                 board.positions[t][b].piece = temp1;
                                 board.positions[i][j].piece = temp0;
                                 break lable;
                             }else {
+                                temp0.x = i;
+                                temp0.y = j;
                                 board.positions[t][b].piece = temp1;
                                 board.positions[i][j].piece = temp0;
                             }
